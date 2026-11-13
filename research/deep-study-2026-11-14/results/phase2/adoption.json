@@ -1,0 +1,22 @@
+{
+  "n_pre_registered": 12,
+  "n_tested": 12,
+  "n_post_hoc": 0,
+  "adopted": [
+    "A_ny_lon_brk_d4h",
+    "B_fomc_cont",
+    "C_donch20",
+    "C_donch20_long",
+    "C_donch20_reg"
+  ],
+  "criteria": {
+    "oos_n_min": 40,
+    "oos_avg_r": ">0",
+    "oos_pf_min": 1.2,
+    "oos_green_years_min": 8,
+    "oos_green_years_of": 15,
+    "mid_2012_2023_avg_r": ">=0",
+    "mid_2012_2023_pf_min": 1.0,
+    "mid_n_min": 20
+  }
+}

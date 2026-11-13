@@ -1,7 +1,7 @@
 {
   "version": 1,
-  "generated_at": "2026-11-13T12:17:56Z",
-  "valid_until": "2026-11-13T17:30:00Z",
+  "generated_at": "2026-11-13T15:16:49Z",
+  "valid_until": "2026-11-13T21:00:00Z",
   "symbol": "XAUUSD",
   "bias": "NONE",
   "entry_zone": {
@@ -15,13 +15,7 @@
   ],
   "confidence": 0,
   "max_risk_pct": 0.5,
-  "rationale": "Stand aside into PPI. SELL retest 3909-3913 never filled (price compressed 3890-3910 spot) and expired; Asia range 3875-3923 spot too wide for A-setup and London never closed outside it. D/4H still LH/LL bearish, spot ~3895, GC basis ~+4. No new entries 13:00-15:00Z PPI blackout; next run reassesses the post-PPI reaction (Friday, no new trades after 16:00 ET).",
-  "news_blackout": [
-    {
-      "start": "2026-11-13T13:00:00Z",
-      "end": "2026-11-13T15:00:00Z",
-      "reason": "US October PPI 8:30am ET"
-    }
-  ],
+  "rationale": "Stand aside into Friday close. PPI (0.3% vs 0.4% m/m, 6.5% y/y) whipsawed 3873-3906 spot and both sides got swept; price back mid Asia range 3865-3923 (~3889), no London/NY close outside it, no clean with-trend sweep. D/4H LH/LL bearish below EMA20, 10y 5.16%, DXY 103.2. GC basis ~+5. No new trades after 16:00 ET Friday.",
+  "news_blackout": [],
   "kill_switch": false
 }

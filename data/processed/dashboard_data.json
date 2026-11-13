@@ -1,6 +1,6 @@
 {
-  "generated_at_ist": "2026-11-13 14:52:02 IST",
-  "generated_at_utc": "2026-11-13T09:22:02Z",
+  "generated_at_ist": "2026-11-13 17:48:25 IST",
+  "generated_at_utc": "2026-11-13T12:18:25Z",
   "timezone_label": "IST (Asia/Kolkata)",
   "account": {
     "server": "MetaQuotes-Demo",
@@ -8,7 +8,7 @@
     "mode": "demo",
     "symbol": "XAUUSD",
     "balance": 100046.1,
-    "equity": 100046.1,
+    "equity": null,
     "balance_display": "$100,046.10",
     "start_of_day_balance": 100046.1,
     "start_of_day_balance_display": "$100,046.10",
@@ -21,26 +21,26 @@
     "starting_capital": 100000.0,
     "first_ea_start_equity": 99999.95,
     "first_ea_start_equity_at_ist": "2026-11-13 01:06:20 IST",
-    "last_terminal_sync_positions": 0,
-    "last_terminal_sync_ist": "2026-11-13 14:50:09 IST"
+    "last_terminal_sync_positions": 1,
+    "last_terminal_sync_ist": "2026-11-13 17:47:07 IST"
   },
   "decision": {
-    "bias": "SELL",
+    "bias": "NONE",
     "symbol": "XAUUSD",
-    "entry_zone_low": 3909.0,
-    "entry_zone_high": 3913.0,
-    "stop_loss": 3929.0,
+    "entry_zone_low": 0.0,
+    "entry_zone_high": 0.0,
+    "stop_loss": 0.0,
     "take_profits": [
-      3879.0,
-      3852.0
+      0.0,
+      0.0
     ],
-    "tp1": 3879.0,
-    "tp2": 3852.0,
-    "confidence": 60,
+    "tp1": 0.0,
+    "tp2": 0.0,
+    "confidence": 0,
     "max_risk_pct": 0.5,
-    "generated_at_ist": "2026-11-13 11:55:18 IST",
-    "valid_until_ist": "2026-11-13 17:50 IST",
-    "valid_until_utc": "2026-11-13T12:20:00Z",
+    "generated_at_ist": "2026-11-13 17:47:56 IST",
+    "valid_until_ist": "2026-11-13 23:00 IST",
+    "valid_until_utc": "2026-11-13T17:30:00Z",
     "expired": false,
     "kill_switch": false,
     "in_news_blackout": false,
@@ -60,12 +60,12 @@
       "end_utc": "2026-11-13T15:00:00Z",
       "reason": "US October PPI 8:30am ET"
     },
-    "rationale": "Supply-rejection SELL on retest. D/4H LH/LL downtrend; Asia relief rally stalled at 3923 spot inside 3905-3930 4H supply, 15M bearish closes broke the 3904.7 pullback low (15M BOS down). Sell only a retrace to 3909-3913 (50% of the 3923->3896 drop), SL above 3923 high, TP1 near Asia low, TP2 prior-day low. Spot levels, GC basis ~+3-6. Flat-entry cutoff before PPI.",
-    "status": "waiting_for_zone",
+    "rationale": "Stand aside into PPI. SELL retest 3909-3913 never filled (price compressed 3890-3910 spot) and expired; Asia range 3875-3923 spot too wide for A-setup and London never closed outside it. D/4H still LH/LL bearish, spot ~3895, GC basis ~+4. No new entries 13:00-15:00Z PPI blackout; next run reassesses the post-PPI reaction (Friday, no new trades after 16:00 ET).",
+    "status": "flat",
     "source": "/workspace/gold-algo/decisions/current.json"
   },
   "open_position": null,
-  "position_status": "flat",
+  "position_status": "unknown_open_in_terminal",
   "ea": {
     "name": "GoldAIBridge",
     "chart": "XAUUSD M15",
@@ -150,10 +150,10 @@
       "sort": "2026-11-13T07:41:28+02:00"
     },
     {
-      "t": "2026-11-13 14:52 IST",
+      "t": "2026-11-13 17:48 IST",
       "label": "Last known balance",
       "equity": 100046.1,
-      "sort": "2026-11-13T14:52:02.212740+05:30"
+      "sort": "2026-11-13T17:48:25.391414+05:30"
     }
   ],
   "stats": {

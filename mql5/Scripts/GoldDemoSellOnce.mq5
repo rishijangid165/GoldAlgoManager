@@ -4,8 +4,7 @@
 //| Aborts on any non-demo account. Runs once and exits.             |
 //+------------------------------------------------------------------+
 #property copyright "GoldAlgoManager"
-#property version   "1.00"
-#property script_show_confirm false
+#property version   "1.01"
 #property script_show_inputs  false
 
 #include <Trade/Trade.mqh>
@@ -13,11 +12,11 @@
 const long   kExpectedLogin   = <demo-login>;
 const string kExpectedServer  = "MetaQuotes-Demo";
 const string kSymbol          = "XAUUSD";
-const double kSL              = 3945.00;
-const double kTP              = 3860.00;
+const double kSL              = 3912.00;
+const double kTP              = 3866.00;
 const double kRiskPct         = 0.50;
 const int    kSlippagePoints  = 30;
-const ulong  kOldOrderTicket  = 11377847166;
+const string kComment         = "owner-requested-demo-2";
 const string kResultFile      = "GoldDemoSellOnce_result.txt";
 
 int OnStart()
@@ -37,8 +36,6 @@ int OnStart()
    report += "company=" + AccountInfoString(ACCOUNT_COMPANY) + "\n";
    report += "balance=" + DoubleToString(balance, 2) + "\n";
    report += "equity=" + DoubleToString(equity, 2) + "\n";
-
-   DumpOldTicket(report);
 
    if(mode != ACCOUNT_TRADE_MODE_DEMO)
      {
@@ -144,22 +141,38 @@ int OnStart()
       return WriteAndExit(report, 1);
      }
 
-   if(bid >= kSL)
+   // Planned SL 3912 / TP 3866 only if SL distance is $8-$30; otherwise SL=entry+18, TP=entry-28.
+   double sl = kSL;
+   double tp = kTP;
+   double sl_dist_plan = sl - bid;
+   report += "planned_sl=" + DoubleToString(kSL, 2) + "\n";
+   report += "planned_tp=" + DoubleToString(kTP, 2) + "\n";
+   report += "planned_sl_dist=" + DoubleToString(sl_dist_plan, 2) + "\n";
+   if(sl_dist_plan < 8.0 || sl_dist_plan > 30.0)
      {
-      report += "ABORT=bid " + DoubleToString(bid, digits) + " is already at/above SL " + DoubleToString(kSL, 2) + "\n";
+      sl = NormalizeDouble(bid + 18.0, digits);
+      tp = NormalizeDouble(bid - 28.0, digits);
+      report += "sl_tp_adjusted=1 (planned SL distance outside 8-30)\n";
+     }
+   else
+      report += "sl_tp_adjusted=0\n";
+
+   if(bid >= sl)
+     {
+      report += "ABORT=bid " + DoubleToString(bid, digits) + " is already at/above SL " + DoubleToString(sl, 2) + "\n";
       return WriteAndExit(report, 1);
      }
-   if(bid <= kTP)
+   if(bid <= tp)
      {
       report += "ABORT=bid already at/through TP\n";
       return WriteAndExit(report, 1);
      }
 
-   const double sl_dist = kSL - bid;
-   const double tp_dist = bid - kTP;
+   const double sl_dist = sl - bid;
+   const double tp_dist = bid - tp;
    const double rr = (sl_dist > 0 ? tp_dist / sl_dist : 0);
-   report += "sl=" + DoubleToString(kSL, 2) + "\n";
-   report += "tp=" + DoubleToString(kTP, 2) + "\n";
+   report += "sl=" + DoubleToString(sl, 2) + "\n";
+   report += "tp=" + DoubleToString(tp, 2) + "\n";
    report += "sl_dist=" + DoubleToString(sl_dist, 2) + "\n";
    report += "tp_dist=" + DoubleToString(tp_dist, 2) + "\n";
    report += "rr=" + DoubleToString(rr, 2) + "\n";
@@ -202,7 +215,7 @@ int OnStart()
    trade.SetTypeFillingBySymbol(kSymbol);
    trade.SetAsyncMode(false);
 
-   const bool sent = trade.Sell(lots, kSymbol, bid, kSL, kTP, "owner-requested-demo");
+   const bool sent = trade.Sell(lots, kSymbol, bid, sl, tp, kComment);
    const uint ret = trade.ResultRetcode();
    const ulong order_id = trade.ResultOrder();
    const ulong deal_id = trade.ResultDeal();
@@ -241,76 +254,6 @@ int OnStart()
       report += "VERIFY=position open\n";
 
    return WriteAndExit(report, sent && found ? 0 : 2);
-  }
-
-void DumpOldTicket(string &report)
-  {
-   report += "---- old ticket " + IntegerToString((long)kOldOrderTicket) + " ----\n";
-   const datetime from = D'2026.11.12 00:00:00';
-   const datetime to   = TimeCurrent() + 86400;
-   if(!HistorySelect(from, to))
-     {
-      report += "old_history_select=fail\n";
-      return;
-     }
-   report += "history_deals=" + IntegerToString(HistoryDealsTotal()) + "\n";
-   report += "history_orders=" + IntegerToString(HistoryOrdersTotal()) + "\n";
-   bool any = false;
-   for(int i=0; i<HistoryDealsTotal(); ++i)
-     {
-      const ulong deal = HistoryDealGetTicket(i);
-      if(deal == 0)
-         continue;
-      const ulong deal_order = (ulong)HistoryDealGetInteger(deal, DEAL_ORDER);
-      const ulong deal_pos   = (ulong)HistoryDealGetInteger(deal, DEAL_POSITION_ID);
-      const string sym = HistoryDealGetString(deal, DEAL_SYMBOL);
-      if(deal_order != kOldOrderTicket && deal_pos != kOldOrderTicket && deal != kOldOrderTicket && deal != 11135687590)
-         if(sym != kSymbol)
-            continue;
-      any = true;
-      const datetime t = (datetime)HistoryDealGetInteger(deal, DEAL_TIME);
-      const int entry = (int)HistoryDealGetInteger(deal, DEAL_ENTRY);
-      const int reason = (int)HistoryDealGetInteger(deal, DEAL_REASON);
-      const int typ = (int)HistoryDealGetInteger(deal, DEAL_TYPE);
-      report += "deal=" + IntegerToString((long)deal) +
-                " order=" + IntegerToString((long)deal_order) +
-                " pos=" + IntegerToString((long)deal_pos) +
-                " symbol=" + sym +
-                " type=" + IntegerToString(typ) +
-                " entry=" + IntegerToString(entry) +
-                " reason=" + IntegerToString(reason) +
-                " vol=" + DoubleToString(HistoryDealGetDouble(deal, DEAL_VOLUME), 2) +
-                " price=" + DoubleToString(HistoryDealGetDouble(deal, DEAL_PRICE), 2) +
-                " profit=" + DoubleToString(HistoryDealGetDouble(deal, DEAL_PROFIT), 2) +
-                " swap=" + DoubleToString(HistoryDealGetDouble(deal, DEAL_SWAP), 2) +
-                " commission=" + DoubleToString(HistoryDealGetDouble(deal, DEAL_COMMISSION), 2) +
-                " sl=" + DoubleToString(HistoryDealGetDouble(deal, DEAL_SL), 2) +
-                " tp=" + DoubleToString(HistoryDealGetDouble(deal, DEAL_TP), 2) +
-                " time=" + TimeToString(t, TIME_DATE|TIME_SECONDS) +
-                " comment=" + HistoryDealGetString(deal, DEAL_COMMENT) +
-                "\n";
-     }
-   for(int i=0; i<HistoryOrdersTotal(); ++i)
-     {
-      const ulong ord = HistoryOrderGetTicket(i);
-      if(ord == 0)
-         continue;
-      if(ord != kOldOrderTicket && (ulong)HistoryOrderGetInteger(ord, ORDER_POSITION_ID) != kOldOrderTicket)
-         continue;
-      any = true;
-      report += "order=" + IntegerToString((long)ord) +
-                " state=" + IntegerToString(HistoryOrderGetInteger(ord, ORDER_STATE)) +
-                " reason=" + IntegerToString(HistoryOrderGetInteger(ord, ORDER_REASON)) +
-                " price_open=" + DoubleToString(HistoryOrderGetDouble(ord, ORDER_PRICE_OPEN), 2) +
-                " sl=" + DoubleToString(HistoryOrderGetDouble(ord, ORDER_SL), 2) +
-                " tp=" + DoubleToString(HistoryOrderGetDouble(ord, ORDER_TP), 2) +
-                " setup=" + TimeToString((datetime)HistoryOrderGetInteger(ord, ORDER_TIME_SETUP), TIME_DATE|TIME_SECONDS) +
-                " done=" + TimeToString((datetime)HistoryOrderGetInteger(ord, ORDER_TIME_DONE), TIME_DATE|TIME_SECONDS) +
-                " comment=" + HistoryOrderGetString(ord, ORDER_COMMENT) +
-                "\n";
-     }
-   if(!any)
-      report += "old_ticket_not_found_in_history\n";
   }
 
 int WriteAndExit(const string report, const int code)

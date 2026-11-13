@@ -1,0 +1,186 @@
+# GoldAI Bridge — Setup for MetaTrader 5
+
+This Expert Advisor (EA) does **not** invent its own entry rules. An AI assistant researches gold, writes a small JSON **decision file**, and the EA only trades when price comes into the zone in that file.
+
+Simple picture (seedha matlab):
+
+- **AI / assistant = dimaag.** It studies the market and writes `decisions/current.json`.
+- **EA = haath.** It polls that file, respects hard risk limits, and places or closes the trade.
+- Start on a **DEMO** account only. Live trading is blocked unless you turn that protection off yourself.
+
+---
+
+## 1. Copy the files into MT5
+
+1. In MetaTrader 5, click **File > Open Data Folder**.
+2. Open the `MQL5` folder inside it.
+3. Copy:
+   - `gold-algo/mql5/Experts/GoldAIBridge.mq5`  →  `MQL5/Experts/`
+   - everything in `gold-algo/mql5/Include/` (`GoldAIJson.mqh`, `GoldAIDecision.mqh`, `GoldAIUtil.mqh`, `GoldAIJournal.mqh`)  →  `MQL5/Include/`
+4. In MT5, open **Navigator** (Ctrl+N), right-click **Expert Advisors**, and click **Refresh**.
+5. Double-click `GoldAIBridge` (or right-click > **Modify**) so MetaEditor opens it, then press **F7** to compile. You want **0 errors**. Warnings should be read, but the EA must compile cleanly before you attach it.
+
+Hindi hint: *Data Folder waley `MQL5/Experts` aur `MQL5/Include` mein files copy karo, phir F7 dabake compile karo.*
+
+---
+
+## 2. Allow the decision-file URL (WebRequest)
+
+The EA uses MT5 `WebRequest` to download the JSON. MT5 will block this until you allow the URL.
+
+1. In MT5 go to **Tools > Options** (or Ctrl+O).
+2. Open the **Expert Advisors** tab.
+3. Tick **Allow WebRequest for listed URL**.
+4. Click **Add** and paste the **base** URL of your host, for example:
+   - `https://raw.githubusercontent.com`
+   - `https://gist.githubusercontent.com`
+5. Click **OK**.
+
+If this step is skipped, the Experts log will show error **4014** and the chart panel will say the poll failed.
+
+You also need **Algo Trading** enabled (the toolbar button, or **Tools > Options > Expert Advisors > Allow algorithmic trading**).
+
+---
+
+## 3. Attach the EA to a gold chart — DEMO first
+
+1. Open a **DEMO** account chart for gold. Common names: `XAUUSD`, `XAUUSDm`, `XAUUSD.m`, `GOLD`, `GOLDm`. The EA maps these suffixes automatically.
+2. Timeframe can be M15 or H1; the EA trades from the decision file, not from candle patterns, but a clean gold chart is easier to watch.
+3. Drag **GoldAIBridge** onto the chart.
+4. In the **Common** tab, tick **Allow Algo Trading**.
+5. In the **Inputs** tab, set `DecisionURL` (see section 5). Leave `AllowRealAccount` = **false**.
+6. Click **OK**. You should see a comment panel in the top-left of the chart, and a smiley / EA icon in the top-right.
+
+Agar account real/live hai aur `AllowRealAccount` false hai, EA **trade nahi karega**. Yeh safety feature hai — ise on mat karo jab tak demo par system prove na ho jaye.
+
+The bundled `decisions/current.json` starts with `"bias": "NONE"`, so the EA will poll and show the panel but will not open a trade until a real researched decision is published.
+
+---
+
+## 4. Input settings (what each one means)
+
+### Connection
+
+| Input | Default | Meaning |
+|---|---|---|
+| `DecisionURL` | placeholder GitHub raw URL | Full URL to `current.json`. Must be allowed in WebRequest (section 2). |
+| `PollMinutes` | 5 | How often the EA re-downloads the file. Minimum 1 minute. Trade *management* (SL / TP1) still happens on every tick. |
+| `WebTimeoutMs` | 8000 | HTTP timeout in milliseconds. |
+| `UseLocalFile` | false | If true, read `LocalFileName` from `MQL5/Files` instead of the web. Useful for a first test before hosting is ready. |
+| `LocalFileName` | `current.json` | File name inside `MQL5/Files` when `UseLocalFile` is true. |
+
+### Symbol
+
+| Input | Default | Meaning |
+|---|---|---|
+| `ExpectedSymbol` | `XAUUSD` | Logical name in the decision file. `GOLD` and broker suffixes (`XAUUSDm` …) are treated as the same instrument. |
+
+### Risk (locked in the EA — the JSON cannot loosen these)
+
+| Input | Default | Meaning |
+|---|---|---|
+| `RiskPercentPerTrade` | 0.5 | Max percent of equity to risk on one trade. The file’s `max_risk_pct` can only go **lower**, never higher. |
+| `MaxDailyLossPct` | 2.0 | If equity is down this much from the start-of-day (server time) equity, no new trades that day. Open trades are still managed. |
+| `MaxOpenTrades` | 1 | Max GoldAI positions on this symbol (this EA’s magic number). |
+| `MaxSpreadPoints` | 50 | Block a new entry if the current spread is wider than this, in **symbol points** (not pips). Watch the chart panel — gold digits differ by broker. |
+| `MinConfidence` | 60 | Ignore a BUY/SELL decision whose `confidence` is below this. |
+| `MagicNumber` | 26011301 | Marks this EA’s orders. Do not let two EAs share the same magic on the same symbol. |
+| `SlippagePoints` | 30 | Max price deviation for market orders, in points. |
+
+### Safety
+
+| Input | Default | Meaning |
+|---|---|---|
+| `AllowRealAccount` | **false** | Leave this off. The EA refuses to trade on a real account unless you explicitly set this to true. |
+
+### Trade management
+
+| Input | Default | Meaning |
+|---|---|---|
+| `TP1CloseFraction` | 0.5 | Close this fraction of the lot at TP1, then move the stop to breakeven. If the position is already the broker’s minimum lot, the EA only moves the stop and lets TP2 work. |
+| `BreakevenOffsetPoints` | 0 | Extra points beyond entry when moving the stop to breakeven (to help cover commission). |
+| `CloseOnBiasFlip` | true | Close the open GoldAI trade if a new decision changes bias (BUY↔SELL) or goes to NONE. |
+| `CloseOnKillSwitch` | true | If the file has `"kill_switch": true`, flatten GoldAI positions and do not open new ones. |
+
+### Journal
+
+| Input | Default | Meaning |
+|---|---|---|
+| `JournalFile` | `GoldAI_journal.csv` | Written under `MQL5/Files`. Copy it out for review with `scripts/review_journal.py`. |
+
+---
+
+## 5. Hosting the decision file
+
+The EA needs a **public HTTPS URL** that returns raw JSON (not an HTML page).
+
+**Recommended:** a public GitHub repository (or a GitHub Gist) and its **raw** URL. The assistant can update `decisions/current.json` in that repo, and the EA will pick it up on the next poll.
+
+Examples (these are **placeholders** — replace with your real account and repo once you decide):
+
+```
+https://raw.githubusercontent.com/USER/REPO/main/decisions/current.json
+https://gist.githubusercontent.com/USER/GIST_ID/raw/current.json
+```
+
+Notes:
+
+- In **Tools > Options > Expert Advisors**, add the *base* host (`https://raw.githubusercontent.com` or `https://gist.githubusercontent.com`), not only the full file path.
+- Always use the **raw** link. A normal GitHub file page is HTML, and the EA cannot parse that.
+- GitHub can cache raw files for a short time. The EA appends a timestamp query (`?t=...`) to reduce stale reads.
+- Keep the repo / gist public so MT5 does not have to log in.
+- Other hosts (a small VPS, object storage, a paste service with a stable raw HTTPS URL) also work, as long as `WebRequest` is allowed for that host.
+
+**Until hosting is decided, leave `DecisionURL` as the placeholder and use the local-file path for tests:**
+
+1. Copy `gold-algo/decisions/current.json` into `MQL5/Files/current.json`.
+2. Set `UseLocalFile` = true.
+3. After the assistant writes a new decision, copy the file in again (or set up hosting).
+
+The assistant writes and validates the file with:
+
+```bash
+source /workspace/gold-algo/.venv/bin/activate
+python /workspace/gold-algo/scripts/write_decision.py --bias NONE \
+  --rationale "Waiting for the next window" --valid-hours 6
+```
+
+---
+
+## 6. How a normal day should feel
+
+1. Assistant researches gold (levels, dollar, yields, news) and writes a new `current.json`.
+2. Within `PollMinutes`, the chart panel updates: bias, zone, SL, TPs, confidence, rationale, time left.
+3. If bias is BUY or SELL, confidence is high enough, spread is OK, and *price is inside the zone*, the EA opens **one** market trade. Lot size comes from risk percent and the distance to the file’s stop-loss.
+4. At TP1 it closes part of the position and moves the stop to breakeven. The rest targets TP2.
+5. If the file goes stale (`valid_until` has passed), the kill switch is on, or a news blackout window is active, it will not open a new trade. A kill switch or a bias flip can close an open trade.
+6. Everything is logged in the Experts log and in `GoldAI_journal.csv`.
+
+Review a session:
+
+```bash
+python /workspace/gold-algo/scripts/review_journal.py /path/to/GoldAI_journal.csv
+```
+
+---
+
+## 7. Safety reminders
+
+- Demo first. Always.
+- The EA cannot think. If the decision file is wrong, the trade will be wrong — only the hard caps (risk %, daily loss, spread, max trades, demo lock) will still protect you.
+- `WebRequest` does **not** work in the MT5 Strategy Tester. Test on a demo chart with a live poll or `UseLocalFile`.
+- Do not share a real-account login, and do not turn `AllowRealAccount` on casually.
+- If something looks wrong, use the kill switch in the decision file, or simply remove the EA from the chart / disable Algo Trading.
+
+---
+
+## 8. Quick checklist
+
+- [ ] Files copied to `MQL5/Experts` and `MQL5/Include`
+- [ ] Compiled with F7, 0 errors
+- [ ] WebRequest URL allowed (or `UseLocalFile` on for a first test)
+- [ ] Algo Trading enabled
+- [ ] Attached to a DEMO gold chart
+- [ ] `AllowRealAccount` is false
+- [ ] Chart panel shows a successful poll (or a successful local file read)
+- [ ] Hosting URL decided and confirmed with the assistant (still open)

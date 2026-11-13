@@ -1,0 +1,4 @@
+variant,setup,direction,reason,session,session_date,entry_time,exit_time,entry,sl_initial,tp1,tp2,lots,risk_dollars,pnl,r_multiple,exit_reason,tp1_hit,mae_r,mfe_r,trend_filter,trend_down,trend_up
+15m|rsi_mr|trend_ma,rsi_mr,SELL,rsi_71_resist,london,2026-10-06,2026-10-06 07:30:00-04:00,2026-10-06 07:45:00-04:00,4192.475,4201.089,4179.555,4166.635,0.58,499.58,-512.63,-1.0261,sl,False,1.1987,0.0,True,True,False
+15m|rsi_mr|trend_ma,rsi_mr,SELL,rsi_71_resist,ny,2026-10-27,2026-10-27 09:45:00-04:00,2026-10-27 10:00:00-04:00,4042.575,4048.434,4033.787,4025.0,0.84,492.11,-511.01,-1.0384,sl,False,2.3257,1.0711,True,True,False
+15m|rsi_mr|trend_ma,rsi_mr,SELL,rsi_81_resist,ny,2026-11-03,2026-11-03 08:45:00-05:00,2026-11-03 10:00:00-05:00,3974.275,3983.114,3961.016,3947.757,0.55,486.17,1088.13,2.2382,tp1+tp2,True,0.84,3.3119,True,True,False

@@ -1,0 +1,4 @@
+variant,setup,direction,reason,session,session_date,entry_time,exit_time,entry,sl_initial,tp1,tp2,lots,risk_dollars,pnl,r_multiple,exit_reason,tp1_hit,mae_r,mfe_r,trend_filter,trend_down,trend_up
+1h|rsi_mr|trend_ma,rsi_mr,BUY,rsi_21_support,london,2024-07-19,2024-07-19 04:00:00-04:00,2024-07-19 06:00:00-04:00,2420.725,2414.179,2430.544,2440.363,0.76,497.5,-514.6,-1.0344,sl,False,1.2412,0.485,True,False,True
+1h|rsi_mr|trend_ma,rsi_mr,BUY,rsi_30_support,ny,2025-10-21,2025-10-21 09:00:00-04:00,2025-10-21 09:00:00-04:00,4223.725,4208.849,4246.038,4268.352,0.33,490.89,-498.32,-1.0151,sl,False,2.9999,1.0201,True,False,False
+1h|rsi_mr|trend_ma,rsi_mr,SELL,rsi_72_resist,ny,2026-07-14,2026-07-14 11:00:00-04:00,2026-07-14 11:00:00-04:00,4092.775,4105.094,4074.297,4055.819,0.4,492.74,-501.74,-1.0183,sl_samebar,False,1.2928,1.7433,True,True,False

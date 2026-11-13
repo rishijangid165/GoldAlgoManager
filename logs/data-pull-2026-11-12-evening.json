@@ -1,0 +1,57 @@
+{
+  "now_utc": "2026-11-12T19:27:43.294105+00:00",
+  "tickers": {
+    "GC=F_1d": {
+      "status": "ok",
+      "interval": "1d",
+      "period": null,
+      "rows": 534,
+      "path": "data/raw/GC=F_daily.csv",
+      "first": "2024-10-01 00:00:00-04:00",
+      "last": "2026-11-12 00:00:00-05:00",
+      "last_close": 3884.300048828125,
+      "last_open": 3994.0,
+      "last_high": 4005.89990234375,
+      "last_low": 3856.800048828125
+    },
+    "GC=F_1h": {
+      "status": "ok",
+      "interval": "1h",
+      "period": "730d",
+      "rows": 13736,
+      "path": "data/raw/GC=F_1h.csv",
+      "first": "2024-06-23 18:00:00-04:00",
+      "last": "2026-11-12 14:00:00-05:00",
+      "last_close": 3884.300048828125,
+      "last_open": 3887.5,
+      "last_high": 3887.5,
+      "last_low": 3880.300048828125
+    },
+    "GC=F_15m": {
+      "status": "ok",
+      "interval": "15m",
+      "period": "60d",
+      "rows": 4547,
+      "path": "data/raw/GC=F_15m.csv",
+      "first": "2026-09-03 00:00:00-04:00",
+      "last": "2026-11-12 14:15:00-05:00",
+      "last_close": 3884.300048828125,
+      "last_open": 3885.10009765625,
+      "last_high": 3885.10009765625,
+      "last_low": 3883.199951171875
+    },
+    "DX-Y.NYB_1d": {
+      "status": "ok",
+      "interval": "1d",
+      "period": null,
+      "rows": 534,
+      "path": "data/raw/DX-Y.NYB_daily.csv",
+      "first": "2024-10-01 00:00:00-04:00",
+      "last": "2026-11-12 00:00:00-05:00",
+      "last_close": 103.19000244140625,
+      "last_open": 102.86199951171875,
+      "last_high": 103.24199676513672,
+      "last_low": 102.8010025024414
+    }
+  }
+}

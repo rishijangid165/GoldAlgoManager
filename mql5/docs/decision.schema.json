@@ -1,0 +1,100 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://gold-algo.local/decision.schema.json",
+  "title": "GoldAI decision file",
+  "description": "One AI trading decision for the GoldAIBridge MT5 EA. Times are UTC ISO-8601.",
+  "type": "object",
+  "required": [
+    "version",
+    "generated_at",
+    "valid_until",
+    "symbol",
+    "bias",
+    "entry_zone",
+    "stop_loss",
+    "take_profits",
+    "confidence",
+    "rationale",
+    "news_blackout",
+    "kill_switch"
+  ],
+  "properties": {
+    "version": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Schema version. EA v1 accepts version >= 1 and reads known fields."
+    },
+    "generated_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "UTC time this file was written, e.g. 2026-11-12T18:30:00Z"
+    },
+    "valid_until": {
+      "type": "string",
+      "format": "date-time",
+      "description": "UTC expiry. The EA ignores the file after this time (treats it as stale)."
+    },
+    "symbol": {
+      "type": "string",
+      "description": "Logical symbol, usually XAUUSD or GOLD. The EA maps broker suffixes such as XAUUSDm."
+    },
+    "bias": {
+      "type": "string",
+      "enum": ["BUY", "SELL", "NONE"],
+      "description": "Trade direction. NONE means stay flat. A flip vs an open trade cancels that trade."
+    },
+    "entry_zone": {
+      "type": "object",
+      "required": ["low", "high"],
+      "properties": {
+        "low": { "type": "number" },
+        "high": { "type": "number" }
+      },
+      "description": "Market orders are allowed only when bid/ask is inside [low, high]. low must be < high when bias is BUY or SELL."
+    },
+    "stop_loss": {
+      "type": "number",
+      "description": "Absolute price. For BUY must sit below the zone; for SELL, above the zone."
+    },
+    "take_profits": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 2,
+      "items": { "type": "number" },
+      "description": "[tp1, tp2]. EA closes a fraction at tp1 and moves SL to breakeven; the remainder targets tp2. If only tp1 is set, it is used as the order TP and no partial is taken."
+    },
+    "confidence": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 100,
+      "description": "0-100. EA will not open a trade if this is below its MinConfidence input (default 60)."
+    },
+    "max_risk_pct": {
+      "type": "number",
+      "minimum": 0,
+      "description": "Optional per-trade risk percent override. The EA caps this at its own RiskPercentPerTrade input. 0 or omitted means use the EA default."
+    },
+    "rationale": {
+      "type": "string",
+      "description": "Short reason, shown on the chart panel and written to the journal."
+    },
+    "news_blackout": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["start", "end", "reason"],
+        "properties": {
+          "start": { "type": "string", "format": "date-time" },
+          "end": { "type": "string", "format": "date-time" },
+          "reason": { "type": "string" }
+        }
+      },
+      "description": "UTC windows where the EA must not open new trades. Open trades are still managed."
+    },
+    "kill_switch": {
+      "type": "boolean",
+      "description": "If true, the EA will not open new trades and will close any open GoldAI positions."
+    }
+  },
+  "additionalProperties": true
+}

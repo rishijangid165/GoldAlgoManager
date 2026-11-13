@@ -1,0 +1,5 @@
+variant,setup,direction,reason,session,session_date,entry_time,exit_time,entry,sl_initial,tp1,tp2,lots,risk_dollars,pnl,r_multiple,exit_reason,tp1_hit,mae_r,mfe_r,trend_filter,trend_down,trend_up
+15m|breakout|trend_strict,breakout,SELL,asia_break_down,london,2026-09-24,2026-09-24 04:30:00-04:00,2026-09-25 06:00:00-04:00,4298.175,4340.205,4235.13,4172.085,0.11,462.33,-464.8,-1.0054,sl,False,1.0903,0.4729,True,True,False
+15m|breakout|trend_strict,breakout,SELL,asia_break_down,london,2026-10-14,2026-10-14 04:45:00-04:00,2026-10-14 08:30:00-04:00,4166.575,4195.261,4123.545,4091.2,0.17,487.67,340.41,0.698,tp1+be,True,0.4645,2.0698,True,True,False
+15m|breakout|trend_strict,breakout,SELL,asia_break_down,london,2026-10-20,2026-10-20 06:00:00-04:00,2026-10-20 10:15:00-04:00,4131.375,4168.454,4075.756,4020.138,0.13,482.03,-484.95,-1.0061,sl,False,1.1415,0.0344,True,True,False
+15m|breakout|trend_strict,breakout,SELL,asia_break_down,london,2026-10-27,2026-10-27 04:15:00-04:00,2026-10-27 08:30:00-04:00,4008.975,4040.87,3961.132,3913.29,0.15,478.43,-481.8,-1.0071,sl,False,1.048,0.2312,True,True,False

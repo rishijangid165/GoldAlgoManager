@@ -1,0 +1,47 @@
+time_utc=2026.11.13 05:41:27
+server_time=2026.11.13 07:39:00
+login=<demo-login>
+server=MetaQuotes-Demo
+trade_mode=0 (0=demo,1=contest,2=real)
+company=MetaQuotes Ltd.
+balance_initial=0.00
+equity_initial=0.00
+sync_wait_ms=1000
+balance_synced=99977.46
+equity_synced=100045.78
+bid=3910.42
+ask=3910.55
+OPEN_TICKET=11382667647
+OPEN_SYMBOL=XAUUSD
+OPEN_SIDE=SELL
+OPEN_VOLUME=0.16
+OPEN_PRICE=3914.82
+OPEN_SL=3945.00
+OPEN_TP=3860.00
+OPEN_PROFIT=68.32
+OPEN_SWAP=0.00
+OPEN_MAGIC=0
+OPEN_COMMENT=owner-requested-demo
+sent=1
+retcode=10009 done at 3910.53
+close_order=11382816303
+close_deal=11140781527
+close_price_result=3910.53
+close_volume=0.16
+close_comment=Request executed
+still_open=0
+balance_after=100046.10
+equity_after=100046.10
+---- history for ticket 11382667647 ----
+deal=11140626981 order=11382667647 pos=11382667647 symbol=XAUUSD type=1 entry=0 reason=3 vol=0.16 price=3914.82 profit=0.00 swap=0.00 commission=0.00 time=2026.11.13 07:32:24 comment=owner-requested-demo
+deal=11140781527 order=11382816303 pos=11382667647 symbol=XAUUSD type=0 entry=1 reason=3 vol=0.16 price=3910.53 profit=68.64 swap=0.00 commission=0.00 time=2026.11.13 07:41:28 comment=
+CLOSE_PRICE=3910.53
+CLOSE_PROFIT=68.64
+CLOSE_SWAP=0.00
+CLOSE_COMMISSION=0.00
+CLOSE_TIME_SERVER=2026.11.13 07:41:28
+CLOSE_DEAL=11140781527
+CLOSE_ORDER=11382816303
+CLOSE_REASON=3
+CLOSE_COMMENT=
+VERIFY=closed

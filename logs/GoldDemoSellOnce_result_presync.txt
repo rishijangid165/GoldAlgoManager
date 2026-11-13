@@ -1,0 +1,31 @@
+time_utc=2026.11.13 05:31:13
+server_time=2026.11.13 05:24:24
+login=<demo-login>
+server=MetaQuotes-Demo
+trade_mode=0 (0=demo,1=contest,2=real)
+company=MetaQuotes Ltd.
+balance=0.00
+equity=0.00
+---- old ticket 11377847166 ----
+history_deals=5
+history_orders=4
+deal=11135687590 order=11377847166 pos=11377847166 symbol=XAUUSD type=1 entry=0 reason=0 vol=0.01 price=3882.56 profit=0.00 swap=0.00 commission=0.00 sl=3905.00 tp=3850.00 time=2026.11.12 21:40:30 comment=test
+deal=11136655706 order=11378779166 pos=11377847166 symbol=XAUUSD type=0 entry=1 reason=4 vol=0.01 price=3905.00 profit=-22.44 swap=-0.05 commission=0.00 sl=3905.00 tp=3850.00 time=2026.11.13 01:00:01 comment=[sl 3905.00]
+order=11377847166 state=4 reason=0 price_open=0.00 sl=3905.00 tp=3850.00 setup=2026.11.12 21:40:30 done=2026.11.12 21:40:30 comment=test
+order=11378779166 state=4 reason=4 price_open=3905.00 sl=0.00 tp=0.00 setup=2026.11.13 01:00:00 done=2026.11.13 01:00:01 comment=[sl 3905.00]
+bid=3917.06
+ask=3917.19
+spread=13.0 points
+contract=100.00
+tick_size=0.01
+tick_value=0.10000
+sl=3945.00
+tp=3860.00
+sl_dist=27.94
+tp_dist=57.06
+rr=2.04
+risk_money=0.00
+loss_per_lot=279.40
+lots_raw_calc=0.0000
+lots=0.00
+ABORT=calculated lots below minimum 0.01

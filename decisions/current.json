@@ -1,21 +1,21 @@
 {
   "version": 1,
-  "generated_at": "2026-11-13T06:25:18Z",
-  "valid_until": "2026-11-13T12:20:00Z",
+  "generated_at": "2026-11-13T12:17:56Z",
+  "valid_until": "2026-11-13T17:30:00Z",
   "symbol": "XAUUSD",
-  "bias": "SELL",
+  "bias": "NONE",
   "entry_zone": {
-    "low": 3909.0,
-    "high": 3913.0
+    "low": 0.0,
+    "high": 0.0
   },
-  "stop_loss": 3929.0,
+  "stop_loss": 0.0,
   "take_profits": [
-    3879.0,
-    3852.0
+    0.0,
+    0.0
   ],
-  "confidence": 60,
+  "confidence": 0,
   "max_risk_pct": 0.5,
-  "rationale": "Supply-rejection SELL on retest. D/4H LH/LL downtrend; Asia relief rally stalled at 3923 spot inside 3905-3930 4H supply, 15M bearish closes broke the 3904.7 pullback low (15M BOS down). Sell only a retrace to 3909-3913 (50% of the 3923->3896 drop), SL above 3923 high, TP1 near Asia low, TP2 prior-day low. Spot levels, GC basis ~+3-6. Flat-entry cutoff before PPI.",
+  "rationale": "Stand aside into PPI. SELL retest 3909-3913 never filled (price compressed 3890-3910 spot) and expired; Asia range 3875-3923 spot too wide for A-setup and London never closed outside it. D/4H still LH/LL bearish, spot ~3895, GC basis ~+4. No new entries 13:00-15:00Z PPI blackout; next run reassesses the post-PPI reaction (Friday, no new trades after 16:00 ET).",
   "news_blackout": [
     {
       "start": "2026-11-13T13:00:00Z",

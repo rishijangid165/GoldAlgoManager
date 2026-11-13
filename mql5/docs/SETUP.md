@@ -34,6 +34,7 @@ The EA uses MT5 `WebRequest` to download the JSON. MT5 will block this until you
 4. Click **Add** and paste the **base** URL of your host, for example:
    - `https://raw.githubusercontent.com`
    - `https://gist.githubusercontent.com`
+   - `https://api.telegram.org`  (needed for instant trade alerts)
 5. Click **OK**.
 
 If this step is skipped, the Experts log will show error **4014** and the chart panel will say the poll failed.
@@ -108,6 +109,18 @@ The bundled `decisions/current.json` starts with `"bias": "NONE"`, so the EA wil
 |---|---|---|
 | `JournalFile` | `GoldAI_journal.csv` | Written under `MQL5/Files`. Copy it out for review with `scripts/review_journal.py`. |
 
+### Telegram alerts
+
+The EA can send a short plain-text message the moment a trade opens, TP1 is taken (partial close + stop to breakeven), a position closes, a new decision is received, or a hard error happens (decision WebRequest failure, kill switch, daily loss stop). A one-line `GoldAIBridge online` test is also sent when the EA is attached.
+
+| Input | Default | Meaning |
+|---|---|---|
+| `EnableTelegram` | true | Turn alerts on or off. |
+| `TelegramToken` | (empty) | Bot token from BotFather. Keep this private. Put it only in the local MT5 `.set` / Inputs box. **Do not commit it to git, and do not paste it in chat.** |
+| `TelegramChatId` | (empty) | Numeric chat id that should receive the alerts. |
+
+Also add `https://api.telegram.org` to the allowed WebRequest list (section 2). If the token, chat id, or URL is missing, the EA still trades — it only writes a line in the Experts log. Telegram failures never block an entry, an exit, or TP1 handling.
+
 ---
 
 ## 5. Hosting the decision file
@@ -154,7 +167,7 @@ python /workspace/gold-algo/scripts/write_decision.py --bias NONE \
 3. If bias is BUY or SELL, confidence is high enough, spread is OK, and *price is inside the zone*, the EA opens **one** market trade. Lot size comes from risk percent and the distance to the file’s stop-loss.
 4. At TP1 it closes part of the position and moves the stop to breakeven. The rest targets TP2.
 5. If the file goes stale (`valid_until` has passed), the kill switch is on, or a news blackout window is active, it will not open a new trade. A kill switch or a bias flip can close an open trade.
-6. Everything is logged in the Experts log and in `GoldAI_journal.csv`.
+6. Everything is logged in the Experts log and in `GoldAI_journal.csv`. If Telegram is configured, the same events also send an instant message (trade opened, TP1 + breakeven, position closed with reason and P&L, new decision, or a hard error).
 
 Review a session:
 
@@ -179,6 +192,8 @@ python /workspace/gold-algo/scripts/review_journal.py /path/to/GoldAI_journal.cs
 - [ ] Files copied to `MQL5/Experts` and `MQL5/Include`
 - [ ] Compiled with F7, 0 errors
 - [ ] WebRequest URL allowed (or `UseLocalFile` on for a first test)
+- [ ] `https://api.telegram.org` allowed if Telegram alerts are used
+- [ ] Telegram token and chat id set in Inputs (never committed to git)
 - [ ] Algo Trading enabled
 - [ ] Attached to a DEMO gold chart
 - [ ] `AllowRealAccount` is false

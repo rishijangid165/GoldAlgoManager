@@ -4,3 +4,9 @@ __pycache__/
 *.egg-info/
 .ipynb_checkpoints/
 .DS_Store
+
+# EA .set presets may contain the Telegram bot token. Never commit a
+# live preset from the MT5 data folder. The committed template
+# mql5/Presets/GoldAIBridge.set must stay token-free.
+*.set
+!mql5/Presets/GoldAIBridge.set

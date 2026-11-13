@@ -1,0 +1,288 @@
+{
+  "generated_at_ist": "2026-11-13 14:52:02 IST",
+  "generated_at_utc": "2026-11-13T09:22:02Z",
+  "timezone_label": "IST (Asia/Kolkata)",
+  "account": {
+    "server": "MetaQuotes-Demo",
+    "company": "MetaQuotes Ltd.",
+    "mode": "demo",
+    "symbol": "XAUUSD",
+    "balance": 100046.1,
+    "equity": 100046.1,
+    "balance_display": "$100,046.10",
+    "start_of_day_balance": 100046.1,
+    "start_of_day_balance_display": "$100,046.10",
+    "start_of_day_at_ist": "2026-11-13 11:12:22 IST",
+    "start_of_day_note": "Start-of-day reference $100,046.10 is the balance after the two closed demo trades (CloseOnce balance_after and EA start equity at 05:42:22 UTC / 11:12:22 IST).",
+    "today_pnl": 0.0,
+    "today_pnl_display": "+0.00",
+    "total_pnl_vs_100k": 46.1,
+    "total_pnl_vs_100k_display": "+46.10",
+    "starting_capital": 100000.0,
+    "first_ea_start_equity": 99999.95,
+    "first_ea_start_equity_at_ist": "2026-11-13 01:06:20 IST",
+    "last_terminal_sync_positions": 0,
+    "last_terminal_sync_ist": "2026-11-13 14:50:09 IST"
+  },
+  "decision": {
+    "bias": "SELL",
+    "symbol": "XAUUSD",
+    "entry_zone_low": 3909.0,
+    "entry_zone_high": 3913.0,
+    "stop_loss": 3929.0,
+    "take_profits": [
+      3879.0,
+      3852.0
+    ],
+    "tp1": 3879.0,
+    "tp2": 3852.0,
+    "confidence": 60,
+    "max_risk_pct": 0.5,
+    "generated_at_ist": "2026-11-13 11:55:18 IST",
+    "valid_until_ist": "2026-11-13 17:50 IST",
+    "valid_until_utc": "2026-11-13T12:20:00Z",
+    "expired": false,
+    "kill_switch": false,
+    "in_news_blackout": false,
+    "news_blackout": [
+      {
+        "start_ist": "2026-11-13 18:30:00 IST",
+        "end_ist": "2026-11-13 20:30:00 IST",
+        "start_utc": "2026-11-13T13:00:00Z",
+        "end_utc": "2026-11-13T15:00:00Z",
+        "reason": "US October PPI 8:30am ET"
+      }
+    ],
+    "next_blackout": {
+      "start_ist": "2026-11-13 18:30:00 IST",
+      "end_ist": "2026-11-13 20:30:00 IST",
+      "start_utc": "2026-11-13T13:00:00Z",
+      "end_utc": "2026-11-13T15:00:00Z",
+      "reason": "US October PPI 8:30am ET"
+    },
+    "rationale": "Supply-rejection SELL on retest. D/4H LH/LL downtrend; Asia relief rally stalled at 3923 spot inside 3905-3930 4H supply, 15M bearish closes broke the 3904.7 pullback low (15M BOS down). Sell only a retrace to 3909-3913 (50% of the 3923->3896 drop), SL above 3923 high, TP1 near Asia low, TP2 prior-day low. Spot levels, GC basis ~+3-6. Flat-entry cutoff before PPI.",
+    "status": "waiting_for_zone",
+    "source": "/workspace/gold-algo/decisions/current.json"
+  },
+  "open_position": null,
+  "position_status": "flat",
+  "ea": {
+    "name": "GoldAIBridge",
+    "chart": "XAUUSD M15",
+    "last_decision_read_ist": "2026-11-13 13:08:30 IST",
+    "last_decision_bias": "SELL"
+  },
+  "trades": [
+    {
+      "ticket": "11377847166",
+      "symbol": "XAUUSD",
+      "side": "SELL",
+      "lots": 0.01,
+      "entry": 3882.56,
+      "exit": 3905.0,
+      "sl": 3905.0,
+      "tp": 3850.0,
+      "profit": -22.44,
+      "swap": -0.05,
+      "commission": 0.0,
+      "pnl": -22.49,
+      "r_multiple": -1.0022,
+      "risk_money": 22.44,
+      "open_time_ist": "2026-11-13 01:10:30 IST",
+      "close_time_ist": "2026-11-13 04:30:01 IST",
+      "open_time_utc": "2026-11-12T19:40:30Z",
+      "close_time_utc": "2026-11-12T23:00:01Z",
+      "reason": "Stopped out at SL 3905.00 (test)",
+      "comment": "test",
+      "source": "GoldDemoSellOnce_result.txt (old ticket history)",
+      "open_dt": "2026-11-12T21:40:30+02:00",
+      "close_dt": "2026-11-13T01:00:01+02:00",
+      "pnl_display": "-22.49",
+      "r_display": "-1.00R"
+    },
+    {
+      "ticket": "11382667647",
+      "symbol": "XAUUSD",
+      "side": "SELL",
+      "lots": 0.16,
+      "entry": 3914.82,
+      "exit": 3910.53,
+      "sl": 3945.0,
+      "tp": 3860.0,
+      "profit": 68.64,
+      "swap": 0.0,
+      "commission": 0.0,
+      "pnl": 68.64,
+      "r_multiple": 0.1422,
+      "risk_money": 482.56,
+      "open_time_ist": "2026-11-13 11:02:24 IST",
+      "close_time_ist": "2026-11-13 11:11:28 IST",
+      "open_time_utc": "2026-11-13T05:32:24Z",
+      "close_time_utc": "2026-11-13T05:41:28Z",
+      "reason": "Owner requested close (book profit)",
+      "comment": "owner-requested-demo",
+      "source": "/workspace/gold-algo/logs/GoldDemoCloseOnce_result.txt",
+      "open_dt": "2026-11-13T07:32:24+02:00",
+      "close_dt": "2026-11-13T07:41:28+02:00",
+      "pnl_display": "+68.64",
+      "r_display": "+0.14R"
+    }
+  ],
+  "equity_curve": [
+    {
+      "t": "2026-11-13 01:06 IST",
+      "label": "EA start equity",
+      "equity": 99999.95,
+      "sort": "2026-11-12T19:36:20+00:00"
+    },
+    {
+      "t": "2026-11-13 04:30 IST",
+      "label": "SELL 0.01 close",
+      "equity": 99977.46,
+      "pnl": -22.49,
+      "sort": "2026-11-13T01:00:01+02:00"
+    },
+    {
+      "t": "2026-11-13 11:11 IST",
+      "label": "SELL 0.16 close",
+      "equity": 100046.1,
+      "pnl": 68.64,
+      "sort": "2026-11-13T07:41:28+02:00"
+    },
+    {
+      "t": "2026-11-13 14:52 IST",
+      "label": "Last known balance",
+      "equity": 100046.1,
+      "sort": "2026-11-13T14:52:02.212740+05:30"
+    }
+  ],
+  "stats": {
+    "trades": 2,
+    "wins": 1,
+    "losses": 1,
+    "scratches": 0,
+    "open": 0,
+    "win_rate_pct": 50.0,
+    "net_pnl": 46.15,
+    "net_pnl_display": "+46.15",
+    "avg_r": -0.43,
+    "avg_r_display": "-0.43R",
+    "avg_r_note": "R uses planned stop distance × $100/point/lot (contract 100). Test trade includes −$0.05 swap in net P&L, so its R is just beyond −1.00."
+  },
+  "backtest": {
+    "setup": "Asia-range breakout (1h, no trend filter)",
+    "sample": "GC=F 1h, 2024-07-07 to 2026-11-13, after costs",
+    "trades": 132,
+    "win_rate_pct": 53.8,
+    "avg_r": 0.37,
+    "profit_factor": 1.79,
+    "net_usd": 26791,
+    "max_dd_pct": -3.4,
+    "tp2_rate_pct": 31,
+    "london": {
+      "trades": 72,
+      "win_rate_pct": 59.7,
+      "avg_r": 0.53,
+      "profit_factor": 2.27,
+      "net_usd": 20763
+    },
+    "new_york": {
+      "trades": 60,
+      "win_rate_pct": 46.7,
+      "avg_r": 0.19,
+      "profit_factor": 1.35,
+      "net_usd": 6028
+    },
+    "note": "The only mechanical setup with a clear 1h edge after costs. Both buys and sells worked. Figures are from research/backtest/README.md (rule-based tests on COMEX futures, not a live-spot guarantee).",
+    "source": "/workspace/gold-algo/research/backtest/README.md",
+    "exact": {
+      "variant": "1h|breakout|no_filter",
+      "trades": 132,
+      "wins": 71,
+      "losses": 61,
+      "win_rate_pct": 53.79,
+      "avg_r": 0.3717,
+      "profit_factor": 1.793,
+      "net_usd": 26790.7,
+      "max_dd_pct": -3.37,
+      "tp2_rate_pct": 31.06,
+      "end_equity": 126790.7,
+      "source": "/workspace/gold-algo/research/backtest/results/metrics_summary.csv"
+    }
+  },
+  "playbook_rules": [
+    {
+      "id": "one-trade",
+      "text": "One open trade at a time. No averaging, no second position, no hedge."
+    },
+    {
+      "id": "risk",
+      "text": "Risk 0.5% of current equity per trade. Size from the actual stop distance. Skip if below 0.01 lots."
+    },
+    {
+      "id": "stop",
+      "text": "Always a hard stop beyond structure. No mental stops."
+    },
+    {
+      "id": "rr",
+      "text": "Do not take a trade that cannot offer at least 1.5R to TP1 at the planned fill."
+    },
+    {
+      "id": "scale",
+      "text": "Close half at 1.5R (TP1), move the runner to breakeven, leave the rest to 3R or the next structure level."
+    },
+    {
+      "id": "daily-loss",
+      "text": "Daily loss stop: −2% realized. No new trades that COMEX session."
+    },
+    {
+      "id": "attempts",
+      "text": "Max two new attempts per session, and only if the first is already closed."
+    },
+    {
+      "id": "binding",
+      "text": "Kill switch, valid_until, and news blackout in the decision file are binding."
+    },
+    {
+      "id": "priority",
+      "text": "Priority: blackout/loss-stop/kill → Asia breakout (A) → optional NY with-trend sweep (B) → discretionary downtrend supply rejection → NONE."
+    },
+    {
+      "id": "no-chase",
+      "text": "Do not chase a breakout already more than half the Asia range through the level. Do not short a live rally just because price reached a sell zone — wait for a rejection close."
+    }
+  ],
+  "schedule": [
+    {
+      "name": "Weekday 3-hour check",
+      "when": "Every ~3 hours, weekdays",
+      "detail": "Full D/4H/1H/15M read, update notes and the decision file if the idea has changed."
+    },
+    {
+      "name": "London open — Asia breakout",
+      "when": "13:40 and 14:40 IST, weekdays",
+      "detail": "Lock the completed Asia range and look for the A-setup (first 1h close beyond the range). First check was scheduled around 13:45 IST on 13 Nov 2026."
+    },
+    {
+      "name": "Saturday review",
+      "when": "Saturday",
+      "detail": "Weekly review of trades, journal lessons, and whether the playbook still matches results."
+    }
+  ],
+  "notes": [
+    "All live money figures come from MT5 result files, the EA journal, and MQL5 logs. No live broker quote is shown unless a file has a fresh one.",
+    "Today's P&L vs the $100,046.10 start-of-day reference is $0.00 because both closed demo trades settled before that reference was recorded. Their combined P&L is +46.15 (including swap), which is already inside the current balance."
+  ],
+  "sources": [
+    "decisions/current.json",
+    "MQL5/Files/GoldAI_journal.csv",
+    "MQL5/Files/GoldDemoSellOnce_result.txt",
+    "MQL5/Files/GoldDemoCloseOnce_result.txt",
+    "MQL5/logs/ (UTF-16 expert log)",
+    "MT5/logs/ (terminal sync)",
+    "research/backtest/README.md",
+    "research/backtest/results/metrics_summary.csv",
+    "research/playbook.md"
+  ],
+  "canvas_edit_hint": "After regenerating this JSON, refresh the Canvas Page with EditCanvas: replace the `DATA` object in the page source with the new JSON (keep it as a typed object literal / const). Do not invent figures."
+}

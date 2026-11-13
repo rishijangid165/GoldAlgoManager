@@ -10,7 +10,7 @@
 //| (Tools > Options > Expert Advisors). See mql5/docs/SETUP.md.     |
 //+------------------------------------------------------------------+
 #property copyright   "Gold Algo / Rishi Jangid"
-#property version     "1.00"
+#property version     "1.01"
 #property description "AI-directed gold EA. Polls a decision JSON and trades only inside the AI zone."
 #property description "Hard risk rules (risk %, daily loss, spread, max trades, demo lock) stay in the EA."
 #property description "DEMO only unless AllowRealAccount is explicitly enabled. See SETUP.md."
@@ -18,6 +18,7 @@
 #include <Trade\Trade.mqh>
 #include <GoldAIDecision.mqh>
 #include <GoldAIJournal.mqh>
+#include <GoldAITelegram.mqh>
 
 //+------------------------------------------------------------------+
 //| Inputs                                                             |
@@ -53,6 +54,11 @@ input bool   InpCloseOnKillSwitch   = true;          // Close if the file raises
 input group "Journal"
 input string InpJournalFile         = "GoldAI_journal.csv"; // Written under MQL5/Files
 
+input group "Telegram"
+input bool   InpEnableTelegram      = true;              // EnableTelegram
+input string InpTelegramToken       = "";                // TelegramToken (never share this)
+input string InpTelegramChatId      = "";                // TelegramChatId
+
 //+------------------------------------------------------------------+
 //| State                                                              |
 //+------------------------------------------------------------------+
@@ -72,6 +78,8 @@ string          g_last_reject        = "";
 string          g_pending_exit_reason = "";
 datetime        g_last_panel         = 0;
 bool            g_first_timer        = true;
+string          g_last_tg_key        = "";
+string          g_tg_decision_fp     = "";
 
 datetime        g_day_start          = 0;
 double          g_day_start_equity   = 0.0;
@@ -120,6 +128,76 @@ void LogUnique(const string event, const string details)
                    (g_have_decision ? g_decision.generated_at : 0),
                    (g_have_decision ? g_decision.rationale : ""),
                    details);
+  }
+
+
+//+------------------------------------------------------------------+
+string TgFpFileName()
+  {
+   return("GoldAI_" + IntegerToString(InpMagicNumber) + "_tg_fp.txt");
+  }
+
+//+------------------------------------------------------------------+
+void LoadTelegramState()
+  {
+   g_tg_decision_fp = "";
+   const int h = FileOpen(TgFpFileName(), FILE_READ | FILE_TXT | FILE_ANSI);
+   if(h == INVALID_HANDLE)
+      return;
+   g_tg_decision_fp = FileReadString(h);
+   FileClose(h);
+  }
+
+//+------------------------------------------------------------------+
+void SaveTelegramDecisionFp(const string fp)
+  {
+   g_tg_decision_fp = fp;
+   const int h = FileOpen(TgFpFileName(), FILE_WRITE | FILE_TXT | FILE_ANSI);
+   if(h == INVALID_HANDLE)
+     {
+      Print("GoldAI telegram: could not save decision fingerprint");
+      return;
+     }
+   FileWriteString(h, fp);
+   FileClose(h);
+  }
+
+//+------------------------------------------------------------------+
+//| Send a Telegram message. Failures are logged only; never block.  |
+//+------------------------------------------------------------------+
+bool NotifyTelegram(const string text)
+  {
+   int status = 0;
+   string err = "";
+   const bool ok = GoldAI_TelegramSend(InpEnableTelegram,
+                                       InpTelegramToken,
+                                       InpTelegramChatId,
+                                       InpWebTimeoutMs,
+                                       text,
+                                       status,
+                                       err);
+   if(ok)
+     {
+      Print("GoldAI telegram sent, WebRequest HTTP ", status);
+      return(true);
+     }
+   if(err == "telegram disabled" || err == "telegram token or chat id is empty")
+     {
+      // Quiet when the feature is off or not configured.
+      return(false);
+     }
+   Print("GoldAI telegram failed: ", err, " (WebRequest HTTP ", status, ")");
+   return(false);
+  }
+
+//+------------------------------------------------------------------+
+void NotifyTelegramOnce(const string key, const string text)
+  {
+   if(key != "" && key == g_last_tg_key)
+      return;
+   NotifyTelegram(text);
+   if(key != "")
+      g_last_tg_key = key; // remember even on failure so a tick loop cannot spam
   }
 
 //+------------------------------------------------------------------+
@@ -377,6 +455,8 @@ bool PollDecision()
          g_poll_status = "HTTP FAIL: " + err;
          g_last_poll   = TimeGMT();
          LogUnique("POLL_ERROR", g_poll_status);
+         NotifyTelegramOnce("POLL_ERROR|" + g_poll_status,
+                            "GoldAI error: WebRequest failure\n" + g_poll_status);
          return(false);
         }
      }
@@ -416,6 +496,19 @@ bool PollDecision()
                       fresh.generated_at,
                       fresh.rationale,
                       fp);
+      if(fp != g_tg_decision_fp)
+        {
+         string msg = "GoldAI new decision\nBias: " + fresh.bias_text +
+                      "\nZone: " + DoubleToString(fresh.zone_low, _Digits) +
+                      " - " + DoubleToString(fresh.zone_high, _Digits) +
+                      "\nSL: " + DoubleToString(fresh.stop_loss, _Digits) +
+                      "  TP1: " + DoubleToString(fresh.tp1, _Digits) +
+                      "  TP2: " + DoubleToString(fresh.tp2, _Digits);
+         if(fresh.kill_switch)
+            msg += "\nKILL SWITCH is ON";
+         if(NotifyTelegram(msg))
+            SaveTelegramDecisionFp(fp);
+        }
      }
    return(true);
   }
@@ -442,6 +535,7 @@ void EnforceDecisionOnOpenTrade()
    if(g_decision.kill_switch && InpCloseOnKillSwitch)
      {
       LogUnique("KILL", "kill_switch is true - flattening GoldAI positions");
+      NotifyTelegramOnce("KILL", "GoldAI error: kill switch is ON - flattening positions");
       CloseOurPositions("kill_switch");
       return;
      }
@@ -579,6 +673,18 @@ void ManageOpenPosition()
      }
 
    PersistTp1(ticket);
+
+   {
+    const string side = (type == POSITION_TYPE_BUY ? "BUY" : "SELL");
+    string msg = "GoldAI TP1 partial close + BE\n";
+    msg += side + " ticket " + IntegerToString((long)ticket);
+    if(close_vol > 0.0 && close_vol < volume)
+       msg += "\nClosed: " + DoubleToString(close_vol, 4) + " lots";
+    else
+       msg += "\nPartial skipped (remainder would be below min lot)";
+    msg += "\nSL moved to breakeven " + DoubleToString(be, _Digits);
+    NotifyTelegram(msg);
+   }
   }
 
 //+------------------------------------------------------------------+
@@ -630,6 +736,7 @@ void TryOpenTrade()
                  DoubleToString(DailyLossPct(), 2) + "% / cap " +
                  DoubleToString(InpMaxDailyLossPct, 2) + "%)";
       LogUnique("DAILY_LOSS", g_status);
+      NotifyTelegramOnce("DAILY_LOSS", "GoldAI error: daily loss stop\n" + g_status);
       return;
      }
 
@@ -749,6 +856,13 @@ void TryOpenTrade()
    g_status = "OPENED " + g_decision.bias_text + " " + DoubleToString(lots, 4) +
               " @ " + DoubleToString(entry_price, _Digits) + " ticket=" + IntegerToString((long)ticket);
    Print("GoldAI ", g_status);
+   NotifyTelegram("GoldAI " + g_decision.bias_text + " opened\nLots: " +
+                  DoubleToString(lots, 4) +
+                  "\nEntry: " + DoubleToString(entry_price, _Digits) +
+                  "\nSL: " + DoubleToString(sl, _Digits) +
+                  "\nTP: " + DoubleToString(g_decision.tp1, _Digits) +
+                  " / " + DoubleToString(g_decision.tp2, _Digits) +
+                  "\nTicket: " + IntegerToString((long)ticket));
    g_journal.Write("ENTRY",
                    ticket,
                    _Symbol,
@@ -775,7 +889,7 @@ void UpdatePanel(const bool force)
 
    const int digits = _Digits;
    string lines = "";
-   lines += "======= GoldAI Bridge v1.00 =======\n";
+   lines += "======= GoldAI Bridge v1.01 =======\n";
    lines += "Account:  " + GoldAI_AccountModeText() +
             "  #" + IntegerToString(AccountInfoInteger(ACCOUNT_LOGIN)) +
             "  " + AccountInfoString(ACCOUNT_CURRENCY) + "\n";
@@ -819,6 +933,7 @@ void UpdatePanel(const bool force)
    lines += g_status + "\n";
    lines += "Daily P/L: " + DoubleToString(-DailyLossPct(), 2) +
             "% of start equity  (cap -" + DoubleToString(InpMaxDailyLossPct, 2) + "%)\n";
+   lines += "Telegram: " + ((InpEnableTelegram && InpTelegramToken != "" && InpTelegramChatId != "") ? "enabled" : "off") + "\n";
 
    ulong ticket = 0;
    if(SelectOurPosition(ticket))
@@ -902,6 +1017,26 @@ int OnInit()
                    "",
                    "EA attached, account=" + GoldAI_AccountModeText());
 
+   LoadTelegramState();
+   if(InpEnableTelegram)
+     {
+      int st = 0;
+      string terr = "";
+      const bool sent = GoldAI_TelegramSend(true,
+                                            InpTelegramToken,
+                                            InpTelegramChatId,
+                                            InpWebTimeoutMs,
+                                            "GoldAIBridge online",
+                                            st,
+                                            terr);
+      if(sent)
+         Print("GoldAI telegram startup test sent, WebRequest HTTP ", st);
+      else
+         Print("GoldAI telegram startup test failed: ", terr, " (WebRequest HTTP ", st, ")");
+     }
+   else
+      Print("GoldAI telegram disabled (EnableTelegram=false)");
+
    UpdatePanel(true);
    return(INIT_SUCCEEDED);
   }
@@ -984,7 +1119,8 @@ void OnTradeTransaction(const MqlTradeTransaction &trans,
    const string bias   = (dtype == DEAL_TYPE_SELL ? "BUY" : (dtype == DEAL_TYPE_BUY ? "SELL" : ""));
    // A closing SELL deal exits a BUY position, and vice versa.
 
-   string details = g_pending_exit_reason;
+   const string pending_reason = g_pending_exit_reason;
+   string details = pending_reason;
    if(details == "")
       details = "deal out, reason=" + IntegerToString((int)HistoryDealGetInteger(trans.deal, DEAL_REASON));
    g_pending_exit_reason = "";
@@ -1005,6 +1141,17 @@ void OnTradeTransaction(const MqlTradeTransaction &trans,
                    (g_have_decision ? g_decision.rationale : ""),
                    details);
    Print("GoldAI EXIT ticket=", ticket, " pnl=", DoubleToString(profit, 2), " ", details);
+   {
+    const long deal_reason = HistoryDealGetInteger(trans.deal, DEAL_REASON);
+    const string reason_txt = GoldAI_DealCloseReason(deal_reason, pending_reason);
+    const double net = GoldAI_PositionNetPnl(pos_id, profit);
+    string pnl_txt = DoubleToString(net, 2);
+    if(net > 0.0)
+       pnl_txt = "+" + pnl_txt;
+    NotifyTelegram("GoldAI position closed\nReason: " + reason_txt +
+                   "\nP&L: $" + pnl_txt +
+                   "\nTicket: " + IntegerToString((long)ticket));
+   }
    if(g_tp1_done_ticket != 0)
       PersistTp1(0);
    UpdatePanel(true);

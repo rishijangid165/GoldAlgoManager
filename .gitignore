@@ -10,3 +10,15 @@ __pycache__/
 # mql5/Presets/GoldAIBridge.set must stay token-free.
 *.set
 !mql5/Presets/GoldAIBridge.set
+
+# Large vendor caches and derived feature frames (rebuild with the download/dataset scripts)
+data/raw/histdata/zips/
+data/raw/histdata/cache/
+data/processed/*.pkl
+__pycache__/
+
+# Walk-forward 1h equity curves are ~4MB each; summaries and trade lists are kept
+research/deep-study-2026-11-14/results/trades/equity_*.csv
+
+# Living decision file is written by the assistant and polled by the EA
+decisions/current.json

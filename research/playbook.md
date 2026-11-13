@@ -1,8 +1,10 @@
 # XAUUSD playbook
 
-Gold only. Demo first. The assistant reads the chart and writes the decision; the EA (`GoldAIBridge`) only executes inside the published zone, with the hard risk caps below locked in the EA.
+Version 2026-11-14 (v2). Gold only. Demo first. The assistant reads the chart and writes the decision; the EA (`GoldAIBridge`) only executes inside the published zone, with the hard risk caps below locked in the EA.
 
-This book is grounded in the 1h `GC=F` backtest of 2024-07-07 to 2026-11-13 (see `research/backtest/README.md`). Those tests are rule-based approximations on futures, not a promise that live spot trades will match the numbers. If a setup did not show a clear edge, it is not an automatic trigger here.
+**v2 change (out-of-sample):** the unfiltered Asia-range breakout is no longer described as a durable, automatic edge. The 2024-07-07 to 2026-11-13 `GC=F` book (132 trades, +0.37R, PF 1.79; see `research/backtest/README.md`) and the same window on spot XAUUSD (128 trades, +0.27R, PF 1.52) are real — but a 2012–2026 walk-forward on HistData spot 1h does **not** confirm it (A-setup OOS −0.03R, PF 0.93, only 6 of 15 years green; 2012–2023 was −0.09R). Evidence and the tests we refused to adopt are in `research/deep-study-2026-11-14/REPORT.md`. Hard risk rules are unchanged.
+
+Those tests are still rule-based approximations, not a promise that live broker-spot trades will match the numbers. If a setup did not show a clear *and stable* edge, it is not an automatic trigger here.
 
 Clock: **America/New_York** (COMEX). Add 9.5 hours for IST in US summer (EDT) or 10.5 hours in US winter (EST). High-impact US data is usually 08:30 ET (18:00 IST in summer, 19:00 IST in winter).
 
@@ -45,7 +47,7 @@ Stand aside (bias NONE) when any of these is true:
 - No setup from section 4 or 5 is present, or the only signal is a pullback/RSI pattern we do not automate.
 - **High-impact US news blackout:** from **30 minutes before to 90 minutes after** 08:30 ET releases (NFP, CPI, PPI, GDP, PCE) and around FOMC (typically 14:00 ET). Do not *enter* inside the window. An already-open, valid trade can be left on unless the thesis is the event itself.
 - Inside the first 30 minutes of a session if price is still a one-sided impulse and there is no close back in range (the 13 Nov 2026 lesson: do not short a live rally just because it has reached a planned sell zone).
-- Asia range is too tight (`< $5`) or too wide (stop would exceed ~3× 1h ATR, recently often ~$45–60). Skip the breakout.
+- Asia range is too tight (`< $5`) or too wide (stop would exceed ~3× 1h ATR, recently often ~$45–60). Skip the breakout. The 2026-11-14 study did **not** find an edge in dropping this cap or in using a half-range stop so that wide days can still trade; wide days also have worse 1.5R continuation. Keep the skip as a sanity filter.
 - The close that would trigger a breakout has already run more than **half the Asia range** beyond the level — that is a chase. Wait for a later retest, or stand aside.
 - After a −2% day, or after a messy gap through the planned stop.
 - The last hour of the COMEX week (after 16:00 ET Friday) — do not *open* a new trade into the weekend. An already-open A-setup may be held; weekend holds of breakouts were profitable on average in the test, but gap risk is real (one historical stop slipped −1.1R).
@@ -53,9 +55,11 @@ Stand aside (bias NONE) when any of these is true:
 
 ---
 
-## 4. A-setup — Asia-range breakout (take this)
+## 4. A-setup — Asia-range breakout (only setup we still *consider* mechanically)
 
-**This is the only mechanical setup with a clear 1h edge after costs:** 132 trades, 53.8% win rate, **+0.37R**, profit factor **1.79**, max drawdown **−3.4%**. Both buys and sells worked. London was the best slice (72 trades, **+0.53R**, PF 2.27). The edge showed up in 2024, 2025, and 2026.
+**Status, 2026-11-14:** this remains the only setup whose *shape* we will still take when it is clean, but it is **not** a proven 15-year edge. On `GC=F` 1h, 2024-07-07 to 2026-11-13, the unfiltered book was 132 trades, 53.8% win rate, **+0.37R**, PF **1.79**, max DD **−3.4%** (London +0.53R). The same rules on spot XAUUSD in that window were still positive (+0.27R, PF 1.52). On spot walk-forward **2012–2026**, the same A-setup was **−0.03R**, PF 0.93, 6/15 years green, and **2012–2023 was −0.09R**. Almost all of the profit sat in 2024–2026. London-only, which looked best in the short futures sample, was negative on the long OOS (−0.04R).
+
+Until the next reviews show the 2024–2026 edge holding up — or clearly dying — take this setup only when it is clean, prefer it *with* the 4H/daily trend rather than against it, and do not size it as if +0.37R were a long-run expectancy. If the next few months go stale, the default is back to **NONE**, not a wider set of weaker rules.
 
 ### Setup
 
@@ -66,9 +70,9 @@ Stand aside (bias NONE) when any of these is true:
 
 ### Direction
 
-- **Soft trend bias, not a hard daily-MA gate.** With-trend buys (price already above daily 50/200 and 4H 50-SMA) were the cleanest subset (+0.53R). A hard “must be below both daily MAs” filter left almost no sells and missed good shorts in a fresh downtrend.
-- Default: trade the Asia close-break **in the direction of the current 4H structure** (4H HH/HL → only upside breaks; 4H LH/LL → only downside breaks).
-- A clean **London** close-break *against* a late daily MA trend may still be taken if the 4H has already turned and the range is orderly. Do not force a counter-trend NY late-morning break.
+- **Soft trend bias, not a hard daily-MA gate.** On the 2024–2026 samples, with-trend buys were the cleanest subset. On the 2012–2026 spot walk-forward, a hard D+4H MA gate (`A_trend_ma`) was the *least bad* pre-registered variant (OOS +0.10R, PF 1.17, 8/15 years) — but almost all of that P&L is again 2024–2026; 2012–2023 was scratch (−0.01R). It is a useful bias, not a 15-year licence.
+- Default: trade the Asia close-break **in the direction of the current 4H structure** (4H HH/HL → only upside breaks; 4H LH/LL → only downside breaks). Be slower to take a clean break that fights both the daily and the 4H.
+- A clean **London** close-break *against* a late daily MA trend may still be taken if the 4H has already turned and the range is orderly. Do not force a counter-trend NY late-morning break. Do not treat “London only” as a long-sample upgrade.
 
 ### Invalid / skip
 
@@ -79,9 +83,9 @@ Stand aside (bias NONE) when any of these is true:
 
 ---
 
-## 5. B-setup — NY liquidity sweep, with trend (optional, modest)
+## 5. B-setup — NY liquidity sweep, with trend (optional, weak; not mechanical)
 
-The unfiltered fade-every-sweep book **lost money** (−0.16R, 36% drawdown). With a D+4H trend filter it was only **scratch** overall (+0.02R). The one slice worth considering:
+The unfiltered fade-every-sweep book **lost money** on the 2024–2026 futures sample (−0.16R, 36% drawdown) and again on the 2012–2026 spot walk-forward (OOS −0.06R, 5/15 years). With a D+4H trend filter it was only **scratch** on the short futures sample (+0.02R) and still slightly negative on the long OOS. NY-with-trend, the only slice previously kept, is OOS **−0.02R**, PF 0.95, 6/15 years, and was −0.10R in 2012–2023 (the 2024–2026 slice was again the only good one). It does **not** earn a standalone mechanical slot. If it is used at all, keep it rare and discretionary:
 
 - **New York session only** (London sweeps with the same filter lost −0.32R).
 - Sweep of the **prior-day or Asia high/low** by a meaningful amount (not a $0.50 tick; use at least ~0.15× 1h ATR), then a **close back inside**.
@@ -138,6 +142,24 @@ The backtest combo that looked at pullbacks *first* blocked better breakouts and
 
 ---
 
-## 10. What this book does not claim
+## 10. Tested and not adopted (2026-11-14)
 
-The supporting test used `GC=F` 1h history of about 28 months, a cost model, no full news calendar, and conservative same-bar stops. Fifteen-minute data covers only the autumn 2026 selloff. Live trading is still a human (or AI) chart read plus the EA’s hard caps — not a fully automated signal bot. If future checks show the A-setup going stale, the default is back to **NONE**, not a wider set of weaker rules.
+These were pre-registered and checked on the 2012–2026 spot walk-forward. They are **not** playbook rules:
+
+- **Half-range stop** on a wide Asia range (so a $48 range can still trade): more trades, worse book (OOS −0.05R).
+- **Dropping the 3× ATR width cap**, or tightening it to 2×: no durable edge (no-cap was scratch; 2× was worse).
+- **Limit entry at a 38.2% or 50% retrace** of the close-break, or at the broken Asia level, instead of the next open: fill rates are high (86–93%), but a later 1.5R is rare (~10%, ~4% on wide days) and the books are OOS-negative.
+- **Mechanical “rejection then retrace to the zone”** (the 13 Nov discretionary type): in a downtrend, a 38.2% limit fills more often than 50% (67% vs 59%), but after the fill 1.5R is only 2–6% and the stop is hit 39–46% of the time.
+- **London-only** as a long-sample upgrade of the A-setup: negative OOS, despite looking excellent on 2024–2026 futures.
+
+## 11. Watchlist (not rules yet)
+
+- Whether the 2024–2026 A-setup edge *persists* after this study. If it fades, stand aside more, do not loosen filters.
+- Soft D+4H trend filter as a *default* rather than a soft preference — interesting, not confirmed before 2024.
+- Friday upward drift on session daily (2012–2026 close–open about +$1, 55% up). Do not turn this into a Friday long.
+- A verified CPI/PPI calendar, and Dukascopy / broker M1 for 2003–2008 and for days HistData has not published yet.
+- Futures–spot basis around GC rolls can be tens of dollars; always recompute before publishing a zone.
+
+## 12. What this book does not claim
+
+The original supporting test used `GC=F` 1h history of about 28 months, a cost model, no full news calendar, and conservative same-bar stops. The 2026-11-14 study added ~17 years of spot XAUUSD (HistData, 2009-03 to 2026-11-06) and a 2012–2026 walk-forward; it still has no official CPI/PPI calendar, and 7–13 Nov 2026 is futures-only. Live trading is still a human (or AI) chart read plus the EA’s hard caps — not a fully automated signal bot. If future checks show the recent A-setup window going stale, the default is back to **NONE**, not a wider set of weaker rules.

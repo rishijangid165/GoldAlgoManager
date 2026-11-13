@@ -1,0 +1,454 @@
+event,ts,date,source,notes
+NFP,2006-01-06 08:30:00-05:00,2006-01-06,first_friday_proxy,08:30 ET conventional
+FOMC,2006-01-31 14:00:00-05:00,2006-01-31,fed_fomchistorical2006,date from Fed document stamp; 14:00 ET conventional
+NFP,2006-02-03 08:30:00-05:00,2006-02-03,first_friday_proxy,08:30 ET conventional
+NFP,2006-03-03 08:30:00-05:00,2006-03-03,first_friday_proxy,08:30 ET conventional
+FOMC,2006-03-28 14:00:00-05:00,2006-03-28,fed_fomchistorical2006,date from Fed document stamp; 14:00 ET conventional
+NFP,2006-04-07 08:30:00-04:00,2006-04-07,first_friday_proxy,08:30 ET conventional
+NFP,2006-05-05 08:30:00-04:00,2006-05-05,first_friday_proxy,08:30 ET conventional
+FOMC,2006-05-10 14:00:00-04:00,2006-05-10,fed_fomchistorical2006,date from Fed document stamp; 14:00 ET conventional
+NFP,2006-06-02 08:30:00-04:00,2006-06-02,first_friday_proxy,08:30 ET conventional
+FOMC,2006-06-29 14:00:00-04:00,2006-06-29,fed_fomchistorical2006,date from Fed document stamp; 14:00 ET conventional
+NFP,2006-07-07 08:30:00-04:00,2006-07-07,first_friday_proxy,08:30 ET conventional
+NFP,2006-08-04 08:30:00-04:00,2006-08-04,first_friday_proxy,08:30 ET conventional
+FOMC,2006-08-08 14:00:00-04:00,2006-08-08,fed_fomchistorical2006,date from Fed document stamp; 14:00 ET conventional
+NFP,2006-09-01 08:30:00-04:00,2006-09-01,first_friday_proxy,08:30 ET conventional
+FOMC,2006-09-20 14:00:00-04:00,2006-09-20,fed_fomchistorical2006,date from Fed document stamp; 14:00 ET conventional
+NFP,2006-10-06 08:30:00-04:00,2006-10-06,first_friday_proxy,08:30 ET conventional
+FOMC,2006-10-25 14:00:00-04:00,2006-10-25,fed_fomchistorical2006,date from Fed document stamp; 14:00 ET conventional
+NFP,2006-11-03 08:30:00-05:00,2006-11-03,first_friday_proxy,08:30 ET conventional
+NFP,2006-12-01 08:30:00-05:00,2006-12-01,first_friday_proxy,08:30 ET conventional
+FOMC,2006-12-12 14:00:00-05:00,2006-12-12,fed_fomchistorical2006,date from Fed document stamp; 14:00 ET conventional
+NFP,2007-01-05 08:30:00-05:00,2007-01-05,first_friday_proxy,08:30 ET conventional
+FOMC,2007-01-31 14:00:00-05:00,2007-01-31,fed_fomchistorical2007,date from Fed document stamp; 14:00 ET conventional
+NFP,2007-02-02 08:30:00-05:00,2007-02-02,first_friday_proxy,08:30 ET conventional
+NFP,2007-03-02 08:30:00-05:00,2007-03-02,first_friday_proxy,08:30 ET conventional
+FOMC,2007-03-21 14:00:00-04:00,2007-03-21,fed_fomchistorical2007,date from Fed document stamp; 14:00 ET conventional
+NFP,2007-04-06 08:30:00-04:00,2007-04-06,first_friday_proxy,08:30 ET conventional
+NFP,2007-05-04 08:30:00-04:00,2007-05-04,first_friday_proxy,08:30 ET conventional
+FOMC,2007-05-09 14:00:00-04:00,2007-05-09,fed_fomchistorical2007,date from Fed document stamp; 14:00 ET conventional
+NFP,2007-06-01 08:30:00-04:00,2007-06-01,first_friday_proxy,08:30 ET conventional
+FOMC,2007-06-28 14:00:00-04:00,2007-06-28,fed_fomchistorical2007,date from Fed document stamp; 14:00 ET conventional
+NFP,2007-07-06 08:30:00-04:00,2007-07-06,first_friday_proxy,08:30 ET conventional
+NFP,2007-08-03 08:30:00-04:00,2007-08-03,first_friday_proxy,08:30 ET conventional
+FOMC,2007-08-07 14:00:00-04:00,2007-08-07,fed_fomchistorical2007,date from Fed document stamp; 14:00 ET conventional
+FOMC,2007-08-10 14:00:00-04:00,2007-08-10,fed_fomchistorical2007,date from Fed document stamp; 14:00 ET conventional
+FOMC,2007-08-16 14:00:00-04:00,2007-08-16,fed_fomchistorical2007,date from Fed document stamp; 14:00 ET conventional
+NFP,2007-09-07 08:30:00-04:00,2007-09-07,first_friday_proxy,08:30 ET conventional
+FOMC,2007-09-18 14:00:00-04:00,2007-09-18,fed_fomchistorical2007,date from Fed document stamp; 14:00 ET conventional
+NFP,2007-10-05 08:30:00-04:00,2007-10-05,first_friday_proxy,08:30 ET conventional
+FOMC,2007-10-31 14:00:00-04:00,2007-10-31,fed_fomchistorical2007,date from Fed document stamp; 14:00 ET conventional
+NFP,2007-11-02 08:30:00-04:00,2007-11-02,first_friday_proxy,08:30 ET conventional
+FOMC,2007-12-06 14:00:00-05:00,2007-12-06,fed_fomchistorical2007,date from Fed document stamp; 14:00 ET conventional
+NFP,2007-12-07 08:30:00-05:00,2007-12-07,first_friday_proxy,08:30 ET conventional
+FOMC,2007-12-11 14:00:00-05:00,2007-12-11,fed_fomchistorical2007,date from Fed document stamp; 14:00 ET conventional
+NFP,2008-01-04 08:30:00-05:00,2008-01-04,first_friday_proxy,08:30 ET conventional
+FOMC,2008-01-09 14:00:00-05:00,2008-01-09,fed_fomchistorical2008,date from Fed document stamp; 14:00 ET conventional
+FOMC,2008-01-21 14:00:00-05:00,2008-01-21,fed_fomchistorical2008,date from Fed document stamp; 14:00 ET conventional
+FOMC,2008-01-30 14:00:00-05:00,2008-01-30,fed_fomchistorical2008,date from Fed document stamp; 14:00 ET conventional
+NFP,2008-02-01 08:30:00-05:00,2008-02-01,first_friday_proxy,08:30 ET conventional
+NFP,2008-03-07 08:30:00-05:00,2008-03-07,first_friday_proxy,08:30 ET conventional
+FOMC,2008-03-10 14:00:00-04:00,2008-03-10,fed_fomchistorical2008,date from Fed document stamp; 14:00 ET conventional
+FOMC,2008-03-18 14:00:00-04:00,2008-03-18,fed_fomchistorical2008,date from Fed document stamp; 14:00 ET conventional
+NFP,2008-04-04 08:30:00-04:00,2008-04-04,first_friday_proxy,08:30 ET conventional
+FOMC,2008-04-30 14:00:00-04:00,2008-04-30,fed_fomchistorical2008,date from Fed document stamp; 14:00 ET conventional
+NFP,2008-05-02 08:30:00-04:00,2008-05-02,first_friday_proxy,08:30 ET conventional
+NFP,2008-06-06 08:30:00-04:00,2008-06-06,first_friday_proxy,08:30 ET conventional
+FOMC,2008-06-25 14:00:00-04:00,2008-06-25,fed_fomchistorical2008,date from Fed document stamp; 14:00 ET conventional
+NFP,2008-07-04 08:30:00-04:00,2008-07-04,first_friday_proxy,08:30 ET conventional
+FOMC,2008-07-24 14:00:00-04:00,2008-07-24,fed_fomchistorical2008,date from Fed document stamp; 14:00 ET conventional
+NFP,2008-08-01 08:30:00-04:00,2008-08-01,first_friday_proxy,08:30 ET conventional
+FOMC,2008-08-05 14:00:00-04:00,2008-08-05,fed_fomchistorical2008,date from Fed document stamp; 14:00 ET conventional
+NFP,2008-09-05 08:30:00-04:00,2008-09-05,first_friday_proxy,08:30 ET conventional
+FOMC,2008-09-16 14:00:00-04:00,2008-09-16,fed_fomchistorical2008,date from Fed document stamp; 14:00 ET conventional
+FOMC,2008-09-29 14:00:00-04:00,2008-09-29,fed_fomchistorical2008,date from Fed document stamp; 14:00 ET conventional
+NFP,2008-10-03 08:30:00-04:00,2008-10-03,first_friday_proxy,08:30 ET conventional
+FOMC,2008-10-07 14:00:00-04:00,2008-10-07,fed_fomchistorical2008,date from Fed document stamp; 14:00 ET conventional
+FOMC,2008-10-29 14:00:00-04:00,2008-10-29,fed_fomchistorical2008,date from Fed document stamp; 14:00 ET conventional
+NFP,2008-11-07 08:30:00-05:00,2008-11-07,first_friday_proxy,08:30 ET conventional
+NFP,2008-12-05 08:30:00-05:00,2008-12-05,first_friday_proxy,08:30 ET conventional
+FOMC,2008-12-16 14:00:00-05:00,2008-12-16,fed_fomchistorical2008,date from Fed document stamp; 14:00 ET conventional
+NFP,2009-01-02 08:30:00-05:00,2009-01-02,first_friday_proxy,08:30 ET conventional
+FOMC,2009-01-16 14:00:00-05:00,2009-01-16,fed_fomchistorical2009,date from Fed document stamp; 14:00 ET conventional
+FOMC,2009-01-28 14:00:00-05:00,2009-01-28,fed_fomchistorical2009,date from Fed document stamp; 14:00 ET conventional
+NFP,2009-02-06 08:30:00-05:00,2009-02-06,first_friday_proxy,08:30 ET conventional
+FOMC,2009-02-07 14:00:00-05:00,2009-02-07,fed_fomchistorical2009,date from Fed document stamp; 14:00 ET conventional
+NFP,2009-03-06 08:30:00-05:00,2009-03-06,first_friday_proxy,08:30 ET conventional
+FOMC,2009-03-18 14:00:00-04:00,2009-03-18,fed_fomchistorical2009,date from Fed document stamp; 14:00 ET conventional
+NFP,2009-04-03 08:30:00-04:00,2009-04-03,first_friday_proxy,08:30 ET conventional
+FOMC,2009-04-29 14:00:00-04:00,2009-04-29,fed_fomchistorical2009,date from Fed document stamp; 14:00 ET conventional
+NFP,2009-05-01 08:30:00-04:00,2009-05-01,first_friday_proxy,08:30 ET conventional
+FOMC,2009-06-03 14:00:00-04:00,2009-06-03,fed_fomchistorical2009,date from Fed document stamp; 14:00 ET conventional
+NFP,2009-06-05 08:30:00-04:00,2009-06-05,first_friday_proxy,08:30 ET conventional
+FOMC,2009-06-24 14:00:00-04:00,2009-06-24,fed_fomchistorical2009,date from Fed document stamp; 14:00 ET conventional
+NFP,2009-07-03 08:30:00-04:00,2009-07-03,first_friday_proxy,08:30 ET conventional
+NFP,2009-08-07 08:30:00-04:00,2009-08-07,first_friday_proxy,08:30 ET conventional
+FOMC,2009-08-12 14:00:00-04:00,2009-08-12,fed_fomchistorical2009,date from Fed document stamp; 14:00 ET conventional
+NFP,2009-09-04 08:30:00-04:00,2009-09-04,first_friday_proxy,08:30 ET conventional
+FOMC,2009-09-23 14:00:00-04:00,2009-09-23,fed_fomchistorical2009,date from Fed document stamp; 14:00 ET conventional
+NFP,2009-10-02 08:30:00-04:00,2009-10-02,first_friday_proxy,08:30 ET conventional
+FOMC,2009-11-04 14:00:00-05:00,2009-11-04,fed_fomchistorical2009,date from Fed document stamp; 14:00 ET conventional
+NFP,2009-11-06 08:30:00-05:00,2009-11-06,first_friday_proxy,08:30 ET conventional
+NFP,2009-12-04 08:30:00-05:00,2009-12-04,first_friday_proxy,08:30 ET conventional
+FOMC,2009-12-16 14:00:00-05:00,2009-12-16,fed_fomchistorical2009,date from Fed document stamp; 14:00 ET conventional
+NFP,2010-01-01 08:30:00-05:00,2010-01-01,first_friday_proxy,08:30 ET conventional
+FOMC,2010-01-27 14:00:00-05:00,2010-01-27,fed_fomchistorical2010,date from Fed document stamp; 14:00 ET conventional
+NFP,2010-02-05 08:30:00-05:00,2010-02-05,first_friday_proxy,08:30 ET conventional
+NFP,2010-03-05 08:30:00-05:00,2010-03-05,first_friday_proxy,08:30 ET conventional
+FOMC,2010-03-16 14:00:00-04:00,2010-03-16,fed_fomchistorical2010,date from Fed document stamp; 14:00 ET conventional
+NFP,2010-04-02 08:30:00-04:00,2010-04-02,first_friday_proxy,08:30 ET conventional
+FOMC,2010-04-28 14:00:00-04:00,2010-04-28,fed_fomchistorical2010,date from Fed document stamp; 14:00 ET conventional
+NFP,2010-05-07 08:30:00-04:00,2010-05-07,first_friday_proxy,08:30 ET conventional
+FOMC,2010-05-09 14:00:00-04:00,2010-05-09,fed_fomchistorical2010,date from Fed document stamp; 14:00 ET conventional
+NFP,2010-06-04 08:30:00-04:00,2010-06-04,first_friday_proxy,08:30 ET conventional
+FOMC,2010-06-23 14:00:00-04:00,2010-06-23,fed_fomchistorical2010,date from Fed document stamp; 14:00 ET conventional
+NFP,2010-07-02 08:30:00-04:00,2010-07-02,first_friday_proxy,08:30 ET conventional
+NFP,2010-08-06 08:30:00-04:00,2010-08-06,first_friday_proxy,08:30 ET conventional
+FOMC,2010-08-10 14:00:00-04:00,2010-08-10,fed_fomchistorical2010,date from Fed document stamp; 14:00 ET conventional
+NFP,2010-09-03 08:30:00-04:00,2010-09-03,first_friday_proxy,08:30 ET conventional
+FOMC,2010-09-21 14:00:00-04:00,2010-09-21,fed_fomchistorical2010,date from Fed document stamp; 14:00 ET conventional
+NFP,2010-10-01 08:30:00-04:00,2010-10-01,first_friday_proxy,08:30 ET conventional
+FOMC,2010-10-15 14:00:00-04:00,2010-10-15,fed_fomchistorical2010,date from Fed document stamp; 14:00 ET conventional
+FOMC,2010-11-03 14:00:00-04:00,2010-11-03,fed_fomchistorical2010,date from Fed document stamp; 14:00 ET conventional
+NFP,2010-11-05 08:30:00-04:00,2010-11-05,first_friday_proxy,08:30 ET conventional
+NFP,2010-12-03 08:30:00-05:00,2010-12-03,first_friday_proxy,08:30 ET conventional
+FOMC,2010-12-14 14:00:00-05:00,2010-12-14,fed_fomchistorical2010,date from Fed document stamp; 14:00 ET conventional
+NFP,2011-01-07 08:30:00-05:00,2011-01-07,first_friday_proxy,08:30 ET conventional
+FOMC,2011-01-26 14:00:00-05:00,2011-01-26,fed_fomchistorical2011,date from Fed document stamp; 14:00 ET conventional
+NFP,2011-02-04 08:30:00-05:00,2011-02-04,first_friday_proxy,08:30 ET conventional
+NFP,2011-03-04 08:30:00-05:00,2011-03-04,first_friday_proxy,08:30 ET conventional
+FOMC,2011-03-15 14:00:00-04:00,2011-03-15,fed_fomchistorical2011,date from Fed document stamp; 14:00 ET conventional
+NFP,2011-04-01 08:30:00-04:00,2011-04-01,first_friday_proxy,08:30 ET conventional
+FOMC,2011-04-27 14:00:00-04:00,2011-04-27,fed_fomchistorical2011,date from Fed document stamp; 14:00 ET conventional
+NFP,2011-05-06 08:30:00-04:00,2011-05-06,first_friday_proxy,08:30 ET conventional
+NFP,2011-06-03 08:30:00-04:00,2011-06-03,first_friday_proxy,08:30 ET conventional
+FOMC,2011-06-22 14:00:00-04:00,2011-06-22,fed_fomchistorical2011,date from Fed document stamp; 14:00 ET conventional
+NFP,2011-07-01 08:30:00-04:00,2011-07-01,first_friday_proxy,08:30 ET conventional
+FOMC,2011-08-01 14:00:00-04:00,2011-08-01,fed_fomchistorical2011,date from Fed document stamp; 14:00 ET conventional
+NFP,2011-08-05 08:30:00-04:00,2011-08-05,first_friday_proxy,08:30 ET conventional
+FOMC,2011-08-09 14:00:00-04:00,2011-08-09,fed_fomchistorical2011,date from Fed document stamp; 14:00 ET conventional
+NFP,2011-09-02 08:30:00-04:00,2011-09-02,first_friday_proxy,08:30 ET conventional
+FOMC,2011-09-21 14:00:00-04:00,2011-09-21,fed_fomchistorical2011,date from Fed document stamp; 14:00 ET conventional
+NFP,2011-10-07 08:30:00-04:00,2011-10-07,first_friday_proxy,08:30 ET conventional
+FOMC,2011-11-02 14:00:00-04:00,2011-11-02,fed_fomchistorical2011,date from Fed document stamp; 14:00 ET conventional
+NFP,2011-11-04 08:30:00-04:00,2011-11-04,first_friday_proxy,08:30 ET conventional
+FOMC,2011-11-28 14:00:00-05:00,2011-11-28,fed_fomchistorical2011,date from Fed document stamp; 14:00 ET conventional
+NFP,2011-12-02 08:30:00-05:00,2011-12-02,first_friday_proxy,08:30 ET conventional
+FOMC,2011-12-13 14:00:00-05:00,2011-12-13,fed_fomchistorical2011,date from Fed document stamp; 14:00 ET conventional
+NFP,2012-01-06 08:30:00-05:00,2012-01-06,first_friday_proxy,08:30 ET conventional
+FOMC,2012-01-25 14:00:00-05:00,2012-01-25,fed_fomchistorical2012,date from Fed document stamp; 14:00 ET conventional
+NFP,2012-02-03 08:30:00-05:00,2012-02-03,first_friday_proxy,08:30 ET conventional
+NFP,2012-03-02 08:30:00-05:00,2012-03-02,first_friday_proxy,08:30 ET conventional
+FOMC,2012-03-13 14:00:00-04:00,2012-03-13,fed_fomchistorical2012,date from Fed document stamp; 14:00 ET conventional
+NFP,2012-04-06 08:30:00-04:00,2012-04-06,first_friday_proxy,08:30 ET conventional
+FOMC,2012-04-25 14:00:00-04:00,2012-04-25,fed_fomchistorical2012,date from Fed document stamp; 14:00 ET conventional
+NFP,2012-05-04 08:30:00-04:00,2012-05-04,first_friday_proxy,08:30 ET conventional
+NFP,2012-06-01 08:30:00-04:00,2012-06-01,first_friday_proxy,08:30 ET conventional
+FOMC,2012-06-20 14:00:00-04:00,2012-06-20,fed_fomchistorical2012,date from Fed document stamp; 14:00 ET conventional
+NFP,2012-07-06 08:30:00-04:00,2012-07-06,first_friday_proxy,08:30 ET conventional
+FOMC,2012-08-01 14:00:00-04:00,2012-08-01,fed_fomchistorical2012,date from Fed document stamp; 14:00 ET conventional
+NFP,2012-08-03 08:30:00-04:00,2012-08-03,first_friday_proxy,08:30 ET conventional
+NFP,2012-09-07 08:30:00-04:00,2012-09-07,first_friday_proxy,08:30 ET conventional
+FOMC,2012-09-13 14:00:00-04:00,2012-09-13,fed_fomchistorical2012,date from Fed document stamp; 14:00 ET conventional
+NFP,2012-10-05 08:30:00-04:00,2012-10-05,first_friday_proxy,08:30 ET conventional
+FOMC,2012-10-23 14:00:00-04:00,2012-10-23,fed_fomchistorical2012,date from Fed document stamp; 14:00 ET conventional
+FOMC,2012-10-24 14:00:00-04:00,2012-10-24,fed_fomchistorical2012,date from Fed document stamp; 14:00 ET conventional
+NFP,2012-11-02 08:30:00-04:00,2012-11-02,first_friday_proxy,08:30 ET conventional
+NFP,2012-12-07 08:30:00-05:00,2012-12-07,first_friday_proxy,08:30 ET conventional
+FOMC,2012-12-12 14:00:00-05:00,2012-12-12,fed_fomchistorical2012,date from Fed document stamp; 14:00 ET conventional
+NFP,2013-01-04 08:30:00-05:00,2013-01-04,first_friday_proxy,08:30 ET conventional
+FOMC,2013-01-30 14:00:00-05:00,2013-01-30,fed_fomchistorical2013,date from Fed document stamp; 14:00 ET conventional
+NFP,2013-02-01 08:30:00-05:00,2013-02-01,first_friday_proxy,08:30 ET conventional
+NFP,2013-03-01 08:30:00-05:00,2013-03-01,first_friday_proxy,08:30 ET conventional
+FOMC,2013-03-20 14:00:00-04:00,2013-03-20,fed_fomchistorical2013,date from Fed document stamp; 14:00 ET conventional
+NFP,2013-04-05 08:30:00-04:00,2013-04-05,first_friday_proxy,08:30 ET conventional
+FOMC,2013-05-01 14:00:00-04:00,2013-05-01,fed_fomchistorical2013,date from Fed document stamp; 14:00 ET conventional
+NFP,2013-05-03 08:30:00-04:00,2013-05-03,first_friday_proxy,08:30 ET conventional
+NFP,2013-06-07 08:30:00-04:00,2013-06-07,first_friday_proxy,08:30 ET conventional
+FOMC,2013-06-19 14:00:00-04:00,2013-06-19,fed_fomchistorical2013,date from Fed document stamp; 14:00 ET conventional
+NFP,2013-07-05 08:30:00-04:00,2013-07-05,first_friday_proxy,08:30 ET conventional
+FOMC,2013-07-31 14:00:00-04:00,2013-07-31,fed_fomchistorical2013,date from Fed document stamp; 14:00 ET conventional
+NFP,2013-08-02 08:30:00-04:00,2013-08-02,first_friday_proxy,08:30 ET conventional
+NFP,2013-09-06 08:30:00-04:00,2013-09-06,first_friday_proxy,08:30 ET conventional
+FOMC,2013-09-18 14:00:00-04:00,2013-09-18,fed_fomchistorical2013,date from Fed document stamp; 14:00 ET conventional
+NFP,2013-10-04 08:30:00-04:00,2013-10-04,first_friday_proxy,08:30 ET conventional
+FOMC,2013-10-16 14:00:00-04:00,2013-10-16,fed_fomchistorical2013,date from Fed document stamp; 14:00 ET conventional
+FOMC,2013-10-30 14:00:00-04:00,2013-10-30,fed_fomchistorical2013,date from Fed document stamp; 14:00 ET conventional
+NFP,2013-11-01 08:30:00-04:00,2013-11-01,first_friday_proxy,08:30 ET conventional
+NFP,2013-12-06 08:30:00-05:00,2013-12-06,first_friday_proxy,08:30 ET conventional
+FOMC,2013-12-18 14:00:00-05:00,2013-12-18,fed_fomchistorical2013,date from Fed document stamp; 14:00 ET conventional
+NFP,2014-01-03 08:30:00-05:00,2014-01-03,first_friday_proxy,08:30 ET conventional
+FOMC,2014-01-29 14:00:00-05:00,2014-01-29,fed_fomchistorical2014,date from Fed document stamp; 14:00 ET conventional
+NFP,2014-02-07 08:30:00-05:00,2014-02-07,first_friday_proxy,08:30 ET conventional
+FOMC,2014-03-04 14:00:00-05:00,2014-03-04,fed_fomchistorical2014,date from Fed document stamp; 14:00 ET conventional
+NFP,2014-03-07 08:30:00-05:00,2014-03-07,first_friday_proxy,08:30 ET conventional
+FOMC,2014-03-19 14:00:00-04:00,2014-03-19,fed_fomchistorical2014,date from Fed document stamp; 14:00 ET conventional
+NFP,2014-04-04 08:30:00-04:00,2014-04-04,first_friday_proxy,08:30 ET conventional
+FOMC,2014-04-30 14:00:00-04:00,2014-04-30,fed_fomchistorical2014,date from Fed document stamp; 14:00 ET conventional
+NFP,2014-05-02 08:30:00-04:00,2014-05-02,first_friday_proxy,08:30 ET conventional
+NFP,2014-06-06 08:30:00-04:00,2014-06-06,first_friday_proxy,08:30 ET conventional
+FOMC,2014-06-18 14:00:00-04:00,2014-06-18,fed_fomchistorical2014,date from Fed document stamp; 14:00 ET conventional
+NFP,2014-07-04 08:30:00-04:00,2014-07-04,first_friday_proxy,08:30 ET conventional
+FOMC,2014-07-30 14:00:00-04:00,2014-07-30,fed_fomchistorical2014,date from Fed document stamp; 14:00 ET conventional
+NFP,2014-08-01 08:30:00-04:00,2014-08-01,first_friday_proxy,08:30 ET conventional
+NFP,2014-09-05 08:30:00-04:00,2014-09-05,first_friday_proxy,08:30 ET conventional
+FOMC,2014-09-17 14:00:00-04:00,2014-09-17,fed_fomchistorical2014,date from Fed document stamp; 14:00 ET conventional
+NFP,2014-10-03 08:30:00-04:00,2014-10-03,first_friday_proxy,08:30 ET conventional
+FOMC,2014-10-29 14:00:00-04:00,2014-10-29,fed_fomchistorical2014,date from Fed document stamp; 14:00 ET conventional
+NFP,2014-11-07 08:30:00-05:00,2014-11-07,first_friday_proxy,08:30 ET conventional
+NFP,2014-12-05 08:30:00-05:00,2014-12-05,first_friday_proxy,08:30 ET conventional
+FOMC,2014-12-17 14:00:00-05:00,2014-12-17,fed_fomchistorical2014,date from Fed document stamp; 14:00 ET conventional
+NFP,2015-01-02 08:30:00-05:00,2015-01-02,first_friday_proxy,08:30 ET conventional
+FOMC,2015-01-28 14:00:00-05:00,2015-01-28,fed_fomchistorical2015,date from Fed document stamp; 14:00 ET conventional
+NFP,2015-02-06 08:30:00-05:00,2015-02-06,first_friday_proxy,08:30 ET conventional
+NFP,2015-03-06 08:30:00-05:00,2015-03-06,first_friday_proxy,08:30 ET conventional
+FOMC,2015-03-18 14:00:00-04:00,2015-03-18,fed_fomchistorical2015,date from Fed document stamp; 14:00 ET conventional
+NFP,2015-04-03 08:30:00-04:00,2015-04-03,first_friday_proxy,08:30 ET conventional
+FOMC,2015-04-29 14:00:00-04:00,2015-04-29,fed_fomchistorical2015,date from Fed document stamp; 14:00 ET conventional
+NFP,2015-05-01 08:30:00-04:00,2015-05-01,first_friday_proxy,08:30 ET conventional
+NFP,2015-06-05 08:30:00-04:00,2015-06-05,first_friday_proxy,08:30 ET conventional
+FOMC,2015-06-17 14:00:00-04:00,2015-06-17,fed_fomchistorical2015,date from Fed document stamp; 14:00 ET conventional
+NFP,2015-07-03 08:30:00-04:00,2015-07-03,first_friday_proxy,08:30 ET conventional
+FOMC,2015-07-29 14:00:00-04:00,2015-07-29,fed_fomchistorical2015,date from Fed document stamp; 14:00 ET conventional
+NFP,2015-08-07 08:30:00-04:00,2015-08-07,first_friday_proxy,08:30 ET conventional
+NFP,2015-09-04 08:30:00-04:00,2015-09-04,first_friday_proxy,08:30 ET conventional
+FOMC,2015-09-17 14:00:00-04:00,2015-09-17,fed_fomchistorical2015,date from Fed document stamp; 14:00 ET conventional
+NFP,2015-10-02 08:30:00-04:00,2015-10-02,first_friday_proxy,08:30 ET conventional
+FOMC,2015-10-28 14:00:00-04:00,2015-10-28,fed_fomchistorical2015,date from Fed document stamp; 14:00 ET conventional
+NFP,2015-11-06 08:30:00-05:00,2015-11-06,first_friday_proxy,08:30 ET conventional
+NFP,2015-12-04 08:30:00-05:00,2015-12-04,first_friday_proxy,08:30 ET conventional
+FOMC,2015-12-16 14:00:00-05:00,2015-12-16,fed_fomchistorical2015,date from Fed document stamp; 14:00 ET conventional
+NFP,2016-01-01 08:30:00-05:00,2016-01-01,first_friday_proxy,08:30 ET conventional
+FOMC,2016-01-27 14:00:00-05:00,2016-01-27,fed_fomchistorical2016,date from Fed document stamp; 14:00 ET conventional
+NFP,2016-02-05 08:30:00-05:00,2016-02-05,first_friday_proxy,08:30 ET conventional
+NFP,2016-03-04 08:30:00-05:00,2016-03-04,first_friday_proxy,08:30 ET conventional
+FOMC,2016-03-16 14:00:00-04:00,2016-03-16,fed_fomchistorical2016,date from Fed document stamp; 14:00 ET conventional
+NFP,2016-04-01 08:30:00-04:00,2016-04-01,first_friday_proxy,08:30 ET conventional
+FOMC,2016-04-27 14:00:00-04:00,2016-04-27,fed_fomchistorical2016,date from Fed document stamp; 14:00 ET conventional
+NFP,2016-05-06 08:30:00-04:00,2016-05-06,first_friday_proxy,08:30 ET conventional
+NFP,2016-06-03 08:30:00-04:00,2016-06-03,first_friday_proxy,08:30 ET conventional
+FOMC,2016-06-15 14:00:00-04:00,2016-06-15,fed_fomchistorical2016,date from Fed document stamp; 14:00 ET conventional
+NFP,2016-07-01 08:30:00-04:00,2016-07-01,first_friday_proxy,08:30 ET conventional
+FOMC,2016-07-27 14:00:00-04:00,2016-07-27,fed_fomchistorical2016,date from Fed document stamp; 14:00 ET conventional
+NFP,2016-08-05 08:30:00-04:00,2016-08-05,first_friday_proxy,08:30 ET conventional
+NFP,2016-09-02 08:30:00-04:00,2016-09-02,first_friday_proxy,08:30 ET conventional
+FOMC,2016-09-21 14:00:00-04:00,2016-09-21,fed_fomchistorical2016,date from Fed document stamp; 14:00 ET conventional
+NFP,2016-10-07 08:30:00-04:00,2016-10-07,first_friday_proxy,08:30 ET conventional
+FOMC,2016-11-02 14:00:00-04:00,2016-11-02,fed_fomchistorical2016,date from Fed document stamp; 14:00 ET conventional
+NFP,2016-11-04 08:30:00-04:00,2016-11-04,first_friday_proxy,08:30 ET conventional
+NFP,2016-12-02 08:30:00-05:00,2016-12-02,first_friday_proxy,08:30 ET conventional
+FOMC,2016-12-14 14:00:00-05:00,2016-12-14,fed_fomchistorical2016,date from Fed document stamp; 14:00 ET conventional
+NFP,2017-01-06 08:30:00-05:00,2017-01-06,first_friday_proxy,08:30 ET conventional
+FOMC,2017-02-01 14:00:00-05:00,2017-02-01,fed_fomchistorical2017,date from Fed document stamp; 14:00 ET conventional
+NFP,2017-02-03 08:30:00-05:00,2017-02-03,first_friday_proxy,08:30 ET conventional
+NFP,2017-03-03 08:30:00-05:00,2017-03-03,first_friday_proxy,08:30 ET conventional
+FOMC,2017-03-15 14:00:00-04:00,2017-03-15,fed_fomchistorical2017,date from Fed document stamp; 14:00 ET conventional
+NFP,2017-04-07 08:30:00-04:00,2017-04-07,first_friday_proxy,08:30 ET conventional
+FOMC,2017-05-03 14:00:00-04:00,2017-05-03,fed_fomchistorical2017,date from Fed document stamp; 14:00 ET conventional
+NFP,2017-05-05 08:30:00-04:00,2017-05-05,first_friday_proxy,08:30 ET conventional
+NFP,2017-06-02 08:30:00-04:00,2017-06-02,first_friday_proxy,08:30 ET conventional
+FOMC,2017-06-14 14:00:00-04:00,2017-06-14,fed_fomchistorical2017,date from Fed document stamp; 14:00 ET conventional
+NFP,2017-07-07 08:30:00-04:00,2017-07-07,first_friday_proxy,08:30 ET conventional
+FOMC,2017-07-26 14:00:00-04:00,2017-07-26,fed_fomchistorical2017,date from Fed document stamp; 14:00 ET conventional
+NFP,2017-08-04 08:30:00-04:00,2017-08-04,first_friday_proxy,08:30 ET conventional
+NFP,2017-09-01 08:30:00-04:00,2017-09-01,first_friday_proxy,08:30 ET conventional
+FOMC,2017-09-20 14:00:00-04:00,2017-09-20,fed_fomchistorical2017,date from Fed document stamp; 14:00 ET conventional
+NFP,2017-10-06 08:30:00-04:00,2017-10-06,first_friday_proxy,08:30 ET conventional
+FOMC,2017-11-01 14:00:00-04:00,2017-11-01,fed_fomchistorical2017,date from Fed document stamp; 14:00 ET conventional
+NFP,2017-11-03 08:30:00-04:00,2017-11-03,first_friday_proxy,08:30 ET conventional
+NFP,2017-12-01 08:30:00-05:00,2017-12-01,first_friday_proxy,08:30 ET conventional
+FOMC,2017-12-13 14:00:00-05:00,2017-12-13,fed_fomchistorical2017,date from Fed document stamp; 14:00 ET conventional
+NFP,2018-01-05 08:30:00-05:00,2018-01-05,first_friday_proxy,08:30 ET conventional
+FOMC,2018-01-31 14:00:00-05:00,2018-01-31,fed_fomchistorical2018,date from Fed document stamp; 14:00 ET conventional
+NFP,2018-02-02 08:30:00-05:00,2018-02-02,first_friday_proxy,08:30 ET conventional
+NFP,2018-03-02 08:30:00-05:00,2018-03-02,first_friday_proxy,08:30 ET conventional
+FOMC,2018-03-21 14:00:00-04:00,2018-03-21,fed_fomchistorical2018,date from Fed document stamp; 14:00 ET conventional
+NFP,2018-04-06 08:30:00-04:00,2018-04-06,first_friday_proxy,08:30 ET conventional
+FOMC,2018-05-02 14:00:00-04:00,2018-05-02,fed_fomchistorical2018,date from Fed document stamp; 14:00 ET conventional
+NFP,2018-05-04 08:30:00-04:00,2018-05-04,first_friday_proxy,08:30 ET conventional
+NFP,2018-06-01 08:30:00-04:00,2018-06-01,first_friday_proxy,08:30 ET conventional
+FOMC,2018-06-13 14:00:00-04:00,2018-06-13,fed_fomchistorical2018,date from Fed document stamp; 14:00 ET conventional
+NFP,2018-07-06 08:30:00-04:00,2018-07-06,first_friday_proxy,08:30 ET conventional
+FOMC,2018-08-01 14:00:00-04:00,2018-08-01,fed_fomchistorical2018,date from Fed document stamp; 14:00 ET conventional
+NFP,2018-08-03 08:30:00-04:00,2018-08-03,first_friday_proxy,08:30 ET conventional
+NFP,2018-09-07 08:30:00-04:00,2018-09-07,first_friday_proxy,08:30 ET conventional
+FOMC,2018-09-26 14:00:00-04:00,2018-09-26,fed_fomchistorical2018,date from Fed document stamp; 14:00 ET conventional
+NFP,2018-10-05 08:30:00-04:00,2018-10-05,first_friday_proxy,08:30 ET conventional
+NFP,2018-11-02 08:30:00-04:00,2018-11-02,first_friday_proxy,08:30 ET conventional
+FOMC,2018-11-08 14:00:00-05:00,2018-11-08,fed_fomchistorical2018,date from Fed document stamp; 14:00 ET conventional
+NFP,2018-12-07 08:30:00-05:00,2018-12-07,first_friday_proxy,08:30 ET conventional
+FOMC,2018-12-19 14:00:00-05:00,2018-12-19,fed_fomchistorical2018,date from Fed document stamp; 14:00 ET conventional
+NFP,2019-01-04 08:30:00-05:00,2019-01-04,first_friday_proxy,08:30 ET conventional
+FOMC,2019-01-30 14:00:00-05:00,2019-01-30,fed_fomchistorical2019,date from Fed document stamp; 14:00 ET conventional
+NFP,2019-02-01 08:30:00-05:00,2019-02-01,first_friday_proxy,08:30 ET conventional
+NFP,2019-03-01 08:30:00-05:00,2019-03-01,first_friday_proxy,08:30 ET conventional
+FOMC,2019-03-20 14:00:00-04:00,2019-03-20,fed_fomchistorical2019,date from Fed document stamp; 14:00 ET conventional
+NFP,2019-04-05 08:30:00-04:00,2019-04-05,first_friday_proxy,08:30 ET conventional
+FOMC,2019-05-01 14:00:00-04:00,2019-05-01,fed_fomchistorical2019,date from Fed document stamp; 14:00 ET conventional
+NFP,2019-05-03 08:30:00-04:00,2019-05-03,first_friday_proxy,08:30 ET conventional
+NFP,2019-06-07 08:30:00-04:00,2019-06-07,first_friday_proxy,08:30 ET conventional
+FOMC,2019-06-19 14:00:00-04:00,2019-06-19,fed_fomchistorical2019,date from Fed document stamp; 14:00 ET conventional
+NFP,2019-07-05 08:30:00-04:00,2019-07-05,first_friday_proxy,08:30 ET conventional
+FOMC,2019-07-31 14:00:00-04:00,2019-07-31,fed_fomchistorical2019,date from Fed document stamp; 14:00 ET conventional
+NFP,2019-08-02 08:30:00-04:00,2019-08-02,first_friday_proxy,08:30 ET conventional
+NFP,2019-09-06 08:30:00-04:00,2019-09-06,first_friday_proxy,08:30 ET conventional
+FOMC,2019-09-18 14:00:00-04:00,2019-09-18,fed_fomchistorical2019,date from Fed document stamp; 14:00 ET conventional
+NFP,2019-10-04 08:30:00-04:00,2019-10-04,first_friday_proxy,08:30 ET conventional
+FOMC,2019-10-04 14:00:00-04:00,2019-10-04,fed_fomchistorical2019,date from Fed document stamp; 14:00 ET conventional
+FOMC,2019-10-11 14:00:00-04:00,2019-10-11,fed_fomchistorical2019,date from Fed document stamp; 14:00 ET conventional
+FOMC,2019-10-30 14:00:00-04:00,2019-10-30,fed_fomchistorical2019,date from Fed document stamp; 14:00 ET conventional
+NFP,2019-11-01 08:30:00-04:00,2019-11-01,first_friday_proxy,08:30 ET conventional
+NFP,2019-12-06 08:30:00-05:00,2019-12-06,first_friday_proxy,08:30 ET conventional
+FOMC,2019-12-11 14:00:00-05:00,2019-12-11,fed_fomchistorical2019,date from Fed document stamp; 14:00 ET conventional
+NFP,2020-01-03 08:30:00-05:00,2020-01-03,first_friday_proxy,08:30 ET conventional
+FOMC,2020-01-29 14:00:00-05:00,2020-01-29,fed_fomchistorical2020,date from Fed document stamp; 14:00 ET conventional
+NFP,2020-02-07 08:30:00-05:00,2020-02-07,first_friday_proxy,08:30 ET conventional
+FOMC,2020-03-02 14:00:00-05:00,2020-03-02,fed_fomchistorical2020,date from Fed document stamp; 14:00 ET conventional
+FOMC,2020-03-03 14:00:00-05:00,2020-03-03,fed_fomchistorical2020,date from Fed document stamp; 14:00 ET conventional
+NFP,2020-03-06 08:30:00-05:00,2020-03-06,first_friday_proxy,08:30 ET conventional
+FOMC,2020-03-15 14:00:00-04:00,2020-03-15,fed_fomchistorical2020,date from Fed document stamp; 14:00 ET conventional
+FOMC,2020-03-19 14:00:00-04:00,2020-03-19,fed_fomchistorical2020,date from Fed document stamp; 14:00 ET conventional
+FOMC,2020-03-23 14:00:00-04:00,2020-03-23,fed_fomchistorical2020,date from Fed document stamp; 14:00 ET conventional
+FOMC,2020-03-31 14:00:00-04:00,2020-03-31,fed_fomchistorical2020,date from Fed document stamp; 14:00 ET conventional
+NFP,2020-04-03 08:30:00-04:00,2020-04-03,first_friday_proxy,08:30 ET conventional
+FOMC,2020-04-29 14:00:00-04:00,2020-04-29,fed_fomchistorical2020,date from Fed document stamp; 14:00 ET conventional
+NFP,2020-05-01 08:30:00-04:00,2020-05-01,first_friday_proxy,08:30 ET conventional
+NFP,2020-06-05 08:30:00-04:00,2020-06-05,first_friday_proxy,08:30 ET conventional
+FOMC,2020-06-10 14:00:00-04:00,2020-06-10,fed_fomchistorical2020,date from Fed document stamp; 14:00 ET conventional
+NFP,2020-07-03 08:30:00-04:00,2020-07-03,first_friday_proxy,08:30 ET conventional
+FOMC,2020-07-29 14:00:00-04:00,2020-07-29,fed_fomchistorical2020,date from Fed document stamp; 14:00 ET conventional
+NFP,2020-08-07 08:30:00-04:00,2020-08-07,first_friday_proxy,08:30 ET conventional
+FOMC,2020-08-27 14:00:00-04:00,2020-08-27,fed_fomchistorical2020,date from Fed document stamp; 14:00 ET conventional
+NFP,2020-09-04 08:30:00-04:00,2020-09-04,first_friday_proxy,08:30 ET conventional
+FOMC,2020-09-15 14:00:00-04:00,2020-09-15,fed_fomchistorical2020,date from Fed document stamp; 14:00 ET conventional
+FOMC,2020-09-16 14:00:00-04:00,2020-09-16,fed_fomchistorical2020,date from Fed document stamp; 14:00 ET conventional
+NFP,2020-10-02 08:30:00-04:00,2020-10-02,first_friday_proxy,08:30 ET conventional
+FOMC,2020-11-05 14:00:00-05:00,2020-11-05,fed_fomchistorical2020,date from Fed document stamp; 14:00 ET conventional
+NFP,2020-11-06 08:30:00-05:00,2020-11-06,first_friday_proxy,08:30 ET conventional
+NFP,2020-12-04 08:30:00-05:00,2020-12-04,first_friday_proxy,08:30 ET conventional
+FOMC,2020-12-16 14:00:00-05:00,2020-12-16,fed_fomchistorical2020,date from Fed document stamp; 14:00 ET conventional
+NFP,2021-01-01 08:30:00-05:00,2021-01-01,first_friday_proxy,08:30 ET conventional
+FOMC,2021-01-27 14:00:00-05:00,2021-01-27,fed_fomccalendars,26-27
+NFP,2021-02-05 08:30:00-05:00,2021-02-05,first_friday_proxy,08:30 ET conventional
+NFP,2021-03-05 08:30:00-05:00,2021-03-05,first_friday_proxy,08:30 ET conventional
+FOMC,2021-03-17 14:00:00-04:00,2021-03-17,fed_fomccalendars,SEP 16-17*
+NFP,2021-04-02 08:30:00-04:00,2021-04-02,first_friday_proxy,08:30 ET conventional
+FOMC,2021-04-28 14:00:00-04:00,2021-04-28,fed_fomccalendars,27-28
+NFP,2021-05-07 08:30:00-04:00,2021-05-07,first_friday_proxy,08:30 ET conventional
+NFP,2021-06-04 08:30:00-04:00,2021-06-04,first_friday_proxy,08:30 ET conventional
+FOMC,2021-06-16 14:00:00-04:00,2021-06-16,fed_fomccalendars,SEP 15-16*
+NFP,2021-07-02 08:30:00-04:00,2021-07-02,first_friday_proxy,08:30 ET conventional
+FOMC,2021-07-28 14:00:00-04:00,2021-07-28,fed_fomccalendars,27-28
+NFP,2021-08-06 08:30:00-04:00,2021-08-06,first_friday_proxy,08:30 ET conventional
+NFP,2021-09-03 08:30:00-04:00,2021-09-03,first_friday_proxy,08:30 ET conventional
+FOMC,2021-09-22 14:00:00-04:00,2021-09-22,fed_fomccalendars,SEP 21-22*
+NFP,2021-10-01 08:30:00-04:00,2021-10-01,first_friday_proxy,08:30 ET conventional
+FOMC,2021-11-03 14:00:00-04:00,2021-11-03,fed_fomccalendars,2-3
+NFP,2021-11-05 08:30:00-04:00,2021-11-05,first_friday_proxy,08:30 ET conventional
+NFP,2021-12-03 08:30:00-05:00,2021-12-03,first_friday_proxy,08:30 ET conventional
+FOMC,2021-12-15 14:00:00-05:00,2021-12-15,fed_fomccalendars,SEP 14-15*
+NFP,2022-01-07 08:30:00-05:00,2022-01-07,first_friday_proxy,08:30 ET conventional
+FOMC,2022-01-26 14:00:00-05:00,2022-01-26,fed_fomccalendars,25-26
+NFP,2022-02-04 08:30:00-05:00,2022-02-04,first_friday_proxy,08:30 ET conventional
+NFP,2022-03-04 08:30:00-05:00,2022-03-04,first_friday_proxy,08:30 ET conventional
+FOMC,2022-03-16 14:00:00-04:00,2022-03-16,fed_fomccalendars,SEP 15-16*
+NFP,2022-04-01 08:30:00-04:00,2022-04-01,first_friday_proxy,08:30 ET conventional
+FOMC,2022-05-04 14:00:00-04:00,2022-05-04,fed_fomccalendars,3-4
+NFP,2022-05-06 08:30:00-04:00,2022-05-06,first_friday_proxy,08:30 ET conventional
+NFP,2022-06-03 08:30:00-04:00,2022-06-03,first_friday_proxy,08:30 ET conventional
+FOMC,2022-06-15 14:00:00-04:00,2022-06-15,fed_fomccalendars,SEP 14-15*
+NFP,2022-07-01 08:30:00-04:00,2022-07-01,first_friday_proxy,08:30 ET conventional
+FOMC,2022-07-27 14:00:00-04:00,2022-07-27,fed_fomccalendars,26-27
+NFP,2022-08-05 08:30:00-04:00,2022-08-05,first_friday_proxy,08:30 ET conventional
+NFP,2022-09-02 08:30:00-04:00,2022-09-02,first_friday_proxy,08:30 ET conventional
+FOMC,2022-09-21 14:00:00-04:00,2022-09-21,fed_fomccalendars,SEP 20-21*
+NFP,2022-10-07 08:30:00-04:00,2022-10-07,first_friday_proxy,08:30 ET conventional
+FOMC,2022-11-02 14:00:00-04:00,2022-11-02,fed_fomccalendars,1-2
+NFP,2022-11-04 08:30:00-04:00,2022-11-04,first_friday_proxy,08:30 ET conventional
+NFP,2022-12-02 08:30:00-05:00,2022-12-02,first_friday_proxy,08:30 ET conventional
+FOMC,2022-12-14 14:00:00-05:00,2022-12-14,fed_fomccalendars,SEP 13-14*
+NFP,2023-01-06 08:30:00-05:00,2023-01-06,first_friday_proxy,08:30 ET conventional
+NFP,2023-02-03 08:30:00-05:00,2023-02-03,first_friday_proxy,08:30 ET conventional
+NFP,2023-03-03 08:30:00-05:00,2023-03-03,first_friday_proxy,08:30 ET conventional
+FOMC,2023-03-22 14:00:00-04:00,2023-03-22,fed_fomccalendars,SEP 21-22*
+NFP,2023-04-07 08:30:00-04:00,2023-04-07,first_friday_proxy,08:30 ET conventional
+FOMC,2023-05-03 14:00:00-04:00,2023-05-03,fed_fomccalendars,2-3
+NFP,2023-05-05 08:30:00-04:00,2023-05-05,first_friday_proxy,08:30 ET conventional
+NFP,2023-06-02 08:30:00-04:00,2023-06-02,first_friday_proxy,08:30 ET conventional
+FOMC,2023-06-14 14:00:00-04:00,2023-06-14,fed_fomccalendars,SEP 13-14*
+NFP,2023-07-07 08:30:00-04:00,2023-07-07,first_friday_proxy,08:30 ET conventional
+FOMC,2023-07-26 14:00:00-04:00,2023-07-26,fed_fomccalendars,25-26
+NFP,2023-08-04 08:30:00-04:00,2023-08-04,first_friday_proxy,08:30 ET conventional
+NFP,2023-09-01 08:30:00-04:00,2023-09-01,first_friday_proxy,08:30 ET conventional
+FOMC,2023-09-20 14:00:00-04:00,2023-09-20,fed_fomccalendars,SEP 19-20*
+NFP,2023-10-06 08:30:00-04:00,2023-10-06,first_friday_proxy,08:30 ET conventional
+NFP,2023-11-03 08:30:00-04:00,2023-11-03,first_friday_proxy,08:30 ET conventional
+NFP,2023-12-01 08:30:00-05:00,2023-12-01,first_friday_proxy,08:30 ET conventional
+FOMC,2023-12-13 14:00:00-05:00,2023-12-13,fed_fomccalendars,SEP 12-13*
+NFP,2024-01-05 08:30:00-05:00,2024-01-05,first_friday_proxy,08:30 ET conventional
+FOMC,2024-01-31 14:00:00-05:00,2024-01-31,fed_fomccalendars,30-31
+NFP,2024-02-02 08:30:00-05:00,2024-02-02,first_friday_proxy,08:30 ET conventional
+NFP,2024-03-01 08:30:00-05:00,2024-03-01,first_friday_proxy,08:30 ET conventional
+FOMC,2024-03-20 14:00:00-04:00,2024-03-20,fed_fomccalendars,SEP 19-20*
+NFP,2024-04-05 08:30:00-04:00,2024-04-05,first_friday_proxy,08:30 ET conventional
+NFP,2024-05-03 08:30:00-04:00,2024-05-03,first_friday_proxy,08:30 ET conventional
+NFP,2024-06-07 08:30:00-04:00,2024-06-07,first_friday_proxy,08:30 ET conventional
+FOMC,2024-06-12 14:00:00-04:00,2024-06-12,fed_fomccalendars,SEP 11-12*
+NFP,2024-07-05 08:30:00-04:00,2024-07-05,first_friday_proxy,08:30 ET conventional
+FOMC,2024-07-31 14:00:00-04:00,2024-07-31,fed_fomccalendars,30-31
+NFP,2024-08-02 08:30:00-04:00,2024-08-02,first_friday_proxy,08:30 ET conventional
+NFP,2024-09-06 08:30:00-04:00,2024-09-06,first_friday_proxy,08:30 ET conventional
+FOMC,2024-09-18 14:00:00-04:00,2024-09-18,fed_fomccalendars,SEP 17-18*
+NFP,2024-10-04 08:30:00-04:00,2024-10-04,first_friday_proxy,08:30 ET conventional
+NFP,2024-11-01 08:30:00-04:00,2024-11-01,first_friday_proxy,08:30 ET conventional
+FOMC,2024-11-07 14:00:00-05:00,2024-11-07,fed_fomccalendars,6-7
+NFP,2024-12-06 08:30:00-05:00,2024-12-06,first_friday_proxy,08:30 ET conventional
+FOMC,2024-12-18 14:00:00-05:00,2024-12-18,fed_fomccalendars,SEP 17-18*
+NFP,2025-01-03 08:30:00-05:00,2025-01-03,first_friday_proxy,08:30 ET conventional
+FOMC,2025-01-29 14:00:00-05:00,2025-01-29,fed_fomccalendars,28-29
+NFP,2025-02-07 08:30:00-05:00,2025-02-07,first_friday_proxy,08:30 ET conventional
+NFP,2025-03-07 08:30:00-05:00,2025-03-07,first_friday_proxy,08:30 ET conventional
+FOMC,2025-03-19 14:00:00-04:00,2025-03-19,fed_fomccalendars,SEP 18-19*
+NFP,2025-04-04 08:30:00-04:00,2025-04-04,first_friday_proxy,08:30 ET conventional
+NFP,2025-05-02 08:30:00-04:00,2025-05-02,first_friday_proxy,08:30 ET conventional
+FOMC,2025-05-07 14:00:00-04:00,2025-05-07,fed_fomccalendars,6-7
+NFP,2025-06-06 08:30:00-04:00,2025-06-06,first_friday_proxy,08:30 ET conventional
+FOMC,2025-06-18 14:00:00-04:00,2025-06-18,fed_fomccalendars,SEP 17-18*
+NFP,2025-07-04 08:30:00-04:00,2025-07-04,first_friday_proxy,08:30 ET conventional
+FOMC,2025-07-30 14:00:00-04:00,2025-07-30,fed_fomccalendars,29-30
+NFP,2025-08-01 08:30:00-04:00,2025-08-01,first_friday_proxy,08:30 ET conventional
+FOMC,2025-08-22 14:00:00-04:00,2025-08-22,fed_fomccalendars,22 (notation vote) unscheduled
+NFP,2025-09-05 08:30:00-04:00,2025-09-05,first_friday_proxy,08:30 ET conventional
+FOMC,2025-09-17 14:00:00-04:00,2025-09-17,fed_fomccalendars,SEP 16-17*
+NFP,2025-10-03 08:30:00-04:00,2025-10-03,first_friday_proxy,08:30 ET conventional
+FOMC,2025-10-29 14:00:00-04:00,2025-10-29,fed_fomccalendars,28-29
+NFP,2025-11-07 08:30:00-05:00,2025-11-07,first_friday_proxy,08:30 ET conventional
+NFP,2025-12-05 08:30:00-05:00,2025-12-05,first_friday_proxy,08:30 ET conventional
+FOMC,2025-12-10 14:00:00-05:00,2025-12-10,fed_fomccalendars,SEP 9-10*
+NFP,2026-01-02 08:30:00-05:00,2026-01-02,first_friday_proxy,08:30 ET conventional
+FOMC,2026-01-28 14:00:00-05:00,2026-01-28,fed_fomccalendars,27-28
+NFP,2026-02-06 08:30:00-05:00,2026-02-06,first_friday_proxy,08:30 ET conventional
+NFP,2026-03-06 08:30:00-05:00,2026-03-06,first_friday_proxy,08:30 ET conventional
+FOMC,2026-03-18 14:00:00-04:00,2026-03-18,fed_fomccalendars,SEP 17-18*
+NFP,2026-04-03 08:30:00-04:00,2026-04-03,first_friday_proxy,08:30 ET conventional
+FOMC,2026-04-29 14:00:00-04:00,2026-04-29,fed_fomccalendars,28-29
+NFP,2026-05-01 08:30:00-04:00,2026-05-01,first_friday_proxy,08:30 ET conventional
+NFP,2026-06-05 08:30:00-04:00,2026-06-05,first_friday_proxy,08:30 ET conventional
+FOMC,2026-06-17 14:00:00-04:00,2026-06-17,fed_fomccalendars,SEP 16-17*
+NFP,2026-07-03 08:30:00-04:00,2026-07-03,first_friday_proxy,08:30 ET conventional
+FOMC,2026-07-29 14:00:00-04:00,2026-07-29,fed_fomccalendars,28-29
+NFP,2026-08-07 08:30:00-04:00,2026-08-07,first_friday_proxy,08:30 ET conventional
+NFP,2026-09-04 08:30:00-04:00,2026-09-04,first_friday_proxy,08:30 ET conventional
+FOMC,2026-09-16 14:00:00-04:00,2026-09-16,fed_fomccalendars,SEP 15-16*
+NFP,2026-10-02 08:30:00-04:00,2026-10-02,first_friday_proxy,08:30 ET conventional
+FOMC,2026-10-28 14:00:00-04:00,2026-10-28,fed_fomccalendars,27-28
+NFP,2026-11-06 08:30:00-05:00,2026-11-06,first_friday_proxy,08:30 ET conventional
+FOMC,2026-12-09 14:00:00-05:00,2026-12-09,fed_fomccalendars,SEP 8-9*
+FOMC,2027-01-27 14:00:00-05:00,2027-01-27,fed_fomccalendars,26-27
+FOMC,2027-03-17 14:00:00-04:00,2027-03-17,fed_fomccalendars,16-17
+FOMC,2027-04-28 14:00:00-04:00,2027-04-28,fed_fomccalendars,27-28
+FOMC,2027-06-09 14:00:00-04:00,2027-06-09,fed_fomccalendars,8-9
+FOMC,2027-07-28 14:00:00-04:00,2027-07-28,fed_fomccalendars,27-28
+FOMC,2027-09-15 14:00:00-04:00,2027-09-15,fed_fomccalendars,14-15
+FOMC,2027-10-27 14:00:00-04:00,2027-10-27,fed_fomccalendars,26-27
+FOMC,2027-11-17 14:00:00-05:00,2027-11-17,fed_fomccalendars,16-17

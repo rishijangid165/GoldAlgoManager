@@ -1,0 +1,538 @@
+{
+  "pulled_at_utc": "2026-11-13T18:35:31Z",
+  "note": "GC=F is COMEX futures (Yahoo). XAUUSD M1 is HistData spot ASCII. Dukascopy/Stooq are probed only. Tokens from HistData pages are not stored.",
+  "histdata": [
+    {
+      "label": "2003",
+      "suffix": "2003",
+      "pulled_at": "2026-11-13T18:35:31Z",
+      "status": "not_zip",
+      "http": 200,
+      "ctype": "text/html; charset=UTF-8",
+      "bytes": 0,
+      "head": ""
+    },
+    {
+      "label": "2004",
+      "suffix": "2004",
+      "pulled_at": "2026-11-13T18:35:33Z",
+      "status": "not_zip",
+      "http": 200,
+      "ctype": "text/html; charset=UTF-8",
+      "bytes": 0,
+      "head": ""
+    },
+    {
+      "label": "2005",
+      "suffix": "2005",
+      "pulled_at": "2026-11-13T18:35:36Z",
+      "status": "not_zip",
+      "http": 200,
+      "ctype": "text/html; charset=UTF-8",
+      "bytes": 0,
+      "head": ""
+    },
+    {
+      "label": "2006",
+      "suffix": "2006",
+      "pulled_at": "2026-11-13T18:35:38Z",
+      "status": "not_zip",
+      "http": 200,
+      "ctype": "text/html; charset=UTF-8",
+      "bytes": 0,
+      "head": ""
+    },
+    {
+      "label": "2007",
+      "suffix": "2007",
+      "pulled_at": "2026-11-13T18:35:41Z",
+      "status": "not_zip",
+      "http": 200,
+      "ctype": "text/html; charset=UTF-8",
+      "bytes": 0,
+      "head": ""
+    },
+    {
+      "label": "2008",
+      "suffix": "2008",
+      "pulled_at": "2026-11-13T18:35:44Z",
+      "status": "not_zip",
+      "http": 200,
+      "ctype": "text/html; charset=UTF-8",
+      "bytes": 0,
+      "head": ""
+    },
+    {
+      "label": "2009",
+      "suffix": "2009",
+      "pulled_at": "2026-11-13T18:35:46Z",
+      "status": "ok",
+      "path": "data/raw/histdata/zips/HISTDATA_COM_ASCII_XAUUSD_M1_2009.zip",
+      "bytes": 2708260,
+      "fields": {
+        "date": "2009",
+        "datemonth": "2009",
+        "platform": "ASCII",
+        "timeframe": "M1",
+        "fxpair": "XAUUSD"
+      }
+    },
+    {
+      "label": "2010",
+      "suffix": "2010",
+      "pulled_at": "2026-11-13T18:35:49Z",
+      "status": "ok",
+      "path": "data/raw/histdata/zips/HISTDATA_COM_ASCII_XAUUSD_M1_2010.zip",
+      "bytes": 3414721,
+      "fields": {
+        "date": "2010",
+        "datemonth": "2010",
+        "platform": "ASCII",
+        "timeframe": "M1",
+        "fxpair": "XAUUSD"
+      }
+    },
+    {
+      "label": "2011",
+      "suffix": "2011",
+      "pulled_at": "2026-11-13T18:35:52Z",
+      "status": "ok",
+      "path": "data/raw/histdata/zips/HISTDATA_COM_ASCII_XAUUSD_M1_2011.zip",
+      "bytes": 3595889,
+      "fields": {
+        "date": "2011",
+        "datemonth": "2011",
+        "platform": "ASCII",
+        "timeframe": "M1",
+        "fxpair": "XAUUSD"
+      }
+    },
+    {
+      "label": "2012",
+      "suffix": "2012",
+      "pulled_at": "2026-11-13T18:35:55Z",
+      "status": "ok",
+      "path": "data/raw/histdata/zips/HISTDATA_COM_ASCII_XAUUSD_M1_2012.zip",
+      "bytes": 3999995,
+      "fields": {
+        "date": "2012",
+        "datemonth": "2012",
+        "platform": "ASCII",
+        "timeframe": "M1",
+        "fxpair": "XAUUSD"
+      }
+    },
+    {
+      "label": "2013",
+      "suffix": "2013",
+      "pulled_at": "2026-11-13T18:35:58Z",
+      "status": "ok",
+      "path": "data/raw/histdata/zips/HISTDATA_COM_ASCII_XAUUSD_M1_2013.zip",
+      "bytes": 4012416,
+      "fields": {
+        "date": "2013",
+        "datemonth": "2013",
+        "platform": "ASCII",
+        "timeframe": "M1",
+        "fxpair": "XAUUSD"
+      }
+    },
+    {
+      "label": "2014",
+      "suffix": "2014",
+      "pulled_at": "2026-11-13T18:36:01Z",
+      "status": "ok",
+      "path": "data/raw/histdata/zips/HISTDATA_COM_ASCII_XAUUSD_M1_2014.zip",
+      "bytes": 3771386,
+      "fields": {
+        "date": "2014",
+        "datemonth": "2014",
+        "platform": "ASCII",
+        "timeframe": "M1",
+        "fxpair": "XAUUSD"
+      }
+    },
+    {
+      "label": "2015",
+      "suffix": "2015",
+      "pulled_at": "2026-11-13T18:36:05Z",
+      "status": "ok",
+      "path": "data/raw/histdata/zips/HISTDATA_COM_ASCII_XAUUSD_M1_2015.zip",
+      "bytes": 3759516,
+      "fields": {
+        "date": "2015",
+        "datemonth": "2015",
+        "platform": "ASCII",
+        "timeframe": "M1",
+        "fxpair": "XAUUSD"
+      }
+    },
+    {
+      "label": "2016",
+      "suffix": "2016",
+      "pulled_at": "2026-11-13T18:36:08Z",
+      "status": "ok",
+      "path": "data/raw/histdata/zips/HISTDATA_COM_ASCII_XAUUSD_M1_2016.zip",
+      "bytes": 3917648,
+      "fields": {
+        "date": "2016",
+        "datemonth": "2016",
+        "platform": "ASCII",
+        "timeframe": "M1",
+        "fxpair": "XAUUSD"
+      }
+    },
+    {
+      "label": "2017",
+      "suffix": "2017",
+      "pulled_at": "2026-11-13T18:36:11Z",
+      "status": "ok",
+      "path": "data/raw/histdata/zips/HISTDATA_COM_ASCII_XAUUSD_M1_2017.zip",
+      "bytes": 3695379,
+      "fields": {
+        "date": "2017",
+        "datemonth": "2017",
+        "platform": "ASCII",
+        "timeframe": "M1",
+        "fxpair": "XAUUSD"
+      }
+    },
+    {
+      "label": "2018",
+      "suffix": "2018",
+      "pulled_at": "2026-11-13T18:36:15Z",
+      "status": "ok",
+      "path": "data/raw/histdata/zips/HISTDATA_COM_ASCII_XAUUSD_M1_2018.zip",
+      "bytes": 3634784,
+      "fields": {
+        "date": "2018",
+        "datemonth": "2018",
+        "platform": "ASCII",
+        "timeframe": "M1",
+        "fxpair": "XAUUSD"
+      }
+    },
+    {
+      "label": "2019",
+      "suffix": "2019",
+      "pulled_at": "2026-11-13T18:36:18Z",
+      "status": "ok",
+      "path": "data/raw/histdata/zips/HISTDATA_COM_ASCII_XAUUSD_M1_2019.zip",
+      "bytes": 3848654,
+      "fields": {
+        "date": "2019",
+        "datemonth": "2019",
+        "platform": "ASCII",
+        "timeframe": "M1",
+        "fxpair": "XAUUSD"
+      }
+    },
+    {
+      "label": "2020",
+      "suffix": "2020",
+      "pulled_at": "2026-11-13T18:36:21Z",
+      "status": "ok",
+      "path": "data/raw/histdata/zips/HISTDATA_COM_ASCII_XAUUSD_M1_2020.zip",
+      "bytes": 4317930,
+      "fields": {
+        "date": "2020",
+        "datemonth": "2020",
+        "platform": "ASCII",
+        "timeframe": "M1",
+        "fxpair": "XAUUSD"
+      }
+    },
+    {
+      "label": "2021",
+      "suffix": "2021",
+      "pulled_at": "2026-11-13T18:36:24Z",
+      "status": "ok",
+      "path": "data/raw/histdata/zips/HISTDATA_COM_ASCII_XAUUSD_M1_2021.zip",
+      "bytes": 4252073,
+      "fields": {
+        "date": "2021",
+        "datemonth": "2021",
+        "platform": "ASCII",
+        "timeframe": "M1",
+        "fxpair": "XAUUSD"
+      }
+    },
+    {
+      "label": "2022",
+      "suffix": "2022",
+      "pulled_at": "2026-11-13T18:36:27Z",
+      "status": "ok",
+      "path": "data/raw/histdata/zips/HISTDATA_COM_ASCII_XAUUSD_M1_2022.zip",
+      "bytes": 4364035,
+      "fields": {
+        "date": "2022",
+        "datemonth": "2022",
+        "platform": "ASCII",
+        "timeframe": "M1",
+        "fxpair": "XAUUSD"
+      }
+    },
+    {
+      "label": "2023",
+      "suffix": "2023",
+      "pulled_at": "2026-11-13T18:36:30Z",
+      "status": "ok",
+      "path": "data/raw/histdata/zips/HISTDATA_COM_ASCII_XAUUSD_M1_2023.zip",
+      "bytes": 3629564,
+      "fields": {
+        "date": "2023",
+        "datemonth": "2023",
+        "platform": "ASCII",
+        "timeframe": "M1",
+        "fxpair": "XAUUSD"
+      }
+    },
+    {
+      "label": "2024",
+      "suffix": "2024",
+      "pulled_at": "2026-11-13T18:36:33Z",
+      "status": "cached",
+      "path": "data/raw/histdata/zips/HISTDATA_COM_ASCII_XAUUSD_M1_2024.zip",
+      "bytes": 4358732
+    },
+    {
+      "label": "2025",
+      "suffix": "2025",
+      "pulled_at": "2026-11-13T18:36:35Z",
+      "status": "ok",
+      "path": "data/raw/histdata/zips/HISTDATA_COM_ASCII_XAUUSD_M1_2025.zip",
+      "bytes": 4561311,
+      "fields": {
+        "date": "2025",
+        "datemonth": "2025",
+        "platform": "ASCII",
+        "timeframe": "M1",
+        "fxpair": "XAUUSD"
+      }
+    },
+    {
+      "label": "202601",
+      "suffix": "2026/01",
+      "pulled_at": "2026-11-13T18:36:38Z",
+      "status": "ok",
+      "path": "data/raw/histdata/zips/HISTDATA_COM_ASCII_XAUUSD_M1_202601.zip",
+      "bytes": 398755,
+      "fields": {
+        "date": "2026",
+        "datemonth": "202601",
+        "platform": "ASCII",
+        "timeframe": "M1",
+        "fxpair": "XAUUSD"
+      }
+    },
+    {
+      "label": "202602",
+      "suffix": "2026/02",
+      "pulled_at": "2026-11-13T18:36:41Z",
+      "status": "ok",
+      "path": "data/raw/histdata/zips/HISTDATA_COM_ASCII_XAUUSD_M1_202602.zip",
+      "bytes": 390184,
+      "fields": {
+        "date": "2026",
+        "datemonth": "202602",
+        "platform": "ASCII",
+        "timeframe": "M1",
+        "fxpair": "XAUUSD"
+      }
+    },
+    {
+      "label": "202603",
+      "suffix": "2026/03",
+      "pulled_at": "2026-11-13T18:36:44Z",
+      "status": "ok",
+      "path": "data/raw/histdata/zips/HISTDATA_COM_ASCII_XAUUSD_M1_202603.zip",
+      "bytes": 438413,
+      "fields": {
+        "date": "2026",
+        "datemonth": "202603",
+        "platform": "ASCII",
+        "timeframe": "M1",
+        "fxpair": "XAUUSD"
+      }
+    },
+    {
+      "label": "202604",
+      "suffix": "2026/04",
+      "pulled_at": "2026-11-13T18:36:47Z",
+      "status": "ok",
+      "path": "data/raw/histdata/zips/HISTDATA_COM_ASCII_XAUUSD_M1_202604.zip",
+      "bytes": 399055,
+      "fields": {
+        "date": "2026",
+        "datemonth": "202604",
+        "platform": "ASCII",
+        "timeframe": "M1",
+        "fxpair": "XAUUSD"
+      }
+    },
+    {
+      "label": "202605",
+      "suffix": "2026/05",
+      "pulled_at": "2026-11-13T18:36:50Z",
+      "status": "ok",
+      "path": "data/raw/histdata/zips/HISTDATA_COM_ASCII_XAUUSD_M1_202605.zip",
+      "bytes": 391663,
+      "fields": {
+        "date": "2026",
+        "datemonth": "202605",
+        "platform": "ASCII",
+        "timeframe": "M1",
+        "fxpair": "XAUUSD"
+      }
+    },
+    {
+      "label": "202606",
+      "suffix": "2026/06",
+      "pulled_at": "2026-11-13T18:36:52Z",
+      "status": "ok",
+      "path": "data/raw/histdata/zips/HISTDATA_COM_ASCII_XAUUSD_M1_202606.zip",
+      "bytes": 413135,
+      "fields": {
+        "date": "2026",
+        "datemonth": "202606",
+        "platform": "ASCII",
+        "timeframe": "M1",
+        "fxpair": "XAUUSD"
+      }
+    },
+    {
+      "label": "202607",
+      "suffix": "2026/07",
+      "pulled_at": "2026-11-13T18:36:55Z",
+      "status": "ok",
+      "path": "data/raw/histdata/zips/HISTDATA_COM_ASCII_XAUUSD_M1_202607.zip",
+      "bytes": 413061,
+      "fields": {
+        "date": "2026",
+        "datemonth": "202607",
+        "platform": "ASCII",
+        "timeframe": "M1",
+        "fxpair": "XAUUSD"
+      }
+    },
+    {
+      "label": "202608",
+      "suffix": "2026/08",
+      "pulled_at": "2026-11-13T18:36:58Z",
+      "status": "ok",
+      "path": "data/raw/histdata/zips/HISTDATA_COM_ASCII_XAUUSD_M1_202608.zip",
+      "bytes": 393838,
+      "fields": {
+        "date": "2026",
+        "datemonth": "202608",
+        "platform": "ASCII",
+        "timeframe": "M1",
+        "fxpair": "XAUUSD"
+      }
+    },
+    {
+      "label": "202609",
+      "suffix": "2026/09",
+      "pulled_at": "2026-11-13T18:37:01Z",
+      "status": "ok",
+      "path": "data/raw/histdata/zips/HISTDATA_COM_ASCII_XAUUSD_M1_202609.zip",
+      "bytes": 411486,
+      "fields": {
+        "date": "2026",
+        "datemonth": "202609",
+        "platform": "ASCII",
+        "timeframe": "M1",
+        "fxpair": "XAUUSD"
+      }
+    },
+    {
+      "label": "202610",
+      "suffix": "2026/10",
+      "pulled_at": "2026-11-13T18:37:04Z",
+      "status": "ok",
+      "path": "data/raw/histdata/zips/HISTDATA_COM_ASCII_XAUUSD_M1_202610.zip",
+      "bytes": 408308,
+      "fields": {
+        "date": "2026",
+        "datemonth": "202610",
+        "platform": "ASCII",
+        "timeframe": "M1",
+        "fxpair": "XAUUSD"
+      }
+    },
+    {
+      "label": "202611",
+      "suffix": "2026/11",
+      "pulled_at": "2026-11-13T18:37:06Z",
+      "status": "ok",
+      "path": "data/raw/histdata/zips/HISTDATA_COM_ASCII_XAUUSD_M1_202611.zip",
+      "bytes": 102956,
+      "fields": {
+        "date": "2026",
+        "datemonth": "202611",
+        "platform": "ASCII",
+        "timeframe": "M1",
+        "fxpair": "XAUUSD"
+      }
+    }
+  ],
+  "dukascopy_probe": {
+    "status": "up",
+    "urls": {
+      "m1_candle_2023-06-01": {
+        "http": 200,
+        "bytes": 14742,
+        "ctype": "application/octet-stream",
+        "looks_binary": true
+      },
+      "tick_2023-06-01-12h": {
+        "http": 200,
+        "bytes": 67944,
+        "ctype": "application/octet-stream",
+        "looks_binary": true
+      }
+    }
+  },
+  "stooq_probe": {
+    "http": 200,
+    "bytes": 796,
+    "csv": false,
+    "head": "<!DOCTYPE html><html><head><meta charset=\"utf-8\"><meta name=\"robots\" content=\"noindex,nofollow\"></head><body><noscript>This site requires JavaScript to verify your browser. Please enable JavaScript an"
+  },
+  "yahoo_refresh": {
+    "status": "skipped_already_full"
+  },
+  "histdata_ok": 28,
+  "histdata_failed": [
+    {
+      "label": "2003",
+      "status": "not_zip",
+      "error": null
+    },
+    {
+      "label": "2004",
+      "status": "not_zip",
+      "error": null
+    },
+    {
+      "label": "2005",
+      "status": "not_zip",
+      "error": null
+    },
+    {
+      "label": "2006",
+      "status": "not_zip",
+      "error": null
+    },
+    {
+      "label": "2007",
+      "status": "not_zip",
+      "error": null
+    },
+    {
+      "label": "2008",
+      "status": "not_zip",
+      "error": null
+    }
+  ]
+}

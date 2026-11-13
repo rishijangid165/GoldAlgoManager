@@ -1,0 +1,30 @@
+{
+  "source": "Yahoo GC=F (futures). HistData XAUUSD ends 2026-11-06. Basis typically a few dollars.",
+  "h1_bars": 20,
+  "m15_bars": 78,
+  "session_high": 3927.199951171875,
+  "session_low": 3871.10009765625,
+  "asia_high": 3927.199951171875,
+  "asia_low": 3879.10009765625,
+  "asia_range": 48.099853515625,
+  "london_high": 3909.39990234375,
+  "london_low": 3889.10009765625,
+  "atr_1h_at_0300": 17.310208460776003,
+  "london_closed_outside_asia": false,
+  "ppi_window": "2026-11-13 08:30 ET / 19:00 IST (US winter)",
+  "asia_over_atr": 2.7786986866516754,
+  "width_filter_would_block_far_stop": false,
+  "london_closes": [
+    3900.5,
+    3905.6,
+    3895.7,
+    3897.2,
+    3892.9
+  ],
+  "day_m15_high": 3927.199951171875,
+  "day_m15_low": 3871.10009765625,
+  "max_after_01ET_before_PPI": 3910.199951171875,
+  "min_after_01ET_before_PPI": 3883.60009765625,
+  "ppi_0800_1000_high": 3909.89990234375,
+  "ppi_0800_1000_low": 3876.10009765625
+}

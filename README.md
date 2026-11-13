@@ -94,7 +94,7 @@ Installed (2026-11-12) and listed in `requirements.txt`:
 
 - Daily notes live at `research/daily-notes/YYYY-MM-DD.md`.
 - Write the idea in `research/strategy-ideas/` before implementing a backtest.
-- The first structured backtest and the live playbook live at `research/backtest/` and `research/playbook.md` (2026-11-13). Trade CSVs and equity curves are under `research/backtest/results/` and `figures/`.
+- The first structured backtest and the live playbook live at `research/backtest/` and `research/playbook.md` (playbook revised 2026-11-14 after a walk-forward on 2009–2026 spot data; see `research/deep-study-2026-11-14/REPORT.md`). Trade CSVs and equity curves are under `research/backtest/results/` and `figures/`.
 - Older convention: backtests also belong in `strategies/backtests/`. Promote only after a written review into `strategies/live-candidates/`.
 - Indicator code belongs in `indicators/`, not mixed into ad-hoc notebook cells that never get checked in.
 - Record mistakes, regime notes, and process changes in `journal/learning-log.md`.

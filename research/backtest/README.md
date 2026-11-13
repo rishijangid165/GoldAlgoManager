@@ -160,3 +160,7 @@ The recent selloff is where a *discretionary* supply rejection / Asia-high sweep
 - **Costs are a model** ($0.25 + $0.10 per side). A wider retail gold spread would shrink, not flip, the breakout edge at these stop distances (~$30–35), but it would hurt tight pullback/sweep stops more.
 
 The written playbook is `research/playbook.md`.
+
+## Follow-up: 2026-11-14 deep study
+
+The numbers above are unchanged and still describe the 1h `GC=F` sample (2024-07-07 to 2026-11-13). A later walk-forward on HistData **spot XAUUSD** (2009–2026, OOS years 2012–2026) found that this A-setup edge does **not** hold over the longer sample (OOS −0.03R; almost all of the profit is in 2024–2026). See `research/deep-study-2026-11-14/REPORT.md` and the 2026-11-14 playbook revision.

@@ -1,6 +1,6 @@
 {
-  "generated_at_ist": "2026-11-13 17:48:25 IST",
-  "generated_at_utc": "2026-11-13T12:18:25Z",
+  "generated_at_ist": "2026-11-13 20:47:15 IST",
+  "generated_at_utc": "2026-11-13T15:17:15Z",
   "timezone_label": "IST (Asia/Kolkata)",
   "account": {
     "server": "MetaQuotes-Demo",
@@ -8,7 +8,7 @@
     "mode": "demo",
     "symbol": "XAUUSD",
     "balance": 100046.1,
-    "equity": null,
+    "equity": 100046.1,
     "balance_display": "$100,046.10",
     "start_of_day_balance": 100046.1,
     "start_of_day_balance_display": "$100,046.10",
@@ -21,8 +21,8 @@
     "starting_capital": 100000.0,
     "first_ea_start_equity": 99999.95,
     "first_ea_start_equity_at_ist": "2026-11-13 01:06:20 IST",
-    "last_terminal_sync_positions": 1,
-    "last_terminal_sync_ist": "2026-11-13 17:47:07 IST"
+    "last_terminal_sync_positions": 0,
+    "last_terminal_sync_ist": "2026-11-13 20:45:42 IST"
   },
   "decision": {
     "bias": "NONE",
@@ -38,39 +38,25 @@
     "tp2": 0.0,
     "confidence": 0,
     "max_risk_pct": 0.5,
-    "generated_at_ist": "2026-11-13 17:47:56 IST",
-    "valid_until_ist": "2026-11-13 23:00 IST",
-    "valid_until_utc": "2026-11-13T17:30:00Z",
+    "generated_at_ist": "2026-11-13 20:46:49 IST",
+    "valid_until_ist": "2026-11-14 02:30 IST",
+    "valid_until_utc": "2026-11-13T21:00:00Z",
     "expired": false,
     "kill_switch": false,
     "in_news_blackout": false,
-    "news_blackout": [
-      {
-        "start_ist": "2026-11-13 18:30:00 IST",
-        "end_ist": "2026-11-13 20:30:00 IST",
-        "start_utc": "2026-11-13T13:00:00Z",
-        "end_utc": "2026-11-13T15:00:00Z",
-        "reason": "US October PPI 8:30am ET"
-      }
-    ],
-    "next_blackout": {
-      "start_ist": "2026-11-13 18:30:00 IST",
-      "end_ist": "2026-11-13 20:30:00 IST",
-      "start_utc": "2026-11-13T13:00:00Z",
-      "end_utc": "2026-11-13T15:00:00Z",
-      "reason": "US October PPI 8:30am ET"
-    },
-    "rationale": "Stand aside into PPI. SELL retest 3909-3913 never filled (price compressed 3890-3910 spot) and expired; Asia range 3875-3923 spot too wide for A-setup and London never closed outside it. D/4H still LH/LL bearish, spot ~3895, GC basis ~+4. No new entries 13:00-15:00Z PPI blackout; next run reassesses the post-PPI reaction (Friday, no new trades after 16:00 ET).",
+    "news_blackout": [],
+    "next_blackout": null,
+    "rationale": "Stand aside into Friday close. PPI (0.3% vs 0.4% m/m, 6.5% y/y) whipsawed 3873-3906 spot and both sides got swept; price back mid Asia range 3865-3923 (~3889), no London/NY close outside it, no clean with-trend sweep. D/4H LH/LL bearish below EMA20, 10y 5.16%, DXY 103.2. GC basis ~+5. No new trades after 16:00 ET Friday.",
     "status": "flat",
     "source": "/workspace/gold-algo/decisions/current.json"
   },
   "open_position": null,
-  "position_status": "unknown_open_in_terminal",
+  "position_status": "flat",
   "ea": {
     "name": "GoldAIBridge",
     "chart": "XAUUSD M15",
-    "last_decision_read_ist": "2026-11-13 13:08:30 IST",
-    "last_decision_bias": "SELL"
+    "last_decision_read_ist": "2026-11-13 18:34:14 IST",
+    "last_decision_bias": "NONE"
   },
   "trades": [
     {
@@ -150,10 +136,10 @@
       "sort": "2026-11-13T07:41:28+02:00"
     },
     {
-      "t": "2026-11-13 17:48 IST",
+      "t": "2026-11-13 20:47 IST",
       "label": "Last known balance",
       "equity": 100046.1,
-      "sort": "2026-11-13T17:48:25.391414+05:30"
+      "sort": "2026-11-13T20:47:15.997060+05:30"
     }
   ],
   "stats": {

@@ -80,6 +80,26 @@ wine MetaEditor64.exe /portable \
 
 The log is UTF-16. MetaEditor's process exit code was 1 even on a clean build; trust the log's `Result:` line, not the exit code.
 
+## Compile note (2026-11-13, v1.02)
+
+MT5 LiveUpdate around 12:17 UTC replaced `C:\MT5\MetaEditor64.exe` with build 6318 (70,119,528 bytes). That binary fails every compile under this Wine prefix with `(0,0) : error 124: fatal compiler error: unknown error`, including a 3-line script in a fresh portable folder. Do not compile from the live `C:\MT5` tree with that 6318 editor — and do not overwrite `C:\MT5\MQL5\Experts\GoldAIBridge.ex5` while the market is open.
+
+Workaround: the later-installer editor (`C:\MT5\MetaEditor64-fresh.exe`, 70,701,752 bytes) compiles cleanly when **copied as `MetaEditor64.exe` into a separate portable folder** (used `C:\MT5d`). Launching it as `MetaEditor64-fresh.exe` from the live tree did not produce a compile log. Example:
+
+```bash
+export PATH="/home/box/wine/wine-11.21-staging-amd64-wow64/bin:$PATH"
+export WINEPREFIX="/home/box/.wine-mt5"
+export WINEDLLOVERRIDES="mscoree,mshtml="
+export DISPLAY=":3"
+
+MT5D="/home/box/.wine-mt5/drive_c/MT5d"
+# (sandbox already has official Include/, our GoldAI*.mqh, and GoldAIBridge.mq5)
+cd "$MT5D"
+wine MetaEditor64.exe /portable   /compile:"MQL5\\Experts\\GoldAIBridge.mq5"   /log:"MQL5\\Experts\\compile.log"
+```
+
+v1.02 result: 0 errors, 0 warnings, 2804 ms, `ex5` 158,106 bytes. Copy the `ex5` into the live `C:\MT5\MQL5\Experts\` folder only after the gold market is closed, then reattach with `C:\MT5\GoldAIBridge.set`.
+
 ## Source fix
 
 First compile: **0 errors, 1 warning**.

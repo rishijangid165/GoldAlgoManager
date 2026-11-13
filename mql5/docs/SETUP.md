@@ -103,6 +103,37 @@ The bundled `decisions/current.json` starts with `"bias": "NONE"`, so the EA wil
 | `CloseOnBiasFlip` | true | Close the open GoldAI trade if a new decision changes bias (BUY↔SELL) or goes to NONE. |
 | `CloseOnKillSwitch` | true | If the file has `"kill_switch": true`, flatten GoldAI positions and do not open new ones. |
 
+### Friday close (v1.02)
+
+On Friday (server time) the EA flattens its own positions and pending orders shortly before the broker’s weekly gold close, then blocks new entries until after the weekend. A missed flatten is also attempted early Saturday (first 6 hours of server Saturday). The EA still uses **server time**, not your local clock.
+
+| Input | Default | Meaning |
+|---|---|---|
+| `FridayCloseEnabled` | true | Turn Friday auto-close on or off. |
+| `FridayCloseHHMM` | 0 | Flatten at this server time as `HHMM` (for example `2315` = 23:15). `0` means **auto**: 45 minutes before the symbol’s last Friday trade session end (`SymbolInfoSessionTrade`). If the session cannot be read, it falls back to 24:00 Friday minus 45 minutes (23:15 server). |
+| `FridayNoEntryMinutes` | 120 | Block new entries this many minutes before the flatten time (default 2 hours). |
+| `FridayCloseManual` | **false** | If true, also flatten **magic 0** manual positions and pending orders on this symbol. Other EAs’ magic numbers are never touched. Leave this off unless you want the EA to close your manual gold trades on Friday too. |
+
+A Telegram alert is sent when at least one position or pending order is closed this way (once per Friday).
+
+### Trailing after TP1 (v1.02)
+
+After the existing half-close at TP1 and the move to breakeven, the remaining half can trail. The stop **only tightens** (never loosens) and always respects the broker’s `StopsLevel` / freeze level. The trail is measured against the **current bid/ask**, not the original entry, so a profitable trail can sit beyond the entry.
+
+| Input | Default | Meaning |
+|---|---|---|
+| `TrailEnabled` | true | Trail the remaining half after TP1 + breakeven. |
+| `TrailUseSwing` | true | Use the last confirmed swing on `TrailTF` (last closed bars). BUY trails behind the last swing low; SELL behind the last swing high. |
+| `TrailUseATR` | true | Also compute a stop from `ATR(TrailATRPeriod) * TrailATRMult` on `TrailTF`. |
+| `TrailTF` | M15 | Timeframe for the swing and the ATR. |
+| `TrailSwingBars` | 2 | Bars on each side required to confirm a swing. |
+| `TrailATRPeriod` | 14 | ATR period. |
+| `TrailATRMult` | 1.0 | ATR multiplier. |
+| `TrailMinStepPoints` | 20 | Ignore a tighten smaller than this, in symbol points. |
+| `TrailTelegramMinSec` | 300 | Minimum seconds between trail Telegram alerts (throttled). |
+
+If both swing and ATR are on, the EA uses the **tighter** of the two valid stops. A Telegram alert is sent on each meaningful trail, subject to the throttle. Telegram failures never block a trail or a Friday close.
+
 ### Journal
 
 | Input | Default | Meaning |
@@ -111,7 +142,7 @@ The bundled `decisions/current.json` starts with `"bias": "NONE"`, so the EA wil
 
 ### Telegram alerts
 
-The EA can send a short plain-text message the moment a trade opens, TP1 is taken (partial close + stop to breakeven), a position closes, a new decision is received, or a hard error happens (decision WebRequest failure, kill switch, daily loss stop). A one-line `GoldAIBridge online` test is also sent when the EA is attached.
+The EA can send a short plain-text message the moment a trade opens, TP1 is taken (partial close + stop to breakeven), the remaining stop is trailed, a Friday auto-close flattens positions, a position closes, a new decision is received, or a hard error happens (decision WebRequest failure, kill switch, daily loss stop). A one-line `GoldAIBridge online` test is also sent when the EA is attached.
 
 | Input | Default | Meaning |
 |---|---|---|
@@ -165,9 +196,9 @@ python /workspace/gold-algo/scripts/write_decision.py --bias NONE \
 1. Assistant researches gold (levels, dollar, yields, news) and writes a new `current.json`.
 2. Within `PollMinutes`, the chart panel updates: bias, zone, SL, TPs, confidence, rationale, time left.
 3. If bias is BUY or SELL, confidence is high enough, spread is OK, and *price is inside the zone*, the EA opens **one** market trade. Lot size comes from risk percent and the distance to the file’s stop-loss.
-4. At TP1 it closes part of the position and moves the stop to breakeven. The rest targets TP2.
-5. If the file goes stale (`valid_until` has passed), the kill switch is on, or a news blackout window is active, it will not open a new trade. A kill switch or a bias flip can close an open trade.
-6. Everything is logged in the Experts log and in `GoldAI_journal.csv`. If Telegram is configured, the same events also send an instant message (trade opened, TP1 + breakeven, position closed with reason and P&L, new decision, or a hard error).
+4. At TP1 it closes part of the position and moves the stop to breakeven. The rest targets TP2, and from that point the remaining half can trail (structure swing and/or ATR) — the stop only tightens, and never tighter than the broker’s stop level.
+5. If the file goes stale (`valid_until` has passed), the kill switch is on, a news blackout window is active, or the Friday no-entry cutoff has been reached, it will not open a new trade. A kill switch or a bias flip can close an open trade. On Friday, at the configured flatten time (default: 45 minutes before the broker’s Friday gold session end), the EA closes its own positions, deletes its pending orders, and stays flat through the weekend.
+6. Everything is logged in the Experts log and in `GoldAI_journal.csv`. If Telegram is configured, the same events also send an instant message (trade opened, TP1 + breakeven, trailing stop move, Friday auto-close, position closed with reason and P&L, new decision, or a hard error).
 
 Review a session:
 

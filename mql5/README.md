@@ -2,7 +2,7 @@
 
 The MetaTrader 5 half of the gold system.
 
-- `Experts/GoldAIBridge.mq5` — EA that polls the AI decision file and trades only inside the given zone.
+- `Experts/GoldAIBridge.mq5` — EA (v1.02) that polls the AI decision file and trades only inside the given zone. Includes Friday auto-close and post-TP1 trailing.
 - `Include/` — JSON parser, decision struct, helpers, CSV journal. Copy these into `MQL5/Include/`.
 - `docs/SETUP.md` — install steps (English, simple wording).
 - `docs/decision.example.json` and `docs/decision.schema.json` — the file the EA expects.

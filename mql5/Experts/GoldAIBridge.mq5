@@ -10,9 +10,10 @@
 //| (Tools > Options > Expert Advisors). See mql5/docs/SETUP.md.     |
 //+------------------------------------------------------------------+
 #property copyright   "Gold Algo / Rishi Jangid"
-#property version     "1.01"
+#property version     "1.02"
 #property description "AI-directed gold EA. Polls a decision JSON and trades only inside the AI zone."
 #property description "Hard risk rules (risk %, daily loss, spread, max trades, demo lock) stay in the EA."
+#property description "v1.02: Friday auto-close before the weekly gold close, and structure/ATR trailing after TP1."
 #property description "DEMO only unless AllowRealAccount is explicitly enabled. See SETUP.md."
 
 #include <Trade\Trade.mqh>
@@ -51,6 +52,23 @@ input int    InpBreakevenOffsetPoints = 0;           // Extra points beyond entr
 input bool   InpCloseOnBiasFlip     = true;          // Close if a new decision flips bias or goes NONE
 input bool   InpCloseOnKillSwitch   = true;          // Close if the file raises kill_switch
 
+input group "Friday close"
+input bool   InpFridayCloseEnabled   = true;         // Flatten GoldAI trades before the weekly close
+input int    InpFridayCloseHHMM      = 0;            // Flatten at this server HHMM; 0 = 45 min before Friday session end
+input int    InpFridayNoEntryMinutes = 120;          // Block new entries this many minutes before the flatten time
+input bool   InpFridayCloseManual    = false;        // Also flatten magic-0 manual positions/orders on this symbol
+
+input group "Trailing after TP1"
+input bool             InpTrailEnabled        = true;     // Trail the remaining half after TP1 + breakeven
+input bool             InpTrailUseSwing       = true;     // Trail behind the last closed M15 swing high/low
+input bool             InpTrailUseATR         = true;     // Also consider ATR(period) * multiplier
+input ENUM_TIMEFRAMES  InpTrailTF             = PERIOD_M15; // Timeframe for swing and ATR
+input int              InpTrailSwingBars      = 2;        // Bars on each side to confirm a swing
+input int              InpTrailATRPeriod      = 14;       // ATR period
+input double           InpTrailATRMult        = 1.0;      // ATR multiplier
+input int              InpTrailMinStepPoints  = 20;       // Ignore a trail tighter than this (points)
+input int              InpTrailTelegramMinSec = 300;      // Min seconds between trail Telegram alerts
+
 input group "Journal"
 input string InpJournalFile         = "GoldAI_journal.csv"; // Written under MQL5/Files
 
@@ -78,6 +96,13 @@ string          g_last_reject        = "";
 string          g_pending_exit_reason = "";
 datetime        g_last_panel         = 0;
 bool            g_first_timer        = true;
+datetime        g_friday_flat_day    = 0;
+datetime        g_last_trail_notify  = 0;
+double          g_last_trail_sl      = 0.0;
+string          g_friday_status      = "";
+int             g_atr_handle         = INVALID_HANDLE;
+int             g_atr_period         = 0;
+ENUM_TIMEFRAMES g_atr_tf             = PERIOD_CURRENT;
 string          g_last_tg_key        = "";
 string          g_tg_decision_fp     = "";
 
@@ -522,6 +547,474 @@ double EffectiveRiskPct()
    return(risk);
   }
 
+
+//+------------------------------------------------------------------+
+//| Friday auto-close and post-TP1 trailing                            |
+//+------------------------------------------------------------------+
+datetime DayStartOf(const datetime t)
+  {
+   MqlDateTime st;
+   TimeToStruct(t, st);
+   st.hour = 0;
+   st.min  = 0;
+   st.sec  = 0;
+   return(StructToTime(st));
+  }
+
+//+------------------------------------------------------------------+
+//| Last trade-session end on Friday, in seconds from midnight.      |
+//| 86400 means the session runs to Friday 24:00 / Saturday 00:00.   |
+//+------------------------------------------------------------------+
+int FridaySessionEndSeconds()
+  {
+   int last = -1;
+   for(uint i = 0; i < 8; i++)
+     {
+      datetime from = 0;
+      datetime to   = 0;
+      if(!SymbolInfoSessionTrade(_Symbol, FRIDAY, i, from, to))
+         break;
+      int sec = (int)to;
+      if(sec >= 86400)
+         sec = 86400;
+      else
+         sec = (int)(to % 86400);
+      if(sec == 0 && from < to)
+         sec = 86400;
+      if(sec > last)
+         last = sec;
+     }
+   if(last <= 0)
+      last = 86400;
+   return(last);
+  }
+
+//+------------------------------------------------------------------+
+int FridayFlattenSeconds()
+  {
+   if(InpFridayCloseHHMM > 0)
+     {
+      const int hh = InpFridayCloseHHMM / 100;
+      const int mm = InpFridayCloseHHMM % 100;
+      if(hh >= 0 && hh <= 23 && mm >= 0 && mm <= 59)
+         return(hh * 3600 + mm * 60);
+     }
+   int end = FridaySessionEndSeconds();
+   int flat = end - 45 * 60;
+   if(flat < 0)
+      flat = 0;
+   return(flat);
+  }
+
+//+------------------------------------------------------------------+
+string FormatHHMMSS(const int sec_in)
+  {
+   int sec = sec_in;
+   if(sec >= 86400)
+      return("24:00");
+   if(sec < 0)
+      sec = 0;
+   const int hh = sec / 3600;
+   const int mm = (sec % 3600) / 60;
+   return(StringFormat("%02d:%02d", hh, mm));
+  }
+
+//+------------------------------------------------------------------+
+bool IsFridayOrEarlySaturday(const datetime t, int &dow, int &nowsec)
+  {
+   MqlDateTime st;
+   TimeToStruct(t, st);
+   dow = st.day_of_week;
+   nowsec = st.hour * 3600 + st.min * 60 + st.sec;
+   if(dow == FRIDAY)
+      return(true);
+   // Catch-up window: early Saturday, before the weekly close has long passed.
+   if(dow == SATURDAY && nowsec < 6 * 3600)
+      return(true);
+   return(false);
+  }
+
+//+------------------------------------------------------------------+
+bool FridayEntriesBlocked()
+  {
+   if(!InpFridayCloseEnabled)
+      return(false);
+   const datetime now = TimeCurrent();
+   int dow = 0, nowsec = 0;
+   if(!IsFridayOrEarlySaturday(now, dow, nowsec))
+      return(false);
+   const int flatten = FridayFlattenSeconds();
+   const int lead = (InpFridayNoEntryMinutes < 0 ? 0 : InpFridayNoEntryMinutes) * 60;
+   int cutoff = flatten - lead;
+   if(dow == SATURDAY)
+      return(true);
+   return(nowsec >= cutoff);
+  }
+
+//+------------------------------------------------------------------+
+bool FridayFlattenDue()
+  {
+   if(!InpFridayCloseEnabled)
+      return(false);
+   const datetime now = TimeCurrent();
+   int dow = 0, nowsec = 0;
+   if(!IsFridayOrEarlySaturday(now, dow, nowsec))
+      return(false);
+   const datetime today = DayStartOf(now);
+   const datetime friday_day = (dow == SATURDAY ? today - 86400 : today);
+   if(g_friday_flat_day == friday_day)
+      return(false);
+   if(dow == SATURDAY)
+      return(true);
+   return(nowsec >= FridayFlattenSeconds());
+  }
+
+//+------------------------------------------------------------------+
+int ClosePositionsByMagicFilter(const bool include_manual, const string reason)
+  {
+   int closed = 0;
+   for(int i = PositionsTotal() - 1; i >= 0; i--)
+     {
+      const ulong ticket = PositionGetTicket(i);
+      if(ticket == 0)
+         continue;
+      if(PositionGetString(POSITION_SYMBOL) != _Symbol)
+         continue;
+      const long magic = PositionGetInteger(POSITION_MAGIC);
+      const bool ours = (magic == InpMagicNumber);
+      const bool manual = (include_manual && magic == 0);
+      if(!ours && !manual)
+         continue;
+      if(ours)
+         g_pending_exit_reason = reason;
+      if(!g_trade.PositionClose(ticket))
+        {
+         Print("GoldAI Friday close failed ticket=", ticket,
+               " ret=", g_trade.ResultRetcode(),
+               " ", g_trade.ResultRetcodeDescription());
+        }
+      else
+        {
+         closed++;
+         Print("GoldAI Friday closed ticket=", ticket, " magic=", magic, " reason=", reason);
+         if(ours && g_tp1_done_ticket == ticket)
+            PersistTp1(0);
+        }
+     }
+   return(closed);
+  }
+
+//+------------------------------------------------------------------+
+int DeletePendingByMagicFilter(const bool include_manual)
+  {
+   int removed = 0;
+   for(int i = OrdersTotal() - 1; i >= 0; i--)
+     {
+      const ulong ticket = OrderGetTicket(i);
+      if(ticket == 0)
+         continue;
+      if(OrderGetString(ORDER_SYMBOL) != _Symbol)
+         continue;
+      const long magic = OrderGetInteger(ORDER_MAGIC);
+      const bool ours = (magic == InpMagicNumber);
+      const bool manual = (include_manual && magic == 0);
+      if(!ours && !manual)
+         continue;
+      if(!g_trade.OrderDelete(ticket))
+         Print("GoldAI Friday pending-delete failed ticket=", ticket,
+               " ", g_trade.ResultRetcodeDescription());
+      else
+        {
+         removed++;
+         Print("GoldAI Friday deleted pending ticket=", ticket, " magic=", magic);
+        }
+     }
+   return(removed);
+  }
+
+//+------------------------------------------------------------------+
+void ManageFridayClose()
+  {
+   g_friday_status = "";
+   if(!InpFridayCloseEnabled)
+      return;
+
+   const int flatten = FridayFlattenSeconds();
+   const int lead = (InpFridayNoEntryMinutes < 0 ? 0 : InpFridayNoEntryMinutes) * 60;
+   int cutoff = flatten - lead;
+   if(cutoff < 0)
+      cutoff = 0;
+   g_friday_status = "flatten " + FormatHHMMSS(flatten) +
+                     (InpFridayCloseHHMM > 0 ? " (manual HHMM)" : " (auto, 45m before session end)") +
+                     ", no entries after " + FormatHHMMSS(cutoff);
+
+   if(FridayEntriesBlocked())
+      g_friday_status += " | entries blocked";
+
+   if(!FridayFlattenDue())
+      return;
+
+   const int closed  = ClosePositionsByMagicFilter(InpFridayCloseManual, "friday_auto_close");
+   const int deleted = DeletePendingByMagicFilter(InpFridayCloseManual);
+   MqlDateTime st;
+   TimeToStruct(TimeCurrent(), st);
+   const datetime today = DayStartOf(TimeCurrent());
+   const datetime friday_day = (st.day_of_week == SATURDAY ? today - 86400 : today);
+   g_friday_flat_day = friday_day;
+   g_friday_status += " | flattened " + IntegerToString(closed) +
+                      " pos, " + IntegerToString(deleted) + " pending";
+
+   const string details = "flattened " + IntegerToString(closed) +
+                          " positions, deleted " + IntegerToString(deleted) +
+                          " pending; manual=" + (InpFridayCloseManual ? "yes" : "no");
+   g_journal.Write("FRIDAY_CLOSE",
+                   0,
+                   _Symbol,
+                   "",
+                   0, 0, 0, 0, 0, 0, 0, 0,
+                   "",
+                   details);
+   Print("GoldAI ", g_friday_status);
+   if(closed > 0 || deleted > 0)
+     {
+      string msg = "GoldAI Friday auto-close\n";
+      msg += "Closed positions: " + IntegerToString(closed) + "\n";
+      msg += "Deleted pending: " + IntegerToString(deleted) + "\n";
+      msg += "Manual (magic 0) included: " + (InpFridayCloseManual ? "yes" : "no") + "\n";
+      msg += "New entries blocked until after the weekend.";
+      const string key = "FRIDAY_CLOSE|" + TimeToString(friday_day, TIME_DATE);
+      NotifyTelegramOnce(key, msg);
+     }
+  }
+
+//+------------------------------------------------------------------+
+double LastClosedSwing(const bool want_high)
+  {
+   const int side = (InpTrailSwingBars < 1 ? 1 : InpTrailSwingBars);
+   const int need = side * 2 + 8;
+   double buf[];
+   ArraySetAsSeries(buf, true);
+   const int copied = (want_high
+                       ? CopyHigh(_Symbol, InpTrailTF, 1, need, buf)
+                       : CopyLow(_Symbol, InpTrailTF, 1, need, buf));
+   if(copied < side * 2 + 1)
+      return(0.0);
+   // buf[0] is the most recently closed bar (copy started at shift 1).
+   for(int i = side; i <= copied - 1 - side; i++)
+     {
+      bool is_swing = true;
+      for(int k = 1; k <= side; k++)
+        {
+         if(want_high)
+           {
+            if(!(buf[i] >= buf[i - k] && buf[i] > buf[i + k]))
+              {
+               is_swing = false;
+               break;
+              }
+           }
+         else
+           {
+            if(!(buf[i] <= buf[i - k] && buf[i] < buf[i + k]))
+              {
+               is_swing = false;
+               break;
+              }
+           }
+        }
+      if(is_swing)
+         return(buf[i]);
+     }
+   return(0.0);
+  }
+
+//+------------------------------------------------------------------+
+int TrailAtrHandle()
+  {
+   const int period = (InpTrailATRPeriod < 1 ? 14 : InpTrailATRPeriod);
+   if(g_atr_handle != INVALID_HANDLE && g_atr_period == period && g_atr_tf == InpTrailTF)
+      return(g_atr_handle);
+   if(g_atr_handle != INVALID_HANDLE)
+     {
+      IndicatorRelease(g_atr_handle);
+      g_atr_handle = INVALID_HANDLE;
+     }
+   g_atr_period = period;
+   g_atr_tf     = InpTrailTF;
+   g_atr_handle = iATR(_Symbol, InpTrailTF, period);
+   return(g_atr_handle);
+  }
+
+//+------------------------------------------------------------------+
+double CurrentATR()
+  {
+   const int handle = TrailAtrHandle();
+   if(handle == INVALID_HANDLE)
+      return(0.0);
+   double buf[];
+   ArraySetAsSeries(buf, true);
+   const int copied = CopyBuffer(handle, 0, 1, 3, buf);
+   if(copied < 1 || buf[0] <= 0.0)
+      return(0.0);
+   return(buf[0]);
+  }
+
+//+------------------------------------------------------------------+
+//| Trail only tightens, only after TP1, and only if the new stop    |
+//| stays a valid distance from the current bid/ask (StopsLevel).    |
+//+------------------------------------------------------------------+
+void TrailOpenPosition(const ulong ticket)
+  {
+   if(!InpTrailEnabled)
+      return;
+   if(!InpTrailUseSwing && !InpTrailUseATR)
+      return;
+   if(!PositionSelectByTicket(ticket))
+      return;
+
+   const long   type  = PositionGetInteger(POSITION_TYPE);
+   const double sl    = PositionGetDouble(POSITION_SL);
+   const double tp    = PositionGetDouble(POSITION_TP);
+   const double bid   = SymbolInfoDouble(_Symbol, SYMBOL_BID);
+   const double ask   = SymbolInfoDouble(_Symbol, SYMBOL_ASK);
+   const double point = SymbolInfoDouble(_Symbol, SYMBOL_POINT);
+   if(point <= 0.0 || bid <= 0.0 || ask <= 0.0)
+      return;
+
+   const int min_pts = GoldAI_StopsLevelPoints(_Symbol);
+   const double min_dist = min_pts * point;
+   const double step = (InpTrailMinStepPoints < 0 ? 0 : InpTrailMinStepPoints) * point;
+   const bool is_buy = (type == POSITION_TYPE_BUY);
+   const double market = (is_buy ? bid : ask);
+
+   double candidate = 0.0;
+   bool have = false;
+   string how = "";
+
+   if(InpTrailUseSwing)
+     {
+      const double sw = LastClosedSwing(!is_buy); // BUY: last swing low; SELL: last swing high
+      if(sw > 0.0)
+        {
+         candidate = sw;
+         have = true;
+         how = "swing";
+        }
+     }
+   if(InpTrailUseATR)
+     {
+      const double atr = CurrentATR();
+      if(atr > 0.0)
+        {
+         const double k = (InpTrailATRMult > 0.0 ? InpTrailATRMult : 1.0);
+         const double atr_sl = (is_buy ? bid - atr * k : ask + atr * k);
+         if(!have)
+           {
+            candidate = atr_sl;
+            have = true;
+            how = "ATR";
+           }
+         else
+           {
+            // Both on: use the tighter (more protective) of the two.
+            if(is_buy && atr_sl > candidate)
+              {
+               candidate = atr_sl;
+               how = "ATR";
+              }
+            if(!is_buy && atr_sl < candidate)
+              {
+               candidate = atr_sl;
+               how = "ATR";
+              }
+            if(how != "ATR" && how != "")
+               how = "swing+ATR";
+           }
+        }
+     }
+   if(!have || candidate <= 0.0)
+      return;
+
+   candidate = GoldAI_NormalizePrice(_Symbol, candidate);
+
+   // Must stay on the correct side of the market and respect StopsLevel.
+   if(is_buy)
+     {
+      const double max_sl = GoldAI_NormalizePrice(_Symbol, bid - min_dist);
+      if(candidate >= bid || (min_dist > 0.0 && candidate > max_sl))
+         candidate = max_sl;
+      if(candidate >= bid)
+         return;
+     }
+   else
+     {
+      const double min_sl = GoldAI_NormalizePrice(_Symbol, ask + min_dist);
+      if(candidate <= ask || (min_dist > 0.0 && candidate < min_sl))
+         candidate = min_sl;
+      if(candidate <= ask)
+         return;
+     }
+
+   // Only tighten (never loosen, never pull back through the current SL).
+   if(is_buy)
+     {
+      if(sl != 0.0 && candidate <= sl + 1e-12)
+         return;
+      if(step > 0.0 && sl != 0.0 && (candidate - sl) < step)
+         return;
+     }
+   else
+     {
+      if(sl != 0.0 && candidate >= sl - 1e-12)
+         return;
+      if(step > 0.0 && sl != 0.0 && (sl - candidate) < step)
+         return;
+     }
+
+   // Re-check a trail stop against current price (not the original entry —
+   // a profit-side trail will often sit beyond entry).
+   if(MathAbs(market - candidate) < min_dist)
+      return;
+
+   if(!g_trade.PositionModify(ticket, candidate, tp))
+     {
+      Print("GoldAI trail modify failed ticket=", ticket,
+            " ", g_trade.ResultRetcodeDescription());
+      return;
+     }
+
+   g_last_trail_sl = candidate;
+   Print("GoldAI trailed SL to ", DoubleToString(candidate, _Digits),
+         " (", how, ") on ticket ", ticket);
+   g_journal.Write("TRAIL",
+                   ticket,
+                   _Symbol,
+                   (is_buy ? "BUY" : "SELL"),
+                   PositionGetDouble(POSITION_VOLUME),
+                   market,
+                   candidate, tp, 0.0,
+                   0.0,
+                   g_decision.confidence,
+                   g_decision.generated_at,
+                   g_decision.rationale,
+                   "SL trailed after TP1 via " + how);
+
+   const datetime now = TimeCurrent();
+   const int gap = (InpTrailTelegramMinSec < 0 ? 0 : InpTrailTelegramMinSec);
+   if(gap == 0 || g_last_trail_notify == 0 || (now - g_last_trail_notify) >= gap)
+     {
+      string msg = "GoldAI trailing stop\n";
+      msg += (is_buy ? "BUY" : "SELL") + " ticket " + IntegerToString((long)ticket) + "\n";
+      msg += "New SL: " + DoubleToString(candidate, _Digits);
+      msg += "  (was " + DoubleToString(sl, _Digits) + ")\n";
+      msg += "Method: " + how;
+      if(NotifyTelegram(msg))
+         g_last_trail_notify = now;
+      else
+         g_last_trail_notify = now; // still throttle even if send failed, to avoid a burst
+     }
+  }
+
 //+------------------------------------------------------------------+
 //| Handle kill switch and bias flips against an open position.      |
 //+------------------------------------------------------------------+
@@ -569,9 +1062,12 @@ void ManageOpenPosition()
    const double ask    = SymbolInfoDouble(_Symbol, SYMBOL_ASK);
    const double point  = SymbolInfoDouble(_Symbol, SYMBOL_POINT);
 
-   if(!g_have_decision || !GoldAI_HasPartialTp(g_decision))
-      return;
    if(ticket == g_tp1_done_ticket)
+     {
+      TrailOpenPosition(ticket);
+      return;
+     }
+   if(!g_have_decision || !GoldAI_HasPartialTp(g_decision))
       return;
 
    const double tp1 = GoldAI_NormalizePrice(_Symbol, g_decision.tp1);
@@ -711,6 +1207,11 @@ void TryOpenTrade()
    if(g_decision.kill_switch)
      {
       g_status = "KILL SWITCH is on - no new trades";
+      return;
+     }
+   if(FridayEntriesBlocked())
+     {
+      g_status = "FRIDAY CLOSE: new entries blocked (" + g_friday_status + ")";
       return;
      }
 
@@ -889,7 +1390,7 @@ void UpdatePanel(const bool force)
 
    const int digits = _Digits;
    string lines = "";
-   lines += "======= GoldAI Bridge v1.01 =======\n";
+   lines += "======= GoldAI Bridge v1.02 =======\n";
    lines += "Account:  " + GoldAI_AccountModeText() +
             "  #" + IntegerToString(AccountInfoInteger(ACCOUNT_LOGIN)) +
             "  " + AccountInfoString(ACCOUNT_CURRENCY) + "\n";
@@ -934,6 +1435,17 @@ void UpdatePanel(const bool force)
    lines += "Daily P/L: " + DoubleToString(-DailyLossPct(), 2) +
             "% of start equity  (cap -" + DoubleToString(InpMaxDailyLossPct, 2) + "%)\n";
    lines += "Telegram: " + ((InpEnableTelegram && InpTelegramToken != "" && InpTelegramChatId != "") ? "enabled" : "off") + "\n";
+   if(InpFridayCloseEnabled)
+      lines += "Friday:   " + (g_friday_status == "" ? "armed" : g_friday_status) + "\n";
+   else
+      lines += "Friday:   off\n";
+   if(InpTrailEnabled)
+      lines += "Trail:    after TP1  " +
+               (InpTrailUseSwing ? "swing " : "") +
+               (InpTrailUseATR ? ("ATR(" + IntegerToString(InpTrailATRPeriod) + ")*" + DoubleToString(InpTrailATRMult, 2) + " ") : "") +
+               EnumToString(InpTrailTF) + "\n";
+   else
+      lines += "Trail:    off\n";
 
    ulong ticket = 0;
    if(SelectOurPosition(ticket))
@@ -958,6 +1470,7 @@ void UpdatePanel(const bool force)
 void ManageAndMaybeEnter()
   {
    RefreshDailyWindow();
+   ManageFridayClose();
    EnforceDecisionOnOpenTrade();
    ManageOpenPosition();
    TryOpenTrade();
@@ -1045,6 +1558,11 @@ int OnInit()
 void OnDeinit(const int reason)
   {
    EventKillTimer();
+   if(g_atr_handle != INVALID_HANDLE)
+     {
+      IndicatorRelease(g_atr_handle);
+      g_atr_handle = INVALID_HANDLE;
+     }
    Comment("");
    Print("GoldAI stopped, reason=", reason);
   }

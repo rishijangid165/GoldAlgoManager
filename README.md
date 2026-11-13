@@ -37,9 +37,11 @@ gold-algo/
 ```
 
 
-## MT5 AI-directed trading (v1)
+## MT5 AI-directed trading (v1.02)
 
 The assistant researches gold and writes `decisions/current.json`. The MetaTrader 5 EA `mql5/Experts/GoldAIBridge.mq5` polls that file (WebRequest or a local file) and will only open a trade when price is inside the AI entry zone. Hard risk caps stay locked in the EA. Demo only by default.
+
+v1.02 adds a Friday auto-close before the weekly gold close (and a no-entry cutoff ahead of it) plus a structure/ATR trailing stop on the remaining half after TP1. Both are described in `mql5/docs/SETUP.md`.
 
 Install steps, inputs, and hosting notes: `mql5/docs/SETUP.md`.
 

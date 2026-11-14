@@ -1,0 +1,42 @@
+{
+  "source": "MetaQuotes-Demo MT5, XAUUSD, MetaTrader5.copy_rates_range (read-only)",
+  "server_tz": "ET+7 (EET/EEST on US DST dates)",
+  "terminal_maxbars": 100000,
+  "files": {
+    "M1": {
+      "file": "data/broker/XAUUSD_M1.csv",
+      "rows": 100000,
+      "first_utc": "2026-07-31 06:40:00",
+      "last_utc": "2026-11-13 20:59:00",
+      "median_spread_usd": 0.17
+    },
+    "M15": {
+      "file": "data/broker/XAUUSD_M15.csv",
+      "rows": 100000,
+      "first_utc": "2022-08-11 19:45:00",
+      "last_utc": "2026-11-13 20:45:00",
+      "median_spread_usd": 0.07
+    },
+    "H1": {
+      "file": "data/broker/XAUUSD_H1.csv",
+      "rows": 100000,
+      "first_utc": "2009-10-13 09:00:00",
+      "last_utc": "2026-11-13 20:00:00",
+      "median_spread_usd": 0.15
+    },
+    "H4": {
+      "file": "data/broker/XAUUSD_H4.csv",
+      "rows": 33546,
+      "first_utc": "2005-01-02 22:00:00",
+      "last_utc": "2026-11-13 18:00:00",
+      "median_spread_usd": 0.05
+    },
+    "D1": {
+      "file": "data/broker/XAUUSD_D1.csv",
+      "rows": 5763,
+      "first_utc": "2004-06-10 21:00:00",
+      "last_utc": "2026-11-12 22:00:00",
+      "median_spread_usd": 0.05
+    }
+  }
+}

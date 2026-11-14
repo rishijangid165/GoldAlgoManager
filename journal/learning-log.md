@@ -74,3 +74,11 @@ Owner asked for a full-night research pass: gold behaviour from the start of ava
 - Compiled in C:\MT5d: 0 errors, 0 warnings, ex5 221,744 bytes. Not deployed (C:\MT5 untouched). news.json windows were correct all along.
 - Lesson: never trust one platform time base; validate each record against a known schedule and test both connected and unconnected states.
 - Side effect: the throwaway probe terminal (C:\MT5cal, now deleted) was auto-updated by LiveUpdate to build 6320 despite /skipupdate; the 6320 package sits in the shared AppData liveupdate cache. Keep /skipupdate on live restarts.
+
+## 2026-11-14 12:22 IST — Weekend study: full broker M1, pre-registered, Holm-corrected (playbook v3.2)
+- Data: copy_rates_range still caps at 100k bars per TF even with "Max bars" Unlimited (chart caches only rebuild on restart, which we avoid). Decoded the terminal's own .hcc M1 base files read-only instead: 7,100,401 M1 bars, 2004-06 → 2026-11, exact match with API M1 and H1 on the overlap. Stored spread is 0 before 2010 and compressed in old history, so the live-window hourly floor ($0.13–0.30) is used.
+- Pre-registration committed first (e2d7509, 12:08 IST), then tests. Same-bar order: immaterial (0–2 ambiguous trades per setup). FOMC (+0.32R, PF 1.72) and Donchian long (+0.27R, PF 1.52) still pass. NY London break fails broker data a second time (PF 1.18, 7/15) → §5 on probation, rules unchanged. Asia + D+4H still a knife-edge fail.
+- 14 new ideas + 12 exit variants: 0 survive Holm (best p 0.010–0.011 vs 0.0036–0.0042). CPI 30m, prior-day H/L break, Donchian ATR filter, FOMC chandelier → watchlist only.
+- Realism: the live EA's Friday close (16:15 ET) keeps FOMC/Donchian passing but takes NY/Asia to ~0R in 2012–2023. The EA's post-TP1 trail is not the tested exit and costs NY/Donchian/Asia 0.02–0.05R per trade. Owner decision pending (PROPOSALS P1).
+- Lesson: check how the live executor really manages trades (Friday flatten, trailing) before trusting a backtest. Live-vs-test gaps were bigger than any new idea's edge.
+- Lesson: with 4–20 trades a year, a 14-test family needs p < 0.004. Expect most "good-looking" ideas to land on the watchlist; that is the system working, not failing.

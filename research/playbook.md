@@ -1,10 +1,12 @@
 # XAUUSD playbook
 
-Version 2026-11-14 (v3.1). Gold only. Demo first. The assistant reads the chart and writes the decision; the EA (`GoldAIBridge`) only executes inside the published zone, with the hard risk caps below locked in the EA.
+Version 2026-11-15 (v3.2). Gold only. Demo first. The assistant reads the chart and writes the decision; the EA (`GoldAIBridge`) only executes inside the published zone, with the hard risk caps below locked in the EA.
 
 **v2 change (out-of-sample):** the unfiltered Asia-range breakout is no longer described as a durable, automatic edge. The 2024-07-07 to 2026-11-13 `GC=F` book (132 trades, +0.37R, PF 1.79; see `research/backtest/README.md`) and the same window on spot XAUUSD (128 trades, +0.27R, PF 1.52) are real — but a 2012–2026 walk-forward on HistData spot 1h does **not** confirm it (A-setup OOS −0.03R, PF 0.93, only 6 of 15 years green; 2012–2023 was −0.09R). Evidence and the tests we refused to adopt are in `research/deep-study-2026-11-14/REPORT.md`. Hard risk rules are unchanged.
 
 **v3 change (Phase 2, 12 pre-registered variants, 0 post-hoc adds):** three ideas *did* clear a bar that also requires 2012–2023 not to be a hidden loss (OOS n≥40, avg R>0, PF≥1.20, ≥8/15 green years, and 2012–2023 avg R≥0 and PF≥1.0). They are now sections 5–7: a New York close-break of the completed London range *with* the daily+4H MA trend (OOS +0.13R, PF 1.23, 10/15 years, and 2012–2023 also +0.12R); FOMC continuation after the first 60 minutes (OOS +0.38R, PF 1.86, 11/15 years, thin sample); and a 20-day Donchian *long-only* core (OOS +0.34R, PF 1.74, 11/15 years). Two-way and 200-SMA-regime Donchian officially passed as well, but we operationalize long-only — shorts are not the source of that edge. Seven other Phase 2 ideas, including London-mid pullbacks, news fades, NFP continuation, and prior-day sweep-and-reclaim, stay on the watchlist. Details: `research/deep-study-2026-11-14/PHASE2.md`.
+
+**v3.2 change (2026-11-15 weekend study, full broker M1 2004–2026, pre-registered, Holm-corrected; `research/weekend-study-2026-11-15/REPORT.md`):** every trade was re-run minute by minute on MetaQuotes-Demo data with the real spread. The old conservative same-bar rule turned out not to matter (0–2 trades per setup). FOMC continuation and the Donchian long still pass. The **NY London-range break failed the bar on broker data twice** (PF 1.18–1.20; 2012–2023 about 0R once the EA's Friday close is applied), so section 5 is now on **probation**: rules unchanged, the forward record decides. None of the 14 new ideas (CPI/NFP continuation, prior-day high/low break, ATR-percentile filters, weekly-gap fade/go, 15m versions) and none of the 12 exit variants survived the multiple-testing correction, so no new rule was added.
 
 Those tests are still rule-based approximations, not a promise that live broker-spot trades will match the numbers. If a setup did not show a clear *and stable* edge, it is not an automatic trigger here.
 
@@ -52,7 +54,7 @@ Stand aside (bias NONE) when any of these is true:
 - Asia range is too tight (`< $5`) or too wide (stop would exceed ~3× 1h ATR, recently often ~$45–60). Skip the Asia breakout. The 2026-11-14 study did **not** find an edge in dropping this cap or in using a half-range stop so that wide days can still trade; wide days also have worse 1.5R continuation. Keep the skip as a sanity filter. The same $5 / 3× 1h ATR cap applies to the NY London-range break (section 5).
 - The close that would trigger a breakout has already run more than **half the relevant range** (Asia for section 4, London for section 5) beyond the level — that is a chase. Wait for a later retest, or stand aside.
 - After a −2% day, or after a messy gap through the planned stop.
-- The last hour of the COMEX week (after 16:00 ET Friday) — do not *open* a new trade into the weekend. An already-open A-setup or NY London-range trade may be held; weekend holds of breakouts were profitable on average in the test, but gap risk is real (one historical stop slipped −1.1R). A Donchian long that triggers on Friday’s daily close is entered at the **Sunday 18:00 ET** open, so the Sunday gap *is* the entry — size from the actual stop at that fill, and skip if R:R to 1.5R is no longer there.
+- **Friday:** no new entries after **14:15 ET**. The EA (`GoldAIBridge`, Friday auto-close on) flattens GoldAI trades at about **16:15 ET** (45 minutes before the session end). Weekend holds therefore do not happen on the live book. The 2026-11-15 study re-ran every setup with that Friday close: FOMC and Donchian still pass (Donchian PF 1.88, max DD 2.0%), while NY and Asia drop to about 0R in 2012–2023. A Donchian long that triggers on Friday’s daily close is entered at the **Sunday 18:00 ET** open, so the Sunday gap *is* the entry. Size from the actual stop at that fill, and skip if R:R to 1.5R is no longer there. A Donchian long flattened on Friday is re-entered on Sunday only if Friday’s close is a fresh 20-day breakout.
 - Any doubt about the basis (spot vs `GC=F`) that would mis-place the zone by more than a few dollars.
 
 ---
@@ -62,6 +64,8 @@ Stand aside (bias NONE) when any of these is true:
 **Status, 2026-11-14 v3:** this remains a setup whose *shape* we will still take when it is clean, but it is **not** a proven 15-year edge. On `GC=F` 1h, 2024-07-07 to 2026-11-13, the unfiltered book was 132 trades, 53.8% win rate, **+0.37R**, PF **1.79**, max DD **−3.4%** (London +0.53R). The same rules on spot XAUUSD in that window were still positive (+0.27R, PF 1.52). On spot walk-forward **2012–2026**, the same A-setup was **−0.03R**, PF 0.93, 6/15 years green, and **2012–2023 was −0.09R**. Almost all of the profit sat in 2024–2026. London-only, which looked best in the short futures sample, was negative on the long OOS (−0.04R).
 
 The Phase 2 work did **not** rescue this Asia-range rule. What *did* hold on 2012–2026 is a different breakout: New York’s first close through the *London* range, with a hard daily+4H gate (section 5). Do not confuse the two.
+
+Broker M1 check (2026-11-15) of the D+4H-gated version: OOS 2012–2026 326 trades, +0.109R, PF 1.19 (bar 1.20), 8/15 green years, 2012–2023 +0.017R, and +0.025R with the EA Friday close. A 15m-signal version was no better (2012–2023 +0.005R). Still not an edge.
 
 Until later reviews show the 2024–2026 Asia edge holding up — or clearly dying — take this setup only when it is clean, prefer it *with* the 4H/daily trend rather than against it, and do not size it as if +0.37R were a long-run expectancy. If the next few months go stale, the default is back to **NONE**, not a wider set of weaker rules.
 
@@ -87,9 +91,16 @@ Until later reviews show the 2024–2026 Asia edge holding up — or clearly dyi
 
 ---
 
-## 5. NY London-range break, with daily+4H trend (mechanical)
+## 5. NY London-range break, with daily+4H trend (mechanical) — PROBATION
 
-**Status, 2026-11-14 v3 — adopted.** This is the session setup that actually held on the long sample. HistData spot 1h, OOS 2012–2026: **286 trades**, 44.4% wins, **+0.134R**, PF **1.23**, max DD **−5.9%**, **10 of 15** years green. 2012–2023 was also positive (**+0.122R**, PF 1.21, 195 trades); 2024–2026 was **+0.161R**, PF 1.26. Average hold about 50 hours. The 4H-only twin missed the bar (OOS PF 1.13) and is not a licence to drop the daily filter. The in-sample warmup (2009–2011) was negative (−0.21R, 38 trades) — noted, not a reason to ignore the OOS bar we pre-registered. 2026 through 6 Nov is a red year so far (−0.11R, 22 trades).
+**Status, 2026-11-15 v3.2 — probation.** On MetaQuotes-Demo broker data it misses the pre-registered bar:
+- H1 retest: 286 trades, +0.114R, PF 1.197.
+- Minute-managed, real spread: 286 trades, **+0.106R, PF 1.18**, only 7/15 green years. 2012–2023 was **+0.025R** (4 green years, 8 red), and **−0.002R** once the EA’s Friday close is applied. The profit sits in 2024–2026 (+0.29R).
+- A 15m-signal version was not better (2012–2023 −0.008R).
+
+Rules are unchanged, and nothing is loosened to rescue it. Still publish it when it triggers exactly, labelled “probation” in the decision note. If the forward paper/live book (`journal/paper_trades.csv`) is flat or negative after about 15 trades, demote it to the watchlist.
+
+**Original v3 status (HistData, 2026-11-14) — adopted.** This is the session setup that actually held on the long sample. HistData spot 1h, OOS 2012–2026: **286 trades**, 44.4% wins, **+0.134R**, PF **1.23**, max DD **−5.9%**, **10 of 15** years green. 2012–2023 was also positive (**+0.122R**, PF 1.21, 195 trades); 2024–2026 was **+0.161R**, PF 1.26. Average hold about 50 hours. The 4H-only twin missed the bar (OOS PF 1.13) and is not a licence to drop the daily filter. The in-sample warmup (2009–2011) was negative (−0.21R, 38 trades) — noted, not a reason to ignore the OOS bar we pre-registered. 2026 through 6 Nov is a red year so far (−0.11R, 22 trades).
 
 ### Setup
 
@@ -110,7 +121,9 @@ Until later reviews show the 2024–2026 Asia edge holding up — or clearly dyi
 
 ## 6. FOMC continuation after 60 minutes (mechanical, rare)
 
-**Status, 2026-11-14 v3 — adopted, thin sample.** OOS 2012–2026: **62 trades** (about four a year), 58.1% wins, **+0.380R**, PF **1.86**, max DD **−2.6%**, **11 of 15** years green. 2012–2023 +0.369R / PF 1.82; 2024–2026 +0.419R / PF 1.96; in-sample also positive. Holds average ~50 hours. Yearly counts are small; 2014, 2022, and 2025 were red or weak. The fade twin lost badly (OOS −0.57R, PF 0.31) — do not fade.
+**Status, 2026-11-15 v3.2 — adopted, confirmed on broker M1:** 68 OOS trades, +0.321R, PF 1.72, 10/15 green years, 2012–2023 +0.320R. With the EA’s Friday close: +0.426R, PF 2.05, 13/15. A chandelier/trailing exit looked better (+0.29R per trade) but did not survive the multiple-testing correction. Watchlist only; keep the 1.5R/3R scale.
+
+**Original v3 status (2026-11-14) — adopted, thin sample.** OOS 2012–2026: **62 trades** (about four a year), 58.1% wins, **+0.380R**, PF **1.86**, max DD **−2.6%**, **11 of 15** years green. 2012–2023 +0.369R / PF 1.82; 2024–2026 +0.419R / PF 1.96; in-sample also positive. Holds average ~50 hours. Yearly counts are small; 2014, 2022, and 2025 were red or weak. The fade twin lost badly (OOS −0.57R, PF 0.31) — do not fade.
 
 ### Setup
 
@@ -124,7 +137,9 @@ Until later reviews show the 2024–2026 Asia edge holding up — or clearly dyi
 
 ## 7. 20-day Donchian long-only (low-frequency core)
 
-**Status, 2026-11-14 v3 — adopted, with an occupancy caveat.** OOS 2012–2026, longs only: **79 trades**, 51.9% wins, **+0.342R**, PF **1.74**, max DD **−3.5%**, **11 of 15** years green. 2012–2023 was **+0.168R**, PF 1.30 (58 trades) — not a 2024 residual — though 2024–2026 was much stronger (+0.822R, PF 4.25). In-sample already +0.33R. Average hold about **610 hours (~25 days)**.
+**Status, 2026-11-15 v3.2 — adopted, confirmed on broker M1:** 80 OOS trades, +0.266R, PF 1.52, 11/15 green years, 2012–2023 +0.069R / PF 1.12 (thin), 2005–2011 backcast +0.61R. Live, the EA flattens it every Friday (93% of tested Donchian trades spanned a weekend). With that Friday close the book still passes (160 trades, +0.174R, PF 1.88, max DD 2.0%). Skipping the top-20% daily-ATR days looked better but did not survive the multiple-testing correction (watchlist).
+
+**Original v3 status (2026-11-14) — adopted, with an occupancy caveat.** OOS 2012–2026, longs only: **79 trades**, 51.9% wins, **+0.342R**, PF **1.74**, max DD **−3.5%**, **11 of 15** years green. 2012–2023 was **+0.168R**, PF 1.30 (58 trades) — not a 2024 residual — though 2024–2026 was much stronger (+0.822R, PF 4.25). In-sample already +0.33R. Average hold about **610 hours (~25 days)**.
 
 Two-way Donchian (OOS +0.121R, PF 1.21) and the 200-SMA regime variant (OOS +0.156R, PF 1.29) officially met the same bar. We still **do not short Donchian breaks**: 2012–2023 for two-way was only +0.056R / PF 1.08, and for the regime variant was a hairline +0.007R / PF 1.004. The edge is the longs.
 
@@ -176,6 +191,7 @@ The only hint of edge is a **clear sell** of a 4H supply zone in an *established
 - **Entry zone** in *spot* XAUUSD, with the futures–spot basis stated in the note. Keep the zone tight enough that a fill still leaves ≥ 1.5R to TP1 after a typical $0.20–0.40 spread.
 - **SL** beyond structure (far side of the Asia range for section 4; far side of the London range for section 5; beyond the 14:00 FOMC bar for section 6; 2× daily ATR for a Donchian long; beyond the wick for a discretionary B or supply sell), plus a small ATR buffer where the rule calls for one. Do not tighten after a paper fill to juice size.
 - **TP1 = 1.5R**, half off, stop of the runner to **entry**. **TP2 = 3R** or the next opposite swing if it sits between 1.5R and 3R.
+- **Tested exit vs the EA:** the EA (v1.02+) also trails the runner after TP1 (M15 swing or 1× M15 ATR). That is **not** the tested exit. On the same trades it lowered expectancy for NY (−0.05R), Donchian (−0.04R) and Asia (−0.02R), and helped FOMC (+0.10R, not significant). Switching the trail off is an open owner decision (`research/weekend-study-2026-11-15/PROPOSALS.md`, P1).
 - **`valid_until`** should expire before the next news blackout, before 13:00 ET for an Asia A-setup that has not triggered, or before 12:00 ET for a NY London-range setup that has not triggered. A FOMC-continuation zone is valid for the 15:00 open, not all afternoon. A Donchian long is valid at the 18:00 ET open only.
 - One decision, one zone, one direction. If the idea is gone, publish **NONE** rather than leaving a stale bias.
 
@@ -185,7 +201,7 @@ The only hint of edge is a **clear sell** of a 4H supply zone in an *established
 
 1. News blackout / daily loss stop / kill switch → **NONE**, except the section 6 FOMC continuation at 15:00 ET.
 2. **FOMC continuation** (section 6) if it is valid — rare, high expectancy, short hold.
-3. Else **NY London-range break with daily+4H** (section 5) if it is valid and no trade is on. This is the workhorse.
+3. Else **NY London-range break with daily+4H** (section 5) if it is valid and no trade is on. It is on **probation** since v3.2: take it only exactly as written, and label it.
 4. Else **Asia-range A-setup** (section 4) if it is still valid and clean, as qualified in v2, and no later adopted setup has taken the slot.
 5. Else a **fresh Donchian long** (section 7) at the 18:00 ET open, only if the book is otherwise empty. If a section 5 or 6 setup is also available, prefer those and use the Donchian break as regime confirmation, not a second ticket.
 6. Else **B-setup** (section 8) or a *discretionary* downtrend supply rejection (section 9), only as written, and only if nothing above is on.
@@ -202,7 +218,7 @@ Do not let a 25-day Donchian long starve sections 5 and 6. The backtest combo th
 - If an Asia A-setup has not triggered by 13:00 ET, cancel it. If a NY London-range setup has not triggered by 12:00 ET, cancel it. Then NONE until the next session’s ranges are complete, unless section 6 applies later that day.
 - **FOMC days:** stand aside 13:30–15:30 except for a possible 15:00 ET continuation entry. After the event, re-read D/4H/1H from scratch. Do not reuse a pre-news Asia or London-break zone.
 - **18:00 ET** (Sunday reopen after Friday): if Friday’s daily closed above the prior 20-session high and the book is empty, consider the Donchian long at that open.
-- Weekend: no new Friday 16:00 ET entries. Review open risk before the Sunday 18:00 ET reopen.
+- Weekend: no new entries after 14:15 ET Friday (the EA flattens GoldAI trades at about 16:15 ET). Review open risk before the Sunday 18:00 ET reopen.
 
 ---
 
@@ -227,6 +243,16 @@ Phase 2 (12 variants, 0 post-hoc; full tables in `PHASE2.md`):
 - **Prior-day high/low sweep-and-reclaim with D+4H**, NY (OOS −0.003R) or London (OOS −0.27R).
 - **Donchian shorts**, including two-way and 200-SMA-regime shorts, even though those IDs formally passed: 2012–2023 contribution is thin; the operational C-rule is long-only.
 
+Weekend study 2026-11-15 (full broker M1, 14 new ideas plus 12 exits, Holm-corrected; `research/weekend-study-2026-11-15/`):
+
+- **CPI continuation** after 60 minutes (OOS −0.17R) and after 30 minutes (OOS +0.17R, but negative in 2024–2026 and in 2005–2011).
+- **NFP continuation** after 30 minutes (+0.01R) and after 60 minutes on M15 (+0.16R, 7/15 green years).
+- **Weekly-open gap fade** (−0.15R) and **gap-and-go** (−0.08R). About half of gaps of $3 or more fill by the end of the Sunday session, but neither side is tradable.
+- **ATR-percentile filters** on the NY break, Asia break and Donchian. Filtered books improved, but none survived the correction; the Donchian ≤ 80th-percentile filter was the closest (p 0.011 against 0.0036).
+- **15m-signal versions** of the NY London-range break and the Asia breakout: no 2012–2023 edge.
+- **Exits:** fixed 2R (no partial), a chandelier trail, and the EA’s M15 trail. No exit beat the 1.5R + BE + 3R baseline after correction.
+- **Weekday/session filters:** none survived (Wednesday NY breaks looked poor, but that is a post-hoc slice).
+
 ---
 
 ## 14. Watchlist (not rules yet)
@@ -236,15 +262,21 @@ Phase 2 (12 variants, 0 post-hoc; full tables in `PHASE2.md`):
 - NFP continuation: good in 2012–2023, poor in 2024–2026. Watch, do not start trading it.
 - 4H-only NY London-range break (PF 1.13) — interesting, not a reason to loosen D+4H.
 - Friday upward drift on session daily (2012–2026 close–open about +$1, 55% up). Do not turn this into a Friday long.
-- A verified CPI/PPI calendar, and Dukascopy / broker M1 for 2003–2008 and for days HistData has not published yet.
+- A verified PPI calendar. CPI dates now come from ALFRED vintages (`research/weekend-study-2026-11-15/cpi_dates.csv`), and broker M1 now covers 2004–2026.
 - Futures–spot basis around GC rolls can be tens of dollars; always recompute before publishing a zone.
+- From the 2026-11-15 study, for a *new* pre-registered round on data after 2026-11-15 only:
+  - Donchian long with a daily-ATR ≤ 80th-percentile filter.
+  - FOMC continuation with a chandelier exit.
+  - Asia + D+4H with a chandelier exit.
+  - Prior-session high/low first break at the NY open with D+4H.
+  - Asia-session long drift (+0.03% a session, mostly 2024–2026).
 - A second “core trend” slot so a Donchian long can run beside the tactical book. Not adopted; would need an explicit risk-budget decision.
 
 ---
 
 ## 15. What this book does not claim
 
-The original supporting test used `GC=F` 1h history of about 28 months, a cost model, no full news calendar, and conservative same-bar stops. The 2026-11-14 studies added ~17 years of spot XAUUSD (HistData, 2009-03 to 2026-11-06) and a 2012–2026 walk-forward, then a 12-variant Phase 2 search with a pre-registered bar. The file still has no official CPI/PPI calendar, and 7–13 Nov 2026 is futures-only. FOMC continuation has only 62 OOS trades. Live trading is still a human (or AI) chart read plus the EA’s hard caps — not a fully automated signal bot. If future checks show an adopted window going stale, the default is back to **NONE**, not a wider set of weaker rules.
+The original supporting test used `GC=F` 1h history of about 28 months, a cost model, no full news calendar, and conservative same-bar stops. The 2026-11-14 studies added ~17 years of spot XAUUSD (HistData, 2009-03 to 2026-11-06) and a 2012–2026 walk-forward, then a 12-variant Phase 2 search with a pre-registered bar. The 2026-11-15 weekend study re-ran everything on the full MetaQuotes-Demo M1 history (2004–2026, 7.1 M bars), with the real spread and minute-by-minute trade management, and added a CPI calendar. One broker's quotes are still one source. Old stored spreads look compressed, so a live-window spread floor is used. FOMC continuation has only 68 OOS trades. Live trading is still a human (or AI) chart read plus the EA’s hard caps — not a fully automated signal bot. If future checks show an adopted window going stale, the default is back to **NONE**, not a wider set of weaker rules.
 
 ---
 

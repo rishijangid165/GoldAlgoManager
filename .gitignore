@@ -25,3 +25,4 @@ decisions/current.json
 
 # Broker MT5 history pulls (large; rebuild with scripts/mt5_wine/*_ro.py + research/broker-retest-2026-11-14/broker_data.py)
 data/broker/*.csv
+data/broker/*.csv.gz

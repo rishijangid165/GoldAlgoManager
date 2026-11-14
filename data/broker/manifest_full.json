@@ -1,0 +1,30 @@
+{
+  "source": "MetaQuotes-Demo XAUUSD M1 base files (.hcc), decoded read-only; higher TFs resampled from M1",
+  "api_note": "copy_rates_range still returns at most 100,000 bars per timeframe on the running terminal",
+  "files": {
+    "M1": {
+      "file": "data/broker/XAUUSD_M1_full.csv.gz",
+      "rows": 7100401,
+      "first_utc": "2004-06-11 04:18:00",
+      "last_utc": "2026-11-13 20:59:00"
+    },
+    "M5": {
+      "file": "data/broker/XAUUSD_M5_full.csv.gz",
+      "rows": 1505705,
+      "first_utc": "2004-06-11 04:15:00",
+      "last_utc": "2026-11-13 20:55:00"
+    },
+    "M15": {
+      "file": "data/broker/XAUUSD_M15_full.csv",
+      "rows": 515011,
+      "first_utc": "2004-06-11 04:15:00",
+      "last_utc": "2026-11-13 20:45:00"
+    },
+    "H1": {
+      "file": "data/broker/XAUUSD_H1_full.csv",
+      "rows": 130415,
+      "first_utc": "2004-06-11 04:00:00",
+      "last_utc": "2026-11-13 20:00:00"
+    }
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "updated_at": "2026-11-14T05:45:00Z",
+  "timezone": "UTC",
+  "note": "Static fallback list for GoldAIBridge v1.03 news auto-blackout. The EA blocks NEW entries from before_min to after_min around each time_utc (inputs default 30/90; per-event values can only widen). US is on EST (UTC-5) for all of Nov-Dec 2026, so 08:30 ET = 13:30Z and 14:00 ET = 19:00Z. Sources: bls.gov/schedule/2026, federalreserve.gov/monetarypolicy/fomccalendars.htm, bea.gov/news/schedule, census.gov/retail/release_schedule.html, cross-checked with the MT5 MetaQuotes-Demo economic calendar on 2026-11-14.",
+  "events": [
+    {"time_utc": "2026-11-17T13:30:00Z", "currency": "USD", "name": "Retail Sales (Oct)", "source": "census"},
+    {"time_utc": "2026-11-18T19:00:00Z", "currency": "USD", "name": "FOMC Minutes (Oct 27-28 meeting)", "source": "fed"},
+    {"time_utc": "2026-11-25T13:30:00Z", "currency": "USD", "name": "GDP Q3 2nd est + PCE/Personal Income (Oct)", "source": "bea"},
+    {"time_utc": "2026-12-04T13:30:00Z", "currency": "USD", "name": "Nonfarm Payrolls / Employment Situation (Nov)", "source": "bls"},
+    {"time_utc": "2026-12-09T19:00:00Z", "currency": "USD", "name": "FOMC rate decision + SEP", "source": "fed"},
+    {"time_utc": "2026-12-09T19:30:00Z", "currency": "USD", "name": "Fed Chair press conference", "source": "fed"},
+    {"time_utc": "2026-12-10T13:30:00Z", "currency": "USD", "name": "CPI (Nov)", "source": "bls"},
+    {"time_utc": "2026-12-15T13:30:00Z", "currency": "USD", "name": "PPI (Nov)", "source": "bls"},
+    {"time_utc": "2026-12-16T13:30:00Z", "currency": "USD", "name": "Retail Sales (Nov)", "source": "census"},
+    {"time_utc": "2026-12-23T13:30:00Z", "currency": "USD", "name": "GDP Q3 3rd est + PCE/Personal Income (Nov)", "source": "bea"},
+    {"time_utc": "2026-12-30T19:00:00Z", "currency": "USD", "name": "FOMC Minutes (Dec 8-9 meeting)", "source": "fed (3-week rule; confirm on the Fed calendar)"}
+  ]
+}

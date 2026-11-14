@@ -230,3 +230,20 @@ python /workspace/gold-algo/scripts/review_journal.py /path/to/GoldAI_journal.cs
 - [ ] `AllowRealAccount` is false
 - [ ] Chart panel shows a successful poll (or a successful local file read)
 - [ ] Hosting URL decided and confirmed with the assistant (still open)
+
+## v1.03 additions (2026-11-14)
+
+### News auto-blackout
+- Blocks **new** entries from `InpNewsBlackoutBeforeMin` (30) minutes before to `InpNewsBlackoutAfterMin` (90) minutes after high-impact USD releases. Open positions are never closed by it.
+- Source 1: MT5 built-in Economic Calendar (`CalendarValueHistory`, currency USD). An event counts when its name matches `InpNewsKeywords` (NFP, unemployment, AHE, CPI, PCE, GDP, PPI, retail sales, Fed rate decision, FOMC minutes/statement/press conference/projections, "Fed Chair") **and** importance >= `InpNewsMinImportance` (2 = moderate; FOMC Minutes is moderate in the MT5 calendar). `InpNewsAllHighUSD=true` additionally blocks every USD HIGH event (jobless claims, ISM, EIA, auctions...).
+- Source 2: static list `decisions/news.json` (UTC times) read through WebRequest from raw.githubusercontent.com every `InpNewsRefreshMinutes`, cached in `MQL5/Files/GoldAI_<magic>_news_cache.json` for offline restarts. Both sources are always merged.
+- Calendar times are server time; the EA converts with `TimeTradeServer() - TimeGMT()` (rounded to 15 min).
+- A blocked actionable decision is journaled (`NEWS_BLOCK`) and alerted on Telegram (one alert per decision+window, min `InpNewsAlertMinMinutes` apart).
+- The decision file's own `news_blackout` array still works as before.
+
+### Two-way Telegram
+- Polls `getUpdates` every `InpTgPollSeconds` (5 s, short poll, `InpTgPollTimeoutMs` 3000 ms) and keeps the `update_id` offset in `MQL5/Files/GoldAI_<magic>_tg_offset.txt`.
+- Only chat id `InpTgAllowedChatId` (730711407) is obeyed; everything else is ignored. Commands sent before the EA started are ignored.
+- `/status`, `/pause`, `/resume` (pause persists in the terminal global variable `GoldAI_<magic>_paused`), `/closeall` (EA magic only, needs `/confirm <4-digit code>` within `InpTgConfirmSeconds`), `/help`.
+- Same host as alerts (`https://api.telegram.org`), so no new WebRequest URL. The token stays only in the box `.set`/inputs.
+- Do not run any other `getUpdates` poller or webhook on the same bot, or Telegram returns HTTP 409.

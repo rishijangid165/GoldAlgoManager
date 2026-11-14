@@ -10,16 +10,18 @@
 //| (Tools > Options > Expert Advisors). See mql5/docs/SETUP.md.     |
 //+------------------------------------------------------------------+
 #property copyright   "Gold Algo / Rishi Jangid"
-#property version     "1.02"
+#property version     "1.03"
 #property description "AI-directed gold EA. Polls a decision JSON and trades only inside the AI zone."
 #property description "Hard risk rules (risk %, daily loss, spread, max trades, demo lock) stay in the EA."
 #property description "v1.02: Friday auto-close before the weekly gold close, and structure/ATR trailing after TP1."
+#property description "v1.03: news auto-blackout (MT5 calendar + news.json) and Telegram commands (/status /pause /resume /closeall)."
 #property description "DEMO only unless AllowRealAccount is explicitly enabled. See SETUP.md."
 
 #include <Trade\Trade.mqh>
 #include <GoldAIDecision.mqh>
 #include <GoldAIJournal.mqh>
 #include <GoldAITelegram.mqh>
+#include <GoldAINews.mqh>
 
 //+------------------------------------------------------------------+
 //| Inputs                                                             |
@@ -77,6 +79,27 @@ input bool   InpEnableTelegram      = true;              // EnableTelegram
 input string InpTelegramToken       = "";                // TelegramToken (never share this)
 input string InpTelegramChatId      = "";                // TelegramChatId
 
+input group "News blackout (v1.03)"
+input bool   InpNewsBlackoutEnabled   = true;            // Block NEW entries around high-impact USD news
+input int    InpNewsBlackoutBeforeMin = 30;              // Minutes before the release
+input int    InpNewsBlackoutAfterMin  = 90;              // Minutes after the release
+input bool   InpNewsUseCalendar       = true;            // Use the MT5 built-in Economic Calendar (USD)
+input string InpNewsKeywords          = "Nonfarm Payrolls;Unemployment Rate;Average Hourly Earnings;CPI;PCE;GDP;PPI;Retail Sales;Fed Interest Rate Decision;FOMC Minutes;FOMC Meeting Minutes;FOMC Press Conference;FOMC Statement;FOMC Economic Projections;Fed Chair"; // Calendar event-name keywords (; or , separated)
+input int    InpNewsMinImportance     = 2;               // Keyword match needs importance >= this (1 low, 2 moderate, 3 high)
+input bool   InpNewsAllHighUSD        = false;           // Also block on EVERY USD HIGH calendar event
+input bool   InpNewsUseFile           = true;            // Also use the static list (news.json via WebRequest)
+input string InpNewsURL               = "https://raw.githubusercontent.com/rishijangid165/GoldAlgoManager/main/decisions/news.json"; // Static news list URL
+input int    InpNewsRefreshMinutes    = 30;              // Re-read calendar and news.json every N minutes (min 5)
+input int    InpNewsLookaheadDays     = 21;              // Calendar look-ahead window (days)
+input int    InpNewsAlertMinMinutes   = 30;              // Min minutes between news-block Telegram alerts
+
+input group "Telegram commands (v1.03)"
+input bool   InpTgCommandsEnabled     = true;            // Poll getUpdates for /status /pause /resume /closeall /help
+input string InpTgAllowedChatId       = "730711407";     // ONLY this chat id may command the EA
+input int    InpTgPollSeconds         = 5;               // getUpdates poll interval (seconds, min 2)
+input int    InpTgPollTimeoutMs       = 3000;            // HTTP timeout for getUpdates (ms)
+input int    InpTgConfirmSeconds      = 60;              // /closeall confirmation window (seconds)
+
 //+------------------------------------------------------------------+
 //| State                                                              |
 //+------------------------------------------------------------------+
@@ -109,6 +132,29 @@ string          g_tg_decision_fp     = "";
 datetime        g_day_start          = 0;
 double          g_day_start_equity   = 0.0;
 ulong           g_tp1_done_ticket    = 0;
+
+// v1.03 news blackout state
+GoldAINewsEvent g_news_cal[];
+GoldAINewsEvent g_news_file[];
+GoldAINewsEvent g_news[];
+datetime        g_news_cal_at        = 0;
+datetime        g_news_file_at       = 0;
+string          g_news_cal_status    = "not loaded";
+string          g_news_file_status   = "not loaded";
+string          g_news_alert_key     = "";
+datetime        g_news_alert_at      = 0;
+string          g_news_last_summary  = "";
+
+// v1.03 Telegram command state
+bool            g_paused             = false;
+long            g_tg_offset          = 0;
+datetime        g_tg_last_poll       = 0;
+datetime        g_start_gmt          = 0;
+string          g_tg_last_err        = "";
+datetime        g_tg_last_err_at     = 0;
+string          g_confirm_code       = "";
+datetime        g_confirm_until      = 0;
+datetime        g_last_manage        = 0;
 
 //+------------------------------------------------------------------+
 string GvDayStartName()
@@ -1199,6 +1245,11 @@ void TryOpenTrade()
       LogUnique("REJECT", g_status);
       return;
      }
+   if(g_paused)
+     {
+      g_status = "PAUSED via Telegram - no new entries (/resume to allow)";
+      return;
+     }
    if(!g_have_decision || !g_decision.loaded)
      {
       g_status = "waiting for a valid decision file";
@@ -1252,6 +1303,16 @@ void TryOpenTrade()
       g_status = "LOW CONFIDENCE " + IntegerToString(g_decision.confidence) +
                  " < min " + IntegerToString(InpMinConfidence);
       LogUnique("LOW_CONFIDENCE", g_status);
+      return;
+     }
+
+   string news_why = "";
+   int news_idx = -1;
+   if(NewsBlocked(news_why, news_idx))
+     {
+      g_status = "NEWS AUTO-BLACKOUT: " + news_why;
+      LogUnique("NEWS_BLOCK", g_status);
+      NotifyNewsBlock(news_idx, news_why);
       return;
      }
 
@@ -1381,6 +1442,638 @@ void TryOpenTrade()
   }
 
 //+------------------------------------------------------------------+
+//| v1.03 News auto-blackout                                         |
+//+------------------------------------------------------------------+
+void NewsCopy(GoldAINewsEvent &dst, const GoldAINewsEvent &src)
+  {
+   dst.event_utc = src.event_utc;
+   dst.start_utc = src.start_utc;
+   dst.end_utc   = src.end_utc;
+   dst.name      = src.name;
+   dst.source    = src.source;
+  }
+
+//+------------------------------------------------------------------+
+void NewsMergeInto(GoldAINewsEvent &dst[], const GoldAINewsEvent &src[])
+  {
+   for(int i = 0; i < ArraySize(src); i++)
+     {
+      bool merged = false;
+      for(int j = 0; j < ArraySize(dst); j++)
+        {
+         if(dst[j].event_utc != src[i].event_utc)
+            continue;
+         if(src[i].start_utc < dst[j].start_utc)
+            dst[j].start_utc = src[i].start_utc;
+         if(src[i].end_utc > dst[j].end_utc)
+            dst[j].end_utc = src[i].end_utc;
+         if(StringFind(dst[j].source, src[i].source) < 0)
+            dst[j].source += "+" + src[i].source;
+         merged = true;
+         break;
+        }
+      if(merged)
+         continue;
+      const int k = ArraySize(dst);
+      if(k >= GOLD_AI_MAX_NEWS * 2)
+         break;
+      ArrayResize(dst, k + 1);
+      NewsCopy(dst[k], src[i]);
+     }
+  }
+
+//+------------------------------------------------------------------+
+void NewsRebuild()
+  {
+   ArrayResize(g_news, 0);
+   NewsMergeInto(g_news, g_news_cal);
+   NewsMergeInto(g_news, g_news_file);
+   const int nx = GoldAI_NewsNext(g_news, TimeGMT());
+   const string summary = "cal=" + IntegerToString(ArraySize(g_news_cal)) +
+                          " file=" + IntegerToString(ArraySize(g_news_file)) +
+                          " merged=" + IntegerToString(ArraySize(g_news)) +
+                          (nx >= 0 ? (" next=" + GoldAI_NewsWindowText(g_news[nx])) : " next=none");
+   if(summary != g_news_last_summary)
+     {
+      g_news_last_summary = summary;
+      Print("GoldAI news windows: ", summary);
+     }
+  }
+
+//+------------------------------------------------------------------+
+string NewsCacheFileName()
+  {
+   return("GoldAI_" + IntegerToString(InpMagicNumber) + "_news_cache.json");
+  }
+
+//+------------------------------------------------------------------+
+bool HttpGetText(const string base_url, const int timeout_ms, string &body, int &status, string &err)
+  {
+   body = "";
+   err  = "";
+   string url = base_url;
+   StringTrimLeft(url);
+   StringTrimRight(url);
+   if(url == "")
+     {
+      err = "empty URL";
+      status = -1;
+      return(false);
+     }
+   url += (StringFind(url, "?") >= 0 ? "&t=" : "?t=") + IntegerToString((long)TimeGMT());
+   char data[];
+   char result[];
+   string result_headers;
+   const string headers = "User-Agent: MetaTrader5-GoldAIBridge/1.03\r\nCache-Control: no-cache\r\n";
+   ResetLastError();
+   status = WebRequest("GET", url, headers, timeout_ms, data, result, result_headers);
+   if(status == -1)
+     {
+      const int le = GetLastError();
+      err = (le == 4014 ? "4014 URL not allowed (add the host to Allow WebRequest)" :
+             "WebRequest failed last_error=" + IntegerToString(le));
+      return(false);
+     }
+   body = CharArrayToString(result, 0, WHOLE_ARRAY, CP_UTF8);
+   if(status != 200)
+     {
+      err = "HTTP " + IntegerToString(status);
+      return(false);
+     }
+   return(true);
+  }
+
+//+------------------------------------------------------------------+
+bool ReadTextFile(const string name, string &body)
+  {
+   body = "";
+   const int h = FileOpen(name, FILE_READ | FILE_BIN);
+   if(h == INVALID_HANDLE)
+      return(false);
+   const ulong size = FileSize(h);
+   if(size == 0)
+     {
+      FileClose(h);
+      return(false);
+     }
+   uchar bytes[];
+   ArrayResize(bytes, (int)size);
+   const uint got = FileReadArray(h, bytes, 0, (int)size);
+   FileClose(h);
+   if(got == 0)
+      return(false);
+   body = CharArrayToString(bytes, 0, WHOLE_ARRAY, CP_UTF8);
+   return(true);
+  }
+
+//+------------------------------------------------------------------+
+void WriteTextFile(const string name, const string body)
+  {
+   const int h = FileOpen(name, FILE_WRITE | FILE_BIN);
+   if(h == INVALID_HANDLE)
+      return;
+   uchar bytes[];
+   const int n = StringToCharArray(body, bytes, 0, WHOLE_ARRAY, CP_UTF8);
+   if(n > 1)
+      FileWriteArray(h, bytes, 0, n - 1);
+   FileClose(h);
+  }
+
+//+------------------------------------------------------------------+
+void RefreshNews(const bool force)
+  {
+   if(!InpNewsBlackoutEnabled)
+      return;
+   const datetime now = TimeGMT();
+   const int interval = (InpNewsRefreshMinutes < 5 ? 5 : InpNewsRefreshMinutes) * 60;
+   bool changed = false;
+
+   if(InpNewsUseCalendar && (force || g_news_cal_at == 0 || (now - g_news_cal_at) >= interval))
+     {
+      g_news_cal_at = now;
+      GoldAINewsEvent tmp[];
+      string err = "";
+      const int n = GoldAI_NewsFromCalendar(tmp,
+                                            InpNewsKeywords,
+                                            InpNewsMinImportance,
+                                            InpNewsAllHighUSD,
+                                            InpNewsBlackoutBeforeMin,
+                                            InpNewsBlackoutAfterMin,
+                                            InpNewsLookaheadDays,
+                                            err);
+      if(n >= 0)
+        {
+         ArrayResize(g_news_cal, ArraySize(tmp));
+         for(int i = 0; i < ArraySize(tmp); i++)
+            NewsCopy(g_news_cal[i], tmp[i]);
+         g_news_cal_status = "OK " + IntegerToString(ArraySize(g_news_cal));
+        }
+      else
+        {
+         // Keep the last good calendar windows; news.json still applies.
+         g_news_cal_status = "FAIL (" + err + ")";
+         LogUnique("NEWS_CAL_ERROR", g_news_cal_status);
+        }
+      changed = true;
+     }
+
+   if(InpNewsUseFile && (force || g_news_file_at == 0 || (now - g_news_file_at) >= interval))
+     {
+      g_news_file_at = now;
+      string body = "", err = "";
+      int status = 0;
+      bool from_cache = false;
+      bool have = HttpGetText(InpNewsURL, InpWebTimeoutMs, body, status, err);
+      if(!have)
+        {
+         string cached = "";
+         if(ReadTextFile(NewsCacheFileName(), cached))
+           {
+            body = cached;
+            have = true;
+            from_cache = true;
+           }
+        }
+      if(have)
+        {
+         GoldAINewsEvent tmp[];
+         string perr = "";
+         const int n = GoldAI_NewsFromJson(tmp, body, InpNewsBlackoutBeforeMin, InpNewsBlackoutAfterMin, perr);
+         if(n >= 0)
+           {
+            ArrayResize(g_news_file, ArraySize(tmp));
+            for(int i = 0; i < ArraySize(tmp); i++)
+               NewsCopy(g_news_file[i], tmp[i]);
+            if(!from_cache)
+               WriteTextFile(NewsCacheFileName(), body);
+            g_news_file_status = (from_cache ? "CACHE " : "OK ") + IntegerToString(ArraySize(g_news_file)) +
+                                 (from_cache ? (" (fetch " + err + ")") : "");
+           }
+         else
+            g_news_file_status = "PARSE FAIL (" + perr + ")";
+        }
+      else
+         g_news_file_status = "FAIL (" + err + ")";
+      if(StringFind(g_news_file_status, "OK") != 0)
+         LogUnique("NEWS_FILE_STATUS", g_news_file_status);
+      changed = true;
+     }
+
+   if(changed)
+      NewsRebuild();
+  }
+
+//+------------------------------------------------------------------+
+bool NewsBlocked(string &why, int &idx)
+  {
+   why = "";
+   idx = -1;
+   if(!InpNewsBlackoutEnabled)
+      return(false);
+   if(!GoldAI_NewsActive(g_news, TimeGMT(), idx))
+      return(false);
+   why = GoldAI_NewsWindowText(g_news[idx]);
+   return(true);
+  }
+
+//+------------------------------------------------------------------+
+void NotifyNewsBlock(const int idx, const string why)
+  {
+   const datetime now = TimeGMT();
+   const string key = g_last_fingerprint + "|" + (idx >= 0 ? IntegerToString((long)g_news[idx].event_utc) : why);
+   if(key == g_news_alert_key)
+      return;
+   const int min_gap = (InpNewsAlertMinMinutes < 0 ? 0 : InpNewsAlertMinMinutes) * 60;
+   if(g_news_alert_at > 0 && (now - g_news_alert_at) < min_gap)
+      return;
+   g_news_alert_key = key;
+   g_news_alert_at  = now;
+   NotifyTelegram("GoldAI entry blocked by news\nDecision: " +
+                  (g_have_decision ? g_decision.bias_text : "?") +
+                  "\nWindow: " + why +
+                  "\nOpen positions are not touched.");
+  }
+
+//+------------------------------------------------------------------+
+string NewsPanelText()
+  {
+   if(!InpNewsBlackoutEnabled)
+      return("off");
+   const datetime now = TimeGMT();
+   int idx = -1;
+   if(GoldAI_NewsActive(g_news, now, idx))
+      return("BLOCKING " + GoldAI_NewsWindowText(g_news[idx]));
+   const int nx = GoldAI_NewsNext(g_news, now);
+   if(nx < 0)
+      return("no window loaded");
+   return("next " + GoldAI_NewsWindowText(g_news[nx]));
+  }
+
+//+------------------------------------------------------------------+
+//| v1.03 Telegram commands                                           |
+//+------------------------------------------------------------------+
+string GvPausedName()
+  {
+   return("GoldAI_" + IntegerToString(InpMagicNumber) + "_paused");
+  }
+
+//+------------------------------------------------------------------+
+string TgOffsetFileName()
+  {
+   return("GoldAI_" + IntegerToString(InpMagicNumber) + "_tg_offset.txt");
+  }
+
+//+------------------------------------------------------------------+
+void LoadTgOffset()
+  {
+   g_tg_offset = 0;
+   const int h = FileOpen(TgOffsetFileName(), FILE_READ | FILE_TXT | FILE_ANSI);
+   if(h == INVALID_HANDLE)
+      return;
+   g_tg_offset = StringToInteger(FileReadString(h));
+   FileClose(h);
+  }
+
+//+------------------------------------------------------------------+
+void SaveTgOffset()
+  {
+   const int h = FileOpen(TgOffsetFileName(), FILE_WRITE | FILE_TXT | FILE_ANSI);
+   if(h == INVALID_HANDLE)
+      return;
+   FileWriteString(h, IntegerToString(g_tg_offset));
+   FileClose(h);
+  }
+
+//+------------------------------------------------------------------+
+bool TgReply(const string text)
+  {
+   int status = 0;
+   string err = "";
+   const bool ok = GoldAI_TelegramSend(InpEnableTelegram, InpTelegramToken, InpTgAllowedChatId,
+                                       InpWebTimeoutMs, text, status, err);
+   if(!ok)
+      Print("GoldAI telegram reply failed: ", err, " (HTTP ", status, ")");
+   return(ok);
+  }
+
+//+------------------------------------------------------------------+
+void SetPaused(const bool paused)
+  {
+   g_paused = paused;
+   GlobalVariableSet(GvPausedName(), paused ? 1.0 : 0.0);
+   LogUnique(paused ? "TG_PAUSE" : "TG_RESUME",
+             paused ? "new entries paused via Telegram" : "new entries resumed via Telegram");
+  }
+
+//+------------------------------------------------------------------+
+int CountEaPositionsAnySymbol()
+  {
+   int n = 0;
+   for(int i = PositionsTotal() - 1; i >= 0; i--)
+     {
+      const ulong t = PositionGetTicket(i);
+      if(t != 0 && PositionGetInteger(POSITION_MAGIC) == InpMagicNumber)
+         n++;
+     }
+   return(n);
+  }
+
+//+------------------------------------------------------------------+
+int CountEaPendingAnySymbol()
+  {
+   int n = 0;
+   for(int i = OrdersTotal() - 1; i >= 0; i--)
+     {
+      const ulong t = OrderGetTicket(i);
+      if(t != 0 && OrderGetInteger(ORDER_MAGIC) == InpMagicNumber)
+         n++;
+     }
+   return(n);
+  }
+
+//+------------------------------------------------------------------+
+//| Close ONLY positions/orders carrying this EA's magic number.     |
+//+------------------------------------------------------------------+
+string CloseAllEaPositions()
+  {
+   int closed = 0, failed = 0, deleted = 0;
+   for(int i = PositionsTotal() - 1; i >= 0; i--)
+     {
+      const ulong ticket = PositionGetTicket(i);
+      if(ticket == 0)
+         continue;
+      if(PositionGetInteger(POSITION_MAGIC) != InpMagicNumber)
+         continue;
+      g_pending_exit_reason = "telegram_closeall";
+      if(g_trade.PositionClose(ticket))
+        {
+         closed++;
+         Print("GoldAI telegram /closeall closed ticket=", ticket);
+         if(g_tp1_done_ticket == ticket)
+            PersistTp1(0);
+        }
+      else
+        {
+         failed++;
+         Print("GoldAI telegram /closeall failed ticket=", ticket,
+               " ret=", g_trade.ResultRetcode(), " ", g_trade.ResultRetcodeDescription());
+        }
+     }
+   for(int i = OrdersTotal() - 1; i >= 0; i--)
+     {
+      const ulong ticket = OrderGetTicket(i);
+      if(ticket == 0)
+         continue;
+      if(OrderGetInteger(ORDER_MAGIC) != InpMagicNumber)
+         continue;
+      if(g_trade.OrderDelete(ticket))
+         deleted++;
+     }
+   const string res = "closed " + IntegerToString(closed) + ", failed " + IntegerToString(failed) +
+                      ", pending deleted " + IntegerToString(deleted);
+   LogUnique("TG_CLOSEALL", res);
+   return(res);
+  }
+
+//+------------------------------------------------------------------+
+string StatusText()
+  {
+   const int digits = _Digits;
+   string t = "GoldAI v1.03 status\n";
+   t += "Account: " + GoldAI_AccountModeText() + "\n";
+   t += "Balance: $" + DoubleToString(AccountInfoDouble(ACCOUNT_BALANCE), 2) +
+        "  Equity: $" + DoubleToString(AccountInfoDouble(ACCOUNT_EQUITY), 2) + "\n";
+   t += "Day P/L: " + DoubleToString(-DailyLossPct(), 2) + "% (cap -" + DoubleToString(InpMaxDailyLossPct, 2) + "%)\n";
+   t += "Entries: " + (g_paused ? "PAUSED (/resume)" : "allowed") + "\n";
+   t += "EA state: " + GoldAI_Truncate(g_status, 160) + "\n";
+
+   int n = 0;
+   string pos = "";
+   for(int i = PositionsTotal() - 1; i >= 0; i--)
+     {
+      const ulong tk = PositionGetTicket(i);
+      if(tk == 0 || PositionGetInteger(POSITION_MAGIC) != InpMagicNumber)
+         continue;
+      n++;
+      const string sym = PositionGetString(POSITION_SYMBOL);
+      const int d = (int)SymbolInfoInteger(sym, SYMBOL_DIGITS);
+      pos += "- " + (PositionGetInteger(POSITION_TYPE) == POSITION_TYPE_BUY ? "BUY " : "SELL ") +
+             DoubleToString(PositionGetDouble(POSITION_VOLUME), 2) + " " + sym +
+             " @ " + DoubleToString(PositionGetDouble(POSITION_PRICE_OPEN), d) +
+             " SL " + DoubleToString(PositionGetDouble(POSITION_SL), d) +
+             " TP " + DoubleToString(PositionGetDouble(POSITION_TP), d) +
+             " P&L $" + DoubleToString(PositionGetDouble(POSITION_PROFIT) + PositionGetDouble(POSITION_SWAP), 2) + "\n";
+     }
+   t += "EA positions: " + IntegerToString(n) + (n > 0 ? "\n" + pos : "\n");
+
+   if(g_have_decision && g_decision.loaded)
+     {
+      t += "Decision: " + g_decision.bias_text + " conf " + IntegerToString(g_decision.confidence);
+      if(g_decision.bias != GOLD_AI_BIAS_NONE)
+         t += "\nZone " + DoubleToString(g_decision.zone_low, digits) + "-" + DoubleToString(g_decision.zone_high, digits) +
+              " SL " + DoubleToString(g_decision.stop_loss, digits) +
+              " TP1 " + DoubleToString(g_decision.tp1, digits) +
+              " TP2 " + DoubleToString(g_decision.tp2, digits);
+      t += "\nValid until " + GoldAI_TimeToIsoUtc(g_decision.valid_until) +
+           (g_decision.kill_switch ? "  KILL SWITCH ON" : "") + "\n";
+     }
+   else
+      t += "Decision: none loaded (" + g_poll_status + ")\n";
+
+   t += "News: " + NewsPanelText() + "\n";
+   if(InpNewsBlackoutEnabled)
+      t += "News sources: calendar " + g_news_cal_status + ", file " + g_news_file_status + "\n";
+   t += "Friday close: " + (InpFridayCloseEnabled ? (g_friday_status == "" ? "armed" : g_friday_status) : "off");
+   return(t);
+  }
+
+//+------------------------------------------------------------------+
+string HelpText()
+  {
+   return("GoldAI commands:\n" +
+          "/status - balance, equity, EA positions, decision, next news window\n" +
+          "/pause - stop NEW entries (open trades still managed)\n" +
+          "/resume - allow new entries again\n" +
+          "/closeall - close ONLY EA positions (magic " + IntegerToString(InpMagicNumber) + "), needs /confirm <code> within " +
+          IntegerToString(InpTgConfirmSeconds) + "s\n" +
+          "/help - this list");
+  }
+
+//+------------------------------------------------------------------+
+void HandleTgCommand(const string text_in)
+  {
+   string text = text_in;
+   StringTrimLeft(text);
+   StringTrimRight(text);
+   if(StringLen(text) < 2 || StringGetCharacter(text, 0) != '/')
+      return; // plain chat text is ignored
+   string parts[];
+   const int np = StringSplit(text, ' ', parts);
+   string cmd = (np > 0 ? parts[0] : text);
+   const int at = StringFind(cmd, "@");
+   if(at > 0)
+      cmd = StringSubstr(cmd, 0, at);
+   StringToLower(cmd);
+   string arg = "";
+   for(int i = 1; i < np; i++)
+      if(parts[i] != "")
+        {
+         arg = parts[i];
+         break;
+        }
+
+   Print("GoldAI telegram command: ", cmd);
+   const datetime now = TimeGMT();
+
+   if(cmd == "/help" || cmd == "/start")
+     {
+      TgReply(HelpText());
+      return;
+     }
+   if(cmd == "/status")
+     {
+      TgReply(StatusText());
+      return;
+     }
+   if(cmd == "/pause")
+     {
+      SetPaused(true);
+      UpdatePanel(true);
+      TgReply("GoldAI: new entries PAUSED. Open EA trades are still managed (SL/TP/trail/Friday close). Send /resume to allow entries.");
+      return;
+     }
+   if(cmd == "/resume")
+     {
+      SetPaused(false);
+      UpdatePanel(true);
+      TgReply("GoldAI: new entries ALLOWED again. All risk rules, news blackout and Friday cutoff still apply.");
+      return;
+     }
+   if(cmd == "/closeall")
+     {
+      const int np_ = CountEaPositionsAnySymbol();
+      const int no_ = CountEaPendingAnySymbol();
+      if(np_ == 0 && no_ == 0)
+        {
+         g_confirm_code = "";
+         TgReply("GoldAI: no open EA positions or orders (magic " + IntegerToString(InpMagicNumber) + "). Nothing to close.");
+         return;
+        }
+      g_confirm_code  = IntegerToString(1000 + MathRand() % 9000);
+      g_confirm_until = now + (InpTgConfirmSeconds < 10 ? 10 : InpTgConfirmSeconds);
+      TgReply("GoldAI: close " + IntegerToString(np_) + " EA position(s) and " + IntegerToString(no_) +
+              " EA order(s)? Manual trades are NOT touched.\nReply /confirm " + g_confirm_code +
+              " within " + IntegerToString((int)(g_confirm_until - now)) + "s.");
+      return;
+     }
+   if(cmd == "/confirm")
+     {
+      if(g_confirm_code == "" || now > g_confirm_until)
+        {
+         g_confirm_code = "";
+         TgReply("GoldAI: no pending /closeall, or the code expired. Nothing closed.");
+         return;
+        }
+      if(arg != g_confirm_code)
+        {
+         g_confirm_code = "";
+         TgReply("GoldAI: wrong code. Nothing closed. Send /closeall again.");
+         return;
+        }
+      g_confirm_code = "";
+      const string res = CloseAllEaPositions();
+      UpdatePanel(true);
+      TgReply("GoldAI /closeall done: " + res + ".\nNew entries are " + (g_paused ? "PAUSED" : "still allowed (send /pause to stop them)") + ".");
+      return;
+     }
+   TgReply("GoldAI: unknown command. Send /help");
+  }
+
+//+------------------------------------------------------------------+
+void PollTelegramCommands()
+  {
+   if(!InpTgCommandsEnabled || !InpEnableTelegram)
+      return;
+   if(InpTelegramToken == "" || InpTgAllowedChatId == "")
+      return;
+   if(MQLInfoInteger(MQL_TESTER))
+      return;
+   const datetime now = TimeGMT();
+   const int every = (InpTgPollSeconds < 2 ? 2 : InpTgPollSeconds);
+   if((now - g_tg_last_poll) < every)
+      return;
+   g_tg_last_poll = now;
+
+   string body = "timeout=0&limit=20&allowed_updates=" + GoldAI_UrlEncode("[\"message\"]");
+   if(g_tg_offset > 0)
+      body += "&offset=" + IntegerToString(g_tg_offset);
+   string resp = "", err = "";
+   int status = 0;
+   if(!GoldAI_TelegramCall(InpTelegramToken, "getUpdates", body,
+                           (InpTgPollTimeoutMs < 500 ? 500 : InpTgPollTimeoutMs),
+                           resp, status, err))
+     {
+      // Throttle: log a given error at most every 10 minutes.
+      if(err != g_tg_last_err || (now - g_tg_last_err_at) >= 600)
+        {
+         g_tg_last_err    = err;
+         g_tg_last_err_at = now;
+         Print("GoldAI telegram getUpdates failed: ", err,
+               (status == 409 ? " (another getUpdates poller or a webhook is active on this bot)" : ""));
+        }
+      return;
+     }
+   g_tg_last_err = "";
+
+   const string arr = JsonGetArray(resp, "result");
+   if(arr == "")
+      return;
+   string items[];
+   bool   flags[];
+   const int n = JsonSplitArray(arr, items, flags);
+   const long old_offset = g_tg_offset;
+   for(int i = 0; i < n; i++)
+     {
+      if(flags[i])
+         continue;
+      string raw = "";
+      bool is_str = false;
+      if(!JsonGet(items[i], "update_id", raw, is_str))
+         continue;
+      const long uid = StringToInteger(raw);
+      if(uid + 1 > g_tg_offset)
+         g_tg_offset = uid + 1;
+
+      const string msg = JsonGetObject(items[i], "message");
+      if(msg == "")
+         continue;
+      const string chat = JsonGetObject(msg, "chat");
+      string cid = "";
+      if(chat == "" || !JsonGet(chat, "id", cid, is_str))
+         continue;
+      StringTrimLeft(cid);
+      StringTrimRight(cid);
+      string allowed = InpTgAllowedChatId;
+      StringTrimLeft(allowed);
+      StringTrimRight(allowed);
+      if(cid != allowed)
+        {
+         Print("GoldAI telegram: ignored an update from a non-allowed chat");
+         continue;
+        }
+      const long msg_date = (long)JsonGetNumberDef(msg, "date", 0.0);
+      if(msg_date > 0 && msg_date < (long)g_start_gmt - 5)
+        {
+         Print("GoldAI telegram: ignored a command sent before this EA start");
+         continue;
+        }
+      HandleTgCommand(JsonGetString(msg, "text", ""));
+     }
+   if(g_tg_offset != old_offset)
+      SaveTgOffset();
+  }
+
+//+------------------------------------------------------------------+
 void UpdatePanel(const bool force)
   {
    const datetime now = TimeGMT();
@@ -1390,7 +2083,7 @@ void UpdatePanel(const bool force)
 
    const int digits = _Digits;
    string lines = "";
-   lines += "======= GoldAI Bridge v1.02 =======\n";
+   lines += "======= GoldAI Bridge v1.03 =======\n";
    lines += "Account:  " + GoldAI_AccountModeText() +
             "  #" + IntegerToString(AccountInfoInteger(ACCOUNT_LOGIN)) +
             "  " + AccountInfoString(ACCOUNT_CURRENCY) + "\n";
@@ -1460,6 +2153,12 @@ void UpdatePanel(const bool force)
    else
       lines += "Open:     none\n";
 
+   lines += "News:     " + NewsPanelText() + "\n";
+   if(InpNewsBlackoutEnabled)
+      lines += "News src: cal " + g_news_cal_status + " | file " + g_news_file_status + "\n";
+   lines += "TG cmds:  " + ((InpTgCommandsEnabled && InpEnableTelegram && InpTelegramToken != "") ? "on" : "off") +
+            (g_paused ? "   ENTRIES PAUSED (/resume)" : "") + "\n";
+
    if(g_trade_locked)
       lines += "LOCK:     " + g_lock_reason + "\n";
 
@@ -1496,6 +2195,16 @@ int OnInit()
 
    LoadPersistedState();
    RefreshDailyWindow();
+
+   g_start_gmt = TimeGMT();
+   MathSrand((uint)(GetTickCount() ^ (uint)TimeLocal()));
+   g_paused = (GlobalVariableCheck(GvPausedName()) && GlobalVariableGet(GvPausedName()) > 0.5);
+   if(g_paused)
+      Print("GoldAI: entries are PAUSED (persisted from Telegram /pause). Send /resume to allow.");
+   LoadTgOffset();
+   g_news_cal_at  = 0;
+   g_news_file_at = 0;
+   g_last_manage  = 0;
 
    if(RealAccountBlocked())
      {
@@ -1539,7 +2248,7 @@ int OnInit()
                                             InpTelegramToken,
                                             InpTelegramChatId,
                                             InpWebTimeoutMs,
-                                            "GoldAIBridge online",
+                                            "GoldAIBridge online (v1.03). Send /help for commands.",
                                             st,
                                             terr);
       if(sent)
@@ -1570,15 +2279,23 @@ void OnDeinit(const int reason)
 //+------------------------------------------------------------------+
 void OnTimer()
   {
-   PollDecision();
-   ManageAndMaybeEnter();
-   if(g_first_timer)
+   // v1.03: 1-second heartbeat. Decision poll keeps its PollMinutes interval;
+   // news refresh, Telegram command polling and management have their own gates.
+   const datetime now = TimeGMT();
+   const int interval = (InpPollMinutes < 1 ? 1 : InpPollMinutes) * 60;
+   bool polled = false;
+   if(g_first_timer || g_last_poll == 0 || (now - g_last_poll) >= interval)
      {
       g_first_timer = false;
-      EventKillTimer();
-      const int minutes = (InpPollMinutes < 1 ? 1 : InpPollMinutes);
-      if(!EventSetTimer(minutes * 60))
-         Print("GoldAI: could not arm the ", minutes, "-minute poll timer");
+      PollDecision();
+      polled = true;
+     }
+   RefreshNews(false);
+   PollTelegramCommands();
+   if(polled || (now - g_last_manage) >= 5)
+     {
+      g_last_manage = now;
+      ManageAndMaybeEnter();
      }
   }
 

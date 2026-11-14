@@ -1,6 +1,6 @@
 //+------------------------------------------------------------------+
 //| GoldAITelegram.mqh                                               |
-//| Non-blocking Telegram alerts for GoldAIBridge.                   |
+//| Telegram alerts + command polling for GoldAIBridge.              |
 //| Never log the bot token or the full send URL.                    |
 //+------------------------------------------------------------------+
 #ifndef GOLD_AI_TELEGRAM_MQH
@@ -156,6 +156,64 @@ double GoldAI_PositionNetPnl(const ulong position_id, const double fallback)
       return(total);
      }
    return(fallback);
+  }
+
+//+------------------------------------------------------------------+
+//| Generic Bot API POST (form-encoded). Used for getUpdates (v1.03). |
+//| Never logs the token or the URL. resp holds the raw JSON.        |
+//+------------------------------------------------------------------+
+bool GoldAI_TelegramCall(const string token,
+                         const string method,
+                         const string form_body,
+                         const int timeout_ms,
+                         string &resp,
+                         int &http_status,
+                         string &err)
+  {
+   resp        = "";
+   http_status = 0;
+   err         = "";
+   string tok = token;
+   StringTrimLeft(tok);
+   StringTrimRight(tok);
+   if(tok == "")
+     {
+      err = "telegram token is empty";
+      return(false);
+     }
+   const string url = "https://api.telegram.org/bot" + tok + "/" + method;
+   const string headers = "Content-Type: application/x-www-form-urlencoded\r\n";
+   char post[];
+   char result[];
+   string result_headers;
+   const int raw_len = StringToCharArray(form_body, post, 0, WHOLE_ARRAY, CP_UTF8);
+   if(raw_len > 1)
+      ArrayResize(post, raw_len - 1);
+   else
+      ArrayResize(post, 0);
+   ResetLastError();
+   http_status = WebRequest("POST", url, headers, timeout_ms, post, result, result_headers);
+   if(http_status == -1)
+     {
+      const int le = GetLastError();
+      if(le == 4014)
+         err = "4014 URL not allowed - add https://api.telegram.org in Tools > Options > Expert Advisors > Allow WebRequest";
+      else
+         err = "WebRequest failed last_error=" + IntegerToString(le);
+      return(false);
+     }
+   resp = CharArrayToString(result, 0, WHOLE_ARRAY, CP_UTF8);
+   if(http_status != 200)
+     {
+      err = "HTTP " + IntegerToString(http_status);
+      return(false);
+     }
+   if(StringFind(resp, "\"ok\":true") < 0 && StringFind(resp, "\"ok\": true") < 0)
+     {
+      err = "telegram returned ok=false";
+      return(false);
+     }
+   return(true);
   }
 
 #endif

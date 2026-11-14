@@ -868,7 +868,10 @@ def paper_section() -> dict[str, Any] | None:
     if not PAPER_SUMMARY.exists():
         return None
     summ = json.loads(PAPER_SUMMARY.read_text())
-    rows = read_journal(PAPER_TRADES) if PAPER_TRADES.exists() else []
+    rows: list[dict[str, str]] = []
+    if PAPER_TRADES.exists():
+        with PAPER_TRADES.open(newline="") as fh:
+            rows = list(csv.DictReader(fh))
     summ["trades"] = rows[-30:]
     return summ
 

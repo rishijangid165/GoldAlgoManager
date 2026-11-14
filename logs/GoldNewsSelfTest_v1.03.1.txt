@@ -1,0 +1,47 @@
+--- calendar pass 0 connected=0 tradeserver=05:46:06 gmt=05:46:06
+calendar added=12 err= server-clock offset=0 | srv+0.0h base: 40 srv, 0 utc, 0 ambiguous(widened)
+UsDst 2026-11-17=false 2026-07-01=true 2026-03-08 06:59Z=false 07:00Z=true 2026-11-01 05:59Z=true 06:00Z=false
+  CAL PPI m/m, Core PPI m/m @ 2026-11-13T13:30:00Z (block 13:00-15:00Z, calendar)
+  CAL Retail Sales m/m, Core Retail Sales m/m @ 2026-11-17T13:30:00Z (block 13:00-15:00Z, calendar)
+  CAL FOMC Minutes @ 2026-11-18T19:00:00Z (block 18:30-20:30Z, calendar)
+  CAL Core PCE Price Index m/m, Core PCE Price Index y/y, GDP q/q, Real PCE q/q, GDP Sales q/q @ 2026-11-25T13:30:00Z (block 13:00-15:00Z, calendar)
+  CAL Unemployment Rate, Nonfarm Payrolls, Average Hourly Earnings m/m, Average Hourly Earnings y/y @ 2026-12-04T13:30:00Z (block 13:00-15:00Z, calendar)
+  CAL FOMC Statement, FOMC Economic Projections, Fed Interest Rate Decision @ 2026-12-09T19:00:00Z (block 18:30-20:30Z, calendar)
+  CAL FOMC Press Conference @ 2026-12-09T19:30:00Z (block 19:00-21:00Z, calendar)
+  CAL CPI m/m, Core CPI m/m, CPI y/y, Core CPI y/y, Core CPI n.s.a. m/m @ 2026-12-10T13:30:00Z (block 13:00-15:00Z, calendar)
+  CAL PPI m/m, Core PPI m/m @ 2026-12-15T13:30:00Z (block 13:00-15:00Z, calendar)
+  CAL Retail Sales m/m, Core Retail Sales m/m @ 2026-12-16T13:30:00Z (block 13:00-15:00Z, calendar)
+  CAL Core PCE Price Index m/m, Core PCE Price Index y/y, GDP q/q, Real PCE q/q, GDP Sales q/q @ 2026-12-23T13:30:00Z (block 13:00-15:00Z, calendar)
+  CAL FOMC Minutes @ 2026-12-30T19:00:00Z (block 18:30-20:30Z, calendar)
+--- calendar pass 1 connected=1 tradeserver=07:46:16 gmt=05:46:16
+calendar added=12 err= server-clock offset=7200 | srv+2.0h base: 34 srv, 6 utc, 0 ambiguous(widened)
+UsDst 2026-11-17=false 2026-07-01=true 2026-03-08 06:59Z=false 07:00Z=true 2026-11-01 05:59Z=true 06:00Z=false
+  CAL PPI m/m, Core PPI m/m @ 2026-11-13T13:30:00Z (block 13:00-15:00Z, calendar)
+  CAL Retail Sales m/m, Core Retail Sales m/m @ 2026-11-17T13:30:00Z (block 13:00-15:00Z, calendar)
+  CAL FOMC Minutes @ 2026-11-18T19:00:00Z (block 18:30-20:30Z, calendar)
+  CAL Core PCE Price Index m/m, Core PCE Price Index y/y, GDP q/q, Real PCE q/q, GDP Sales q/q @ 2026-11-25T13:30:00Z (block 13:00-15:00Z, calendar)
+  CAL Unemployment Rate, Nonfarm Payrolls, Average Hourly Earnings m/m, Average Hourly Earnings y/y @ 2026-12-04T13:30:00Z (block 13:00-15:00Z, calendar)
+  CAL FOMC Statement, FOMC Economic Projections, Fed Interest Rate Decision @ 2026-12-09T19:00:00Z (block 18:30-20:30Z, calendar)
+  CAL FOMC Press Conference @ 2026-12-09T19:30:00Z (block 19:00-21:00Z, calendar)
+  CAL CPI m/m, Core CPI m/m, CPI y/y, Core CPI y/y, Core CPI n.s.a. m/m @ 2026-12-10T13:30:00Z (block 13:00-15:00Z, calendar)
+  CAL PPI m/m, Core PPI m/m @ 2026-12-15T13:30:00Z (block 13:00-15:00Z, calendar)
+  CAL Retail Sales m/m, Core Retail Sales m/m @ 2026-12-16T13:30:00Z (block 13:00-15:00Z, calendar)
+  CAL Core PCE Price Index m/m, Core PCE Price Index y/y, GDP q/q, Real PCE q/q, GDP Sales q/q @ 2026-12-23T13:30:00Z (block 13:00-15:00Z, calendar)
+  CAL FOMC Minutes @ 2026-12-30T19:00:00Z (block 18:30-20:30Z, calendar)
+file added=11 err=
+  FILE Retail Sales (Oct) @ 2026-11-17T13:30:00Z (block 13:00-15:00Z, file)
+  FILE FOMC Minutes (Oct 27-28 meeting) @ 2026-11-18T19:00:00Z (block 18:30-20:30Z, file)
+  FILE GDP Q3 2nd est + PCE/Personal Income (Oct) @ 2026-11-25T13:30:00Z (block 13:00-15:00Z, file)
+  FILE Nonfarm Payrolls / Employment Situation (Nov) @ 2026-12-04T13:30:00Z (block 13:00-15:00Z, file)
+  FILE FOMC rate decision + SEP @ 2026-12-09T19:00:00Z (block 18:30-20:30Z, file)
+  FILE Fed Chair press conference @ 2026-12-09T19:30:00Z (block 19:00-21:00Z, file)
+  FILE CPI (Nov) @ 2026-12-10T13:30:00Z (block 13:00-15:00Z, file)
+  FILE PPI (Nov) @ 2026-12-15T13:30:00Z (block 13:00-15:00Z, file)
+  FILE Retail Sales (Nov) @ 2026-12-16T13:30:00Z (block 13:00-15:00Z, file)
+  FILE GDP Q3 3rd est + PCE/Personal Income (Nov) @ 2026-12-23T13:30:00Z (block 13:00-15:00Z, file)
+  FILE FOMC Minutes (Dec 8-9 meeting) @ 2026-12-30T19:00:00Z (block 18:30-20:30Z, file)
+active at 2026-11-18 18:45Z (file)=FOMC Minutes (Oct 27-28 meeting) @ 2026-11-18T19:00:00Z (block 18:30-20:30Z, file)
+active at 2026-11-18 20:31Z (file)=none
+next from now (cal)=Retail Sales m/m, Core Retail Sales m/m @ 2026-11-17T13:30:00Z (block 13:00-15:00Z, calendar)
+  upd=123456789 chat=730711407 allowed=yes date=1794643200 text=/confirm 4821
+  upd=123456790 chat=-100555 allowed=no date=1794643201 text=/closeall

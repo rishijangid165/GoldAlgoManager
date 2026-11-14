@@ -14,6 +14,7 @@
 #property description "AI-directed gold EA. Polls a decision JSON and trades only inside the AI zone."
 #property description "Hard risk rules (risk %, daily loss, spread, max trades, demo lock) stay in the EA."
 #property description "v1.02: Friday auto-close before the weekly gold close, and structure/ATR trailing after TP1."
+#property description "v1.03.1: calendar time base fixed per record (server vs UTC)."
 #property description "v1.03: news auto-blackout (MT5 calendar + news.json) and Telegram commands (/status /pause /resume /closeall)."
 #property description "DEMO only unless AllowRealAccount is explicitly enabled. See SETUP.md."
 
@@ -1606,7 +1607,7 @@ void RefreshNews(const bool force)
          ArrayResize(g_news_cal, ArraySize(tmp));
          for(int i = 0; i < ArraySize(tmp); i++)
             NewsCopy(g_news_cal[i], tmp[i]);
-         g_news_cal_status = "OK " + IntegerToString(ArraySize(g_news_cal));
+         g_news_cal_status = "OK " + IntegerToString(ArraySize(g_news_cal)) + " " + g_GoldAI_cal_tz_info;
         }
       else
         {
@@ -1839,7 +1840,7 @@ string CloseAllEaPositions()
 string StatusText()
   {
    const int digits = _Digits;
-   string t = "GoldAI v1.03 status\n";
+   string t = "GoldAI v1.03.1 status\n";
    t += "Account: " + GoldAI_AccountModeText() + "\n";
    t += "Balance: $" + DoubleToString(AccountInfoDouble(ACCOUNT_BALANCE), 2) +
         "  Equity: $" + DoubleToString(AccountInfoDouble(ACCOUNT_EQUITY), 2) + "\n";
@@ -2083,7 +2084,7 @@ void UpdatePanel(const bool force)
 
    const int digits = _Digits;
    string lines = "";
-   lines += "======= GoldAI Bridge v1.03 =======\n";
+   lines += "====== GoldAI Bridge v1.03.1 ======\n";
    lines += "Account:  " + GoldAI_AccountModeText() +
             "  #" + IntegerToString(AccountInfoInteger(ACCOUNT_LOGIN)) +
             "  " + AccountInfoString(ACCOUNT_CURRENCY) + "\n";
@@ -2248,7 +2249,7 @@ int OnInit()
                                             InpTelegramToken,
                                             InpTelegramChatId,
                                             InpWebTimeoutMs,
-                                            "GoldAIBridge online (v1.03). Send /help for commands.",
+                                            "GoldAIBridge online (v1.03.1). Send /help for commands.",
                                             st,
                                             terr);
       if(sent)

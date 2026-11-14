@@ -12,13 +12,24 @@ void OnStart()
    string out = "";
    GoldAINewsEvent cal[];
    string err = "";
-   const int nc = GoldAI_NewsFromCalendar(cal,
-      "Nonfarm Payrolls;Unemployment Rate;Average Hourly Earnings;CPI;PCE;GDP;PPI;Retail Sales;Fed Interest Rate Decision;FOMC Minutes;FOMC Meeting Minutes;FOMC Press Conference;FOMC Statement;FOMC Economic Projections;Fed Chair",
-      2, false, 30, 90, 50, err);
-   out += "calendar added=" + IntegerToString(nc) + " err=" + err + " offset=" + IntegerToString(GoldAI_ServerGmtOffset()) + "\n";
-   for(int i = 0; i < ArraySize(cal); i++)
-      out += "  CAL " + GoldAI_NewsWindowText(cal[i]) + "\n";
+   for(int pass = 0; pass < 2; pass++)
+     {
+      if(pass == 1)
+         Sleep(10000);
+      ArrayResize(cal, 0);
+      out += "--- calendar pass " + IntegerToString(pass) + " connected=" + IntegerToString(TerminalInfoInteger(TERMINAL_CONNECTED)) +
+             " tradeserver=" + TimeToString(TimeTradeServer(), TIME_SECONDS) + " gmt=" + TimeToString(TimeGMT(), TIME_SECONDS) + "\n";
+      const int nc = GoldAI_NewsFromCalendar(cal,
+         "Nonfarm Payrolls;Unemployment Rate;Average Hourly Earnings;CPI;PCE;GDP;PPI;Retail Sales;Fed Interest Rate Decision;FOMC Minutes;FOMC Meeting Minutes;FOMC Press Conference;FOMC Statement;FOMC Economic Projections;Fed Chair",
+         2, false, 30, 90, 50, err);
+      out += "calendar added=" + IntegerToString(nc) + " err=" + err + " server-clock offset=" + IntegerToString(GoldAI_ServerGmtOffset()) + " | " + g_GoldAI_cal_tz_info + "\n";
+      out += "UsDst 2026-11-17=" + (string)GoldAI_UsDst(D'2026.11.17 13:30') + " 2026-07-01=" + (string)GoldAI_UsDst(D'2026.07.01 12:00') +
+             " 2026-03-08 06:59Z=" + (string)GoldAI_UsDst(D'2026.03.08 06:59') + " 07:00Z=" + (string)GoldAI_UsDst(D'2026.03.08 07:00') +
+             " 2026-11-01 05:59Z=" + (string)GoldAI_UsDst(D'2026.11.01 05:59') + " 06:00Z=" + (string)GoldAI_UsDst(D'2026.11.01 06:00') + "\n";
+      for(int i = 0; i < ArraySize(cal); i++)
+         out += "  CAL " + GoldAI_NewsWindowText(cal[i]) + "\n";
 
+     }
    string body = "";
    const int h = FileOpen("news.json", FILE_READ | FILE_BIN);
    if(h != INVALID_HANDLE)

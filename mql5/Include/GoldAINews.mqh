@@ -93,6 +93,7 @@ void GoldAI_NewsAdd(GoldAINewsEvent &arr[],
 
 //+------------------------------------------------------------------+
 //| Server-minus-GMT offset in seconds, rounded to 15 minutes.        |
+//| Only a FALLBACK for calendar times (see the calibration below).  |
 //+------------------------------------------------------------------+
 long GoldAI_ServerGmtOffset()
   {
@@ -100,11 +101,95 @@ long GoldAI_ServerGmtOffset()
    return((long)MathRound((double)raw / 900.0) * 900);
   }
 
+// Last calendar time-base calibration, for the panel / logs.
+string g_GoldAI_cal_tz_info = "";
+
+//+------------------------------------------------------------------+
+//| US daylight saving (EDT) at a UTC instant: from 2nd Sunday of    |
+//| March 07:00Z to 1st Sunday of November 06:00Z.                    |
+//+------------------------------------------------------------------+
+datetime GoldAI_NthSundayUtc(const int year, const int month, const int nth, const int hour_utc)
+  {
+   MqlDateTime st;
+   st.year = year; st.mon = month; st.day = 1;
+   st.hour = 0; st.min = 0; st.sec = 0;
+   datetime t = StructToTime(st);
+   TimeToStruct(t, st);
+   const int first_sunday = 1 + ((7 - st.day_of_week) % 7);
+   return(t + (datetime)((first_sunday - 1 + 7 * (nth - 1)) * 86400 + hour_utc * 3600));
+  }
+
+bool GoldAI_UsDst(const datetime utc)
+  {
+   MqlDateTime st;
+   TimeToStruct(utc, st);
+   const datetime on  = GoldAI_NthSundayUtc(st.year, 3, 2, 7);
+   const datetime off = GoldAI_NthSundayUtc(st.year, 11, 1, 6);
+   return(utc >= on && utc < off);
+  }
+
+//+------------------------------------------------------------------+
+//| Is a UTC instant on a scheduled New York release slot?           |
+//| US macro releases in scope are at 08:30, 10:00, 14:00 (FOMC      |
+//| decision/statement/minutes) or 14:30 (press conference) ET.      |
+//+------------------------------------------------------------------+
+bool GoldAI_OnNySlot(const datetime utc)
+  {
+   const long ny = (long)utc - (GoldAI_UsDst(utc) ? 4 : 5) * 3600;
+   const long tod = ((ny % 86400) + 86400) % 86400;
+   return(tod == 8 * 3600 + 30 * 60 || tod == 10 * 3600 ||
+          tod == 14 * 3600 || tod == 14 * 3600 + 30 * 60);
+  }
+
+//+------------------------------------------------------------------+
+//| Add with an explicit window (used for ambiguous time bases).      |
+//+------------------------------------------------------------------+
+void GoldAI_NewsAddWindow(GoldAINewsEvent &arr[],
+                          const datetime event_utc,
+                          const datetime start_utc,
+                          const datetime end_utc,
+                          const string name,
+                          const string source)
+  {
+   const int n = ArraySize(arr);
+   for(int i = 0; i < n; i++)
+     {
+      if(arr[i].event_utc == event_utc)
+        {
+         if(StringFind(arr[i].name, name) < 0 && StringLen(arr[i].name) < 90)
+            arr[i].name += ", " + name;
+         if(start_utc < arr[i].start_utc)
+            arr[i].start_utc = start_utc;
+         if(end_utc > arr[i].end_utc)
+            arr[i].end_utc = end_utc;
+         return;
+        }
+     }
+   if(n >= GOLD_AI_MAX_NEWS)
+      return;
+   ArrayResize(arr, n + 1);
+   arr[n].event_utc = event_utc;
+   arr[n].start_utc = start_utc;
+   arr[n].end_utc   = end_utc;
+   arr[n].name      = name;
+   arr[n].source    = source;
+  }
+
 //+------------------------------------------------------------------+
 //| Load USD events from the MT5 Economic Calendar.                  |
 //| min_importance: 1=LOW 2=MODERATE 3=HIGH. A name keyword match    |
 //| plus importance >= min_importance is required, unless            |
 //| all_high is true (then every USD HIGH event is used as well).    |
+//|                                                                  |
+//| v1.03.1 time base: MqlCalendarValue.time is NOT in one base.     |
+//| On MetaQuotes-Demo build 6318/6320 under Wine the same query     |
+//| returned some records in server time (GMT+2) and others already  |
+//| in UTC (e.g. Retail Sales on the live terminal, GDP/NFP/Fed rate |
+//| decision on a probe). So each record is resolved on its own:     |
+//| candidates raw-S (server base, S = TimeTradeServer-TimeGMT) and  |
+//| raw (UTC base); the one landing on a New York release slot       |
+//| (08:30/10:00/14:00/14:30 ET) wins. If neither or both match, the |
+//| window is widened to cover both candidates (fail-safe).          |
 //| Returns the number of events added, or -1 on calendar failure.   |
 //+------------------------------------------------------------------+
 int GoldAI_NewsFromCalendar(GoldAINewsEvent &arr[],
@@ -117,13 +202,15 @@ int GoldAI_NewsFromCalendar(GoldAINewsEvent &arr[],
                             string &err)
   {
    err = "";
+   g_GoldAI_cal_tz_info = "";
    string keys[];
    GoldAI_NewsKeywords(keywords_csv, keys);
 
-   const long offset = GoldAI_ServerGmtOffset();
-   const datetime now_srv = TimeTradeServer();
-   const datetime from = now_srv - 86400;
-   const datetime to   = now_srv + (datetime)(MathMax(lookahead_days, 1) * 86400);
+   const long S = GoldAI_ServerGmtOffset();
+   const datetime now_gmt = TimeGMT();
+   // Generous raw range so either base is covered.
+   const datetime from = now_gmt - 86400 - 14 * 3600;
+   const datetime to   = now_gmt + (datetime)(MathMax(lookahead_days, 1) * 86400) + 14 * 3600;
 
    MqlCalendarValue values[];
    ResetLastError();
@@ -139,6 +226,9 @@ int GoldAI_NewsFromCalendar(GoldAINewsEvent &arr[],
       return(-1);
      }
 
+   const long bsec = (long)MathMax(before_min, 0) * 60;
+   const long asec = (long)MathMax(after_min, 0) * 60;
+   int n_srv = 0, n_utc = 0, n_amb = 0;
    int added = 0;
    for(int i = 0; i < nv; i++)
      {
@@ -154,12 +244,47 @@ int GoldAI_NewsFromCalendar(GoldAINewsEvent &arr[],
          take = true;
       if(!take)
          continue;
-      const datetime utc = (datetime)((long)values[i].time - offset);
+
+      const long raw = (long)values[i].time;
+      const datetime c_srv = (datetime)(raw - S);
+      const datetime c_utc = (datetime)raw;
+      datetime ev_utc = c_srv;
+      datetime st = (datetime)((long)c_srv - bsec);
+      datetime en = (datetime)((long)c_srv + asec);
+      string src = "calendar";
+      if(S != 0)
+        {
+         const bool m_srv = GoldAI_OnNySlot(c_srv);
+         const bool m_utc = GoldAI_OnNySlot(c_utc);
+         if(m_srv && !m_utc)
+            n_srv++;
+         else if(m_utc && !m_srv)
+           {
+            n_utc++;
+            ev_utc = c_utc;
+            st = (datetime)((long)c_utc - bsec);
+            en = (datetime)((long)c_utc + asec);
+           }
+         else
+           {
+            n_amb++;
+            src = "calendar~";
+            st = (datetime)(MathMin((long)c_srv, (long)c_utc) - bsec);
+            en = (datetime)(MathMax((long)c_srv, (long)c_utc) + asec);
+           }
+        }
+      else
+         n_srv++;
+      if((long)en < (long)now_gmt - 86400)
+         continue;
       const int before = ArraySize(arr);
-      GoldAI_NewsAdd(arr, utc, ev.name, "calendar", before_min, after_min);
+      GoldAI_NewsAddWindow(arr, ev_utc, st, en, ev.name, src);
       if(ArraySize(arr) > before)
          added++;
      }
+   g_GoldAI_cal_tz_info = "srv" + (S >= 0 ? "+" : "") + DoubleToString((double)S / 3600.0, 1) + "h base: " +
+                          IntegerToString(n_srv) + " srv, " + IntegerToString(n_utc) + " utc, " +
+                          IntegerToString(n_amb) + " ambiguous(widened)";
    return(added);
   }
 

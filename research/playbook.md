@@ -1,6 +1,6 @@
 # XAUUSD playbook
 
-Version 2026-11-14 (v3). Gold only. Demo first. The assistant reads the chart and writes the decision; the EA (`GoldAIBridge`) only executes inside the published zone, with the hard risk caps below locked in the EA.
+Version 2026-11-14 (v3.1). Gold only. Demo first. The assistant reads the chart and writes the decision; the EA (`GoldAIBridge`) only executes inside the published zone, with the hard risk caps below locked in the EA.
 
 **v2 change (out-of-sample):** the unfiltered Asia-range breakout is no longer described as a durable, automatic edge. The 2024-07-07 to 2026-11-13 `GC=F` book (132 trades, +0.37R, PF 1.79; see `research/backtest/README.md`) and the same window on spot XAUUSD (128 trades, +0.27R, PF 1.52) are real — but a 2012–2026 walk-forward on HistData spot 1h does **not** confirm it (A-setup OOS −0.03R, PF 0.93, only 6 of 15 years green; 2012–2023 was −0.09R). Evidence and the tests we refused to adopt are in `research/deep-study-2026-11-14/REPORT.md`. Hard risk rules are unchanged.
 
@@ -245,3 +245,15 @@ Phase 2 (12 variants, 0 post-hoc; full tables in `PHASE2.md`):
 ## 15. What this book does not claim
 
 The original supporting test used `GC=F` 1h history of about 28 months, a cost model, no full news calendar, and conservative same-bar stops. The 2026-11-14 studies added ~17 years of spot XAUUSD (HistData, 2009-03 to 2026-11-06) and a 2012–2026 walk-forward, then a 12-variant Phase 2 search with a pre-registered bar. The file still has no official CPI/PPI calendar, and 7–13 Nov 2026 is futures-only. FOMC continuation has only 62 OOS trades. Live trading is still a human (or AI) chart read plus the EA’s hard caps — not a fully automated signal bot. If future checks show an adopted window going stale, the default is back to **NONE**, not a wider set of weaker rules.
+
+---
+
+## 16. Owner-requested / manual trades (added 2026-11-14 weekly review)
+
+Week 1 lesson: all 6 gold trades were test or owner-requested fills, 0 were system trades. They netted +$542 only because they were closed by hand at +0.14 to +0.46R; one fill came 25 minutes before PPI and one was opened while another sell was still on.
+
+- Two separate books: **setup trades** (system/EA magic, from sections above) and **manual trades** (owner-requested or magic 0). Manual trades are a **separate book**. Journal them as manual and report them apart from system (EA magic) results in every review.
+- The hard rules in section 1 still apply: one position at a time, a hard SL, and at least 1.5R to the first target at the planned fill.
+- **News:** no new manual entry from 30 minutes before to 90 minutes after a high-impact release (section 3). If the owner asks inside that window, flag it and fill only after an explicit second confirmation.
+- **Exits:** decide the target before entry (1.5R TP1 + breakeven, or a nearer structure level with size set for it). Closing by hand at +0.2R while risking 0.5% is not a plan.
+- No more `test` trades on the live demo book. Connectivity checks use read-only queries.

@@ -1,28 +1,395 @@
 {
-  "generated_at_ist": "2026-11-13 20:47:15 IST",
-  "generated_at_utc": "2026-11-13T15:17:15Z",
+  "generated_at_ist": "2026-11-14 11:14:16 IST",
+  "generated_at_utc": "2026-11-14T05:44:16Z",
   "timezone_label": "IST (Asia/Kolkata)",
   "account": {
     "server": "MetaQuotes-Demo",
     "company": "MetaQuotes Ltd.",
     "mode": "demo",
     "symbol": "XAUUSD",
-    "balance": 100046.1,
-    "equity": 100046.1,
-    "balance_display": "$100,046.10",
-    "start_of_day_balance": 100046.1,
-    "start_of_day_balance_display": "$100,046.10",
-    "start_of_day_at_ist": "2026-11-13 11:12:22 IST",
-    "start_of_day_note": "Start-of-day reference $100,046.10 is the balance after the two closed demo trades (CloseOnce balance_after and EA start equity at 05:42:22 UTC / 11:12:22 IST).",
-    "today_pnl": 0.0,
+    "balance": 100542.45,
+    "equity": 100542.45,
+    "balance_display": "$100,542.45",
+    "start_of_day_balance": 100542.45,
+    "start_of_day_balance_display": "$100,542.45",
+    "start_of_day_at_ist": null,
+    "start_of_day_note": "Start-of-day balance = live MT5 balance minus XAUUSD P&L closed today (IST date).",
+    "today_pnl": 0,
     "today_pnl_display": "+0.00",
-    "total_pnl_vs_100k": 46.1,
-    "total_pnl_vs_100k_display": "+46.10",
+    "total_pnl_vs_100k": 542.45,
+    "total_pnl_vs_100k_display": "+542.45",
     "starting_capital": 100000.0,
     "first_ea_start_equity": 99999.95,
     "first_ea_start_equity_at_ist": "2026-11-13 01:06:20 IST",
     "last_terminal_sync_positions": 0,
-    "last_terminal_sync_ist": "2026-11-13 20:45:42 IST"
+    "last_terminal_sync_ist": "2026-11-14 11:14:15 IST"
+  },
+  "live_account": {
+    "state": "live",
+    "pulled_at_ist": "2026-11-14 11:14:15 IST",
+    "balance": 100542.45,
+    "equity": 100542.45,
+    "open_profit": 0.0,
+    "positions": 0,
+    "demo": true
+  },
+  "books": {
+    "source": "MT5 history_deals_get / history_orders_get (read-only snapshot)",
+    "system": {
+      "trades": [],
+      "stats": {
+        "closed": 0,
+        "open": 0,
+        "wins": 0,
+        "win_rate_pct": null,
+        "net_pnl": 0,
+        "net_pnl_display": "+0.00",
+        "avg_r": null
+      }
+    },
+    "manual": {
+      "trades": [
+        {
+          "position_id": "11377847166",
+          "side": "SELL",
+          "lots": 0.01,
+          "entry": 3882.56,
+          "sl": 3905.0,
+          "exit": 3905.0,
+          "pnl": -22.49,
+          "pnl_display": "-22.49",
+          "r": -1.0,
+          "r_display": "-1.00R",
+          "open_time_ist": "2026-11-13 01:10 IST",
+          "close_time_ist": "2026-11-13 04:30 IST",
+          "comment": "test",
+          "magic": 0,
+          "status": "closed"
+        },
+        {
+          "position_id": "11382667647",
+          "side": "SELL",
+          "lots": 0.16,
+          "entry": 3914.82,
+          "sl": 3945.0,
+          "exit": 3910.53,
+          "pnl": 68.64,
+          "pnl_display": "+68.64",
+          "r": 0.14,
+          "r_display": "+0.14R",
+          "open_time_ist": "2026-11-13 11:02 IST",
+          "close_time_ist": "2026-11-13 11:11 IST",
+          "comment": "owner-requested-demo",
+          "magic": 0,
+          "status": "closed"
+        },
+        {
+          "position_id": "11388939566",
+          "side": "SELL",
+          "lots": 0.29,
+          "entry": 3894.81,
+          "sl": 3912.0,
+          "exit": 3889.2,
+          "pnl": 162.69,
+          "pnl_display": "+162.69",
+          "r": 0.33,
+          "r_display": "+0.33R",
+          "open_time_ist": "2026-11-13 17:44 IST",
+          "close_time_ist": "2026-11-13 18:15 IST",
+          "comment": "owner-requested-demo-2",
+          "magic": 0,
+          "status": "closed"
+        },
+        {
+          "position_id": "11389421614",
+          "side": "SELL",
+          "lots": 0.29,
+          "entry": 3889.83,
+          "sl": 3912.0,
+          "exit": 3889.23,
+          "pnl": 17.4,
+          "pnl_display": "+17.40",
+          "r": 0.03,
+          "r_display": "+0.03R",
+          "open_time_ist": "2026-11-13 18:14 IST",
+          "close_time_ist": "2026-11-13 18:15 IST",
+          "comment": "",
+          "magic": 0,
+          "status": "closed"
+        },
+        {
+          "position_id": "11389943963",
+          "side": "SELL",
+          "lots": 0.34,
+          "entry": 3891.35,
+          "sl": 3906.0,
+          "exit": 3884.66,
+          "pnl": 227.46,
+          "pnl_display": "+227.46",
+          "r": 0.46,
+          "r_display": "+0.46R",
+          "open_time_ist": "2026-11-13 18:35 IST",
+          "close_time_ist": "2026-11-13 19:37 IST",
+          "comment": "owner-requested-demo-3",
+          "magic": 0,
+          "status": "closed"
+        },
+        {
+          "position_id": "11397685376",
+          "side": "SELL",
+          "lots": 0.37,
+          "entry": 3889.51,
+          "sl": 3903.0,
+          "exit": 3887.11,
+          "pnl": 88.8,
+          "pnl_display": "+88.80",
+          "r": 0.18,
+          "r_display": "+0.18R",
+          "open_time_ist": "2026-11-13 23:24 IST",
+          "close_time_ist": "2026-11-13 23:25 IST",
+          "comment": "owner-requested-demo-4",
+          "magic": 0,
+          "status": "closed"
+        }
+      ],
+      "stats": {
+        "closed": 6,
+        "open": 0,
+        "wins": 5,
+        "win_rate_pct": 83.3,
+        "net_pnl": 542.5,
+        "net_pnl_display": "+542.50",
+        "avg_r": 0.02
+      }
+    }
+  },
+  "paper": {
+    "per_setup": {
+      "ny_lon_brk_d4h": {
+        "label": "NY London-range break (D+4H)",
+        "all": {
+          "closed": 3,
+          "open": 1,
+          "wins": 1,
+          "win_rate_pct": 33.3,
+          "avg_r": 0.094,
+          "total_r": 0.282,
+          "profit_factor": 1.14
+        },
+        "backfill": {
+          "closed": 3,
+          "open": 1,
+          "wins": 1,
+          "win_rate_pct": 33.3,
+          "avg_r": 0.094,
+          "total_r": 0.282,
+          "profit_factor": 1.14
+        },
+        "live": {
+          "closed": 0,
+          "open": 0,
+          "wins": 0,
+          "win_rate_pct": null,
+          "avg_r": null,
+          "total_r": 0.0,
+          "profit_factor": null
+        }
+      },
+      "fomc_cont": {
+        "label": "FOMC continuation (+60 min)",
+        "all": {
+          "closed": 0,
+          "open": 0,
+          "wins": 0,
+          "win_rate_pct": null,
+          "avg_r": null,
+          "total_r": 0.0,
+          "profit_factor": null
+        },
+        "backfill": {
+          "closed": 0,
+          "open": 0,
+          "wins": 0,
+          "win_rate_pct": null,
+          "avg_r": null,
+          "total_r": 0.0,
+          "profit_factor": null
+        },
+        "live": {
+          "closed": 0,
+          "open": 0,
+          "wins": 0,
+          "win_rate_pct": null,
+          "avg_r": null,
+          "total_r": 0.0,
+          "profit_factor": null
+        }
+      },
+      "donch20_long": {
+        "label": "Donchian-20 long (18:00 ET)",
+        "all": {
+          "closed": 0,
+          "open": 0,
+          "wins": 0,
+          "win_rate_pct": null,
+          "avg_r": null,
+          "total_r": 0.0,
+          "profit_factor": null
+        },
+        "backfill": {
+          "closed": 0,
+          "open": 0,
+          "wins": 0,
+          "win_rate_pct": null,
+          "avg_r": null,
+          "total_r": 0.0,
+          "profit_factor": null
+        },
+        "live": {
+          "closed": 0,
+          "open": 0,
+          "wins": 0,
+          "win_rate_pct": null,
+          "avg_r": null,
+          "total_r": 0.0,
+          "profit_factor": null
+        }
+      },
+      "asia_brk_trend": {
+        "label": "Asia breakout (clean, D+4H)",
+        "all": {
+          "closed": 2,
+          "open": 0,
+          "wins": 0,
+          "win_rate_pct": 0.0,
+          "avg_r": -1.006,
+          "total_r": -2.012,
+          "profit_factor": 0.0
+        },
+        "backfill": {
+          "closed": 2,
+          "open": 0,
+          "wins": 0,
+          "win_rate_pct": 0.0,
+          "avg_r": -1.006,
+          "total_r": -2.012,
+          "profit_factor": 0.0
+        },
+        "live": {
+          "closed": 0,
+          "open": 0,
+          "wins": 0,
+          "win_rate_pct": null,
+          "avg_r": null,
+          "total_r": 0.0,
+          "profit_factor": null
+        }
+      }
+    },
+    "equity_curve_r": [
+      {
+        "t": "2026-10-20 19:30 IST",
+        "setup": "asia_brk_trend",
+        "mode": "backfill",
+        "cum_r": -1.004
+      },
+      {
+        "t": "2026-10-22 21:30 IST",
+        "setup": "ny_lon_brk_d4h",
+        "mode": "backfill",
+        "cum_r": 1.299
+      },
+      {
+        "t": "2026-10-27 16:30 IST",
+        "setup": "asia_brk_trend",
+        "mode": "backfill",
+        "cum_r": 0.291
+      },
+      {
+        "t": "2026-10-27 18:30 IST",
+        "setup": "ny_lon_brk_d4h",
+        "mode": "backfill",
+        "cum_r": -0.717
+      },
+      {
+        "t": "2026-10-28 22:30 IST",
+        "setup": "ny_lon_brk_d4h",
+        "mode": "backfill",
+        "cum_r": -1.73
+      }
+    ],
+    "equity_curve_usd": [
+      {
+        "t": "2026-10-20 19:30 IST",
+        "equity": 99498.0
+      },
+      {
+        "t": "2026-10-22 21:30 IST",
+        "equity": 100643.72
+      },
+      {
+        "t": "2026-10-27 16:30 IST",
+        "equity": 100136.48
+      },
+      {
+        "t": "2026-10-27 18:30 IST",
+        "equity": 99631.79
+      },
+      {
+        "t": "2026-10-28 22:30 IST",
+        "equity": 99127.15
+      }
+    ],
+    "total": {
+      "closed": 5,
+      "open": 1,
+      "wins": 1,
+      "win_rate_pct": 20.0,
+      "avg_r": -0.346,
+      "total_r": -1.73,
+      "backfill_closed": 5,
+      "live_closed": 0
+    },
+    "generated_utc": "2026-11-14T05:44Z",
+    "generated_ist": "2026-11-14 11:14 IST",
+    "data_source": "mt5_broker_live",
+    "last_completed_bar_ist": "2026-11-14 01:30 IST",
+    "backfill_start_ist": "2026-10-16 09:30 IST",
+    "live_start_ist": "2026-11-14 05:30 IST",
+    "pending_signals": {},
+    "new_rows_this_run": [],
+    "closed_this_run": [],
+    "note": "Paper only. Each setup is its own one-trade book, so books can overlap (live trading allows one trade total). Rows with mode=backfill were reconstructed from broker history on 2026-11-14, not logged in real time.",
+    "mt5_account": {
+      "server": "MetaQuotes-Demo",
+      "trade_mode": 0,
+      "currency": "USD",
+      "balance": 100542.45,
+      "equity": 100542.45,
+      "margin": 0.0,
+      "profit": 0.0,
+      "pulled_at_utc": "2026-11-14T05:44:15.288921+00:00"
+    },
+    "trades": [
+      {
+        "trade_id,mode,setup,setup_label,direction,entry_time_utc,entry_time_ist,entry,sl,tp1_1p5r,tp2_3r,risk_per_oz,status,exit_time_utc,exit_time_ist,exit_reason,tp1_hit,result,r,mark_r,data_source,first_logged_utc,updated_utc": "ny_lon_brk_d4h|2026-10-19T14:00Z|SELL,backfill,ny_lon_brk_d4h,NY London-range break (D+4H),SELL,2026-10-19 14:00Z,2026-10-19 19:30 IST,4154.28,4192.5,4096.96,4039.64,38.21,CLOSED,2026-10-22 16:00Z,2026-10-22 21:30 IST,tp1+tp2,True,WIN,2.303,,mt5_broker_live,2026-11-14T05:40Z,2026-11-14T05:40Z"
+      },
+      {
+        "trade_id,mode,setup,setup_label,direction,entry_time_utc,entry_time_ist,entry,sl,tp1_1p5r,tp2_3r,risk_per_oz,status,exit_time_utc,exit_time_ist,exit_reason,tp1_hit,result,r,mark_r,data_source,first_logged_utc,updated_utc": "asia_brk_trend|2026-10-20T10:00Z|SELL,backfill,asia_brk_trend,\"Asia breakout (clean, D+4H)\",SELL,2026-10-20 10:00Z,2026-10-20 15:30 IST,4112.35,4149.12,4057.2,4002.05,36.77,CLOSED,2026-10-20 14:00Z,2026-10-20 19:30 IST,sl,False,LOSS,-1.004,,mt5_broker_live,2026-11-14T05:40Z,2026-11-14T05:40Z"
+      },
+      {
+        "trade_id,mode,setup,setup_label,direction,entry_time_utc,entry_time_ist,entry,sl,tp1_1p5r,tp2_3r,risk_per_oz,status,exit_time_utc,exit_time_ist,exit_reason,tp1_hit,result,r,mark_r,data_source,first_logged_utc,updated_utc": "ny_lon_brk_d4h|2026-10-23T15:00Z|SELL,backfill,ny_lon_brk_d4h,NY London-range break (D+4H),SELL,2026-10-23 15:00Z,2026-10-23 20:30 IST,4000.1,4033.59,3949.85,3899.61,33.49,CLOSED,2026-10-27 13:00Z,2026-10-27 18:30 IST,sl,False,LOSS,-1.008,,mt5_broker_live,2026-11-14T05:40Z,2026-11-14T05:40Z"
+      },
+      {
+        "trade_id,mode,setup,setup_label,direction,entry_time_utc,entry_time_ist,entry,sl,tp1_1p5r,tp2_3r,risk_per_oz,status,exit_time_utc,exit_time_ist,exit_reason,tp1_hit,result,r,mark_r,data_source,first_logged_utc,updated_utc": "asia_brk_trend|2026-10-27T08:00Z|SELL,backfill,asia_brk_trend,\"Asia breakout (clean, D+4H)\",SELL,2026-10-27 08:00Z,2026-10-27 13:30 IST,3994.39,4027.35,3944.96,3895.53,32.95,CLOSED,2026-10-27 11:00Z,2026-10-27 16:30 IST,sl,False,LOSS,-1.008,,mt5_broker_live,2026-11-14T05:40Z,2026-11-14T05:40Z"
+      },
+      {
+        "trade_id,mode,setup,setup_label,direction,entry_time_utc,entry_time_ist,entry,sl,tp1_1p5r,tp2_3r,risk_per_oz,status,exit_time_utc,exit_time_ist,exit_reason,tp1_hit,result,r,mark_r,data_source,first_logged_utc,updated_utc": "ny_lon_brk_d4h|2026-10-28T14:00Z|SELL,backfill,ny_lon_brk_d4h,NY London-range break (D+4H),SELL,2026-10-28 14:00Z,2026-10-28 19:30 IST,4041.27,4061.63,4010.72,3980.18,20.36,CLOSED,2026-10-28 17:00Z,2026-10-28 22:30 IST,sl,False,LOSS,-1.013,,mt5_broker_live,2026-11-14T05:40Z,2026-11-14T05:40Z"
+      },
+      {
+        "trade_id,mode,setup,setup_label,direction,entry_time_utc,entry_time_ist,entry,sl,tp1_1p5r,tp2_3r,risk_per_oz,status,exit_time_utc,exit_time_ist,exit_reason,tp1_hit,result,r,mark_r,data_source,first_logged_utc,updated_utc": "ny_lon_brk_d4h|2026-11-13T14:00Z|SELL,backfill,ny_lon_brk_d4h,NY London-range break (D+4H),SELL,2026-11-13 14:00Z,2026-11-13 19:30 IST,3880.99,3907.71,3840.92,3800.85,26.71,OPEN,,,,False,OPEN,,0.09,mt5_broker_live,2026-11-14T05:40Z,2026-11-14T05:40Z"
+      }
+    ]
   },
   "decision": {
     "bias": "NONE",
@@ -41,13 +408,13 @@
     "generated_at_ist": "2026-11-13 20:46:49 IST",
     "valid_until_ist": "2026-11-14 02:30 IST",
     "valid_until_utc": "2026-11-13T21:00:00Z",
-    "expired": false,
+    "expired": true,
     "kill_switch": false,
     "in_news_blackout": false,
     "news_blackout": [],
     "next_blackout": null,
     "rationale": "Stand aside into Friday close. PPI (0.3% vs 0.4% m/m, 6.5% y/y) whipsawed 3873-3906 spot and both sides got swept; price back mid Asia range 3865-3923 (~3889), no London/NY close outside it, no clean with-trend sweep. D/4H LH/LL bearish below EMA20, 10y 5.16%, DXY 103.2. GC basis ~+5. No new trades after 16:00 ET Friday.",
-    "status": "flat",
+    "status": "expired",
     "source": "/workspace/gold-algo/decisions/current.json"
   },
   "open_position": null,
@@ -55,7 +422,7 @@
   "ea": {
     "name": "GoldAIBridge",
     "chart": "XAUUSD M15",
-    "last_decision_read_ist": "2026-11-13 18:34:14 IST",
+    "last_decision_read_ist": "2026-11-14 11:08:10 IST",
     "last_decision_bias": "NONE"
   },
   "trades": [
@@ -136,10 +503,10 @@
       "sort": "2026-11-13T07:41:28+02:00"
     },
     {
-      "t": "2026-11-13 20:47 IST",
+      "t": "2026-11-14 11:14 IST",
       "label": "Last known balance",
       "equity": 100046.1,
-      "sort": "2026-11-13T20:47:15.997060+05:30"
+      "sort": "2026-11-14T11:14:16.140895+05:30"
     }
   ],
   "stats": {
@@ -256,6 +623,7 @@
     }
   ],
   "notes": [
+    "Balance and equity are live from MT5 (pulled 2026-11-14 11:14:15 IST).",
     "All live money figures come from MT5 result files, the EA journal, and MQL5 logs. No live broker quote is shown unless a file has a fresh one.",
     "Today's P&L vs the $100,046.10 start-of-day reference is $0.00 because both closed demo trades settled before that reference was recorded. Their combined P&L is +46.15 (including swap), which is already inside the current balance."
   ],

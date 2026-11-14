@@ -27,12 +27,21 @@ from zoneinfo import ZoneInfo
 
 IST = ZoneInfo("Asia/Kolkata")
 UTC = timezone.utc
-# MetaQuotes-Demo server clock is UTC+2, confirmed by paired
-# time_utc / server_time (and CLOSE_TIME_SERVER) in the one-shot result files.
+# MetaQuotes-Demo server clock is ET+7 all year (UTC+2 in US winter, UTC+3 in
+# US summer). In Nov–Mar it is UTC+2, which matches the paired time_utc /
+# server_time in the one-shot result files. Use server_epoch_to_utc() for
+# anything that can fall in US daylight time.
 SERVER_TZ = timezone(timedelta(hours=2))
+ET_ZONE = ZoneInfo("America/New_York")
+EA_MAGIC = 26011301
+WIN_BROKER = Path("/home/box/.wine-mt5/drive_c/winpy/broker")
+LIVE_MAX_AGE_MIN = 20
+PULL_LIVE = True
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_OUT = REPO_ROOT / "data" / "processed" / "dashboard_data.json"
+PAPER_SUMMARY = REPO_ROOT / "journal" / "paper_summary.json"
+PAPER_TRADES = REPO_ROOT / "journal" / "paper_trades.csv"
 
 MT5_ROOT = Path("/home/box/.wine-mt5/drive_c/MT5")
 MT5_FILES = MT5_ROOT / "MQL5" / "Files"
@@ -747,6 +756,123 @@ def first_ea_start_equity(rows: list[dict[str, str]]) -> tuple[float | None, dat
     return earliest, latest
 
 
+def server_epoch_to_utc(epoch: int | float) -> datetime:
+    """MT5 server epoch (server wall clock written as if UTC) -> real UTC. Server = ET+7."""
+    wall = datetime(1970, 1, 1) + timedelta(seconds=int(epoch)) - timedelta(hours=7)
+    return wall.replace(tzinfo=ET_ZONE).astimezone(UTC)
+
+
+def load_live_snapshot(pull: bool = True) -> tuple[dict[str, Any] | None, str]:
+    """Live MT5 account/deals via the read-only Wine snapshot (shared with paper_tracker)."""
+    snap = None
+    if pull:
+        try:
+            import importlib.util
+
+            spec = importlib.util.spec_from_file_location("paper_tracker", REPO_ROOT / "scripts" / "paper_tracker.py")
+            mod = importlib.util.module_from_spec(spec)
+            spec.loader.exec_module(mod)
+            snap = mod.pull_mt5_snapshot()
+        except Exception:
+            snap = None
+    if snap is None:
+        p = WIN_BROKER / "live_snapshot.json"
+        if p.exists():
+            try:
+                snap = json.loads(p.read_text())
+            except ValueError:
+                snap = None
+    if not snap or not snap.get("account"):
+        return None, "missing"
+    pulled = parse_iso(snap.get("pulled_at_utc"))
+    age_min = (datetime.now(UTC) - pulled).total_seconds() / 60 if pulled else 1e9
+    return snap, ("live" if age_min <= LIVE_MAX_AGE_MIN else "stale")
+
+
+def trade_books(snap: dict[str, Any] | None) -> dict[str, Any]:
+    """Split real MT5 XAUUSD deals into the system (EA magic) and manual books."""
+    books: dict[str, list[dict[str, Any]]] = {"system": [], "manual": []}
+    if not snap:
+        return {"system": {"trades": [], "stats": book_stats([])}, "manual": {"trades": [], "stats": book_stats([])},
+                "source": "no live MT5 snapshot"}
+    orders = snap.get("orders") or []
+    first_sl: dict[int, float] = {}
+    for o in sorted(orders, key=lambda x: x.get("time_setup", 0)):
+        pid = o.get("position_id")
+        if pid and pid not in first_sl and (o.get("sl") or 0) > 0:
+            first_sl[pid] = float(o["sl"])
+    by_pos: dict[int, list[dict[str, Any]]] = {}
+    for d in snap.get("deals") or []:
+        if d.get("symbol") != "XAUUSD" or not d.get("position_id"):
+            continue
+        by_pos.setdefault(d["position_id"], []).append(d)
+    for pid, deals in by_pos.items():
+        deals.sort(key=lambda x: x["time_utc_epoch_server"])
+        ins = [d for d in deals if d["entry"] == 0]
+        outs = [d for d in deals if d["entry"] in (1, 3)]
+        if not ins:
+            continue
+        d0 = ins[0]
+        side = "BUY" if d0["type"] == 0 else "SELL"
+        vol = sum(d["volume"] for d in ins)
+        entry = d0["price"]
+        pnl = round(sum(d["profit"] + d["swap"] + d["commission"] + d.get("fee", 0.0) for d in deals), 2)
+        sl = first_sl.get(pid)
+        r = None
+        if sl and outs:
+            risk = abs(entry - sl) * vol * 100.0
+            r = round(pnl / risk, 2) if risk > 0 else None
+        magic = d0.get("magic", 0)
+        rec = {
+            "position_id": str(pid),
+            "side": side,
+            "lots": round(vol, 2),
+            "entry": entry,
+            "sl": sl,
+            "exit": outs[-1]["price"] if outs else None,
+            "pnl": pnl if outs else None,
+            "pnl_display": money(pnl, signed=True) if outs else "open",
+            "r": r,
+            "r_display": f"{r:+.2f}R" if r is not None else "n/a",
+            "open_time_ist": fmt_ist(server_epoch_to_utc(d0["time_utc_epoch_server"]), with_seconds=False),
+            "close_time_ist": fmt_ist(server_epoch_to_utc(outs[-1]["time_utc_epoch_server"]), with_seconds=False) if outs else None,
+            "comment": d0.get("comment") or "",
+            "magic": magic,
+            "status": "closed" if outs else "open",
+        }
+        books["system" if magic == EA_MAGIC else "manual"].append(rec)
+    out: dict[str, Any] = {"source": "MT5 history_deals_get / history_orders_get (read-only snapshot)"}
+    for k, rows in books.items():
+        rows.sort(key=lambda x: x["open_time_ist"] or "")
+        out[k] = {"trades": rows, "stats": book_stats(rows)}
+    return out
+
+
+def book_stats(rows: list[dict[str, Any]]) -> dict[str, Any]:
+    closed = [r for r in rows if r.get("pnl") is not None]
+    wins = [r for r in closed if r["pnl"] > 0]
+    rs = [r["r"] for r in closed if r.get("r") is not None]
+    net = round(sum(r["pnl"] for r in closed), 2)
+    return {
+        "closed": len(closed),
+        "open": len(rows) - len(closed),
+        "wins": len(wins),
+        "win_rate_pct": round(100.0 * len(wins) / len(closed), 1) if closed else None,
+        "net_pnl": net,
+        "net_pnl_display": money(net, signed=True),
+        "avg_r": round(sum(rs) / len(rs), 2) if rs else None,
+    }
+
+
+def paper_section() -> dict[str, Any] | None:
+    if not PAPER_SUMMARY.exists():
+        return None
+    summ = json.loads(PAPER_SUMMARY.read_text())
+    rows = read_journal(PAPER_TRADES) if PAPER_TRADES.exists() else []
+    summ["trades"] = rows[-30:]
+    return summ
+
+
 def build() -> dict[str, Any]:
     now = ist_now()
     decision = load_decision()
@@ -830,6 +956,45 @@ def build() -> dict[str, Any]:
             f"P&L is {money(trade_pnl, signed=True)} (including swap), which is already inside the current balance."
         )
 
+    # ---- Live MT5 account (preferred over the reconstructed balance above) ----
+    snap, live_state = load_live_snapshot(pull=PULL_LIVE)
+    books = trade_books(snap)
+    paper = paper_section()
+    live_account = None
+    if snap and snap.get("account"):
+        a = snap["account"]
+        live_account = {
+            "state": live_state,
+            "pulled_at_ist": fmt_ist(parse_iso(snap.get("pulled_at_utc"))),
+            "balance": a["balance"],
+            "equity": a["equity"],
+            "open_profit": a.get("profit"),
+            "positions": len(snap.get("positions") or []),
+            "demo": a.get("trade_mode") == 0,
+        }
+        if live_state == "live":
+            current_balance = round(float(a["balance"]), 2)
+            total_pnl_vs_100k = round(current_balance - STARTING_CAPITAL, 2)
+            sync_positions = len(snap.get("positions") or [])
+            sync_dt = parse_iso(snap.get("pulled_at_utc"))
+            if sync_positions == 0 and open_pos is None:
+                position_status = "flat"
+            elif sync_positions:
+                position_status = "open"
+            today = now.strftime("%Y-%m-%d")
+            today_pnl = round(sum(t["pnl"] for b in ("system", "manual") for t in books[b]["trades"]
+                                  if t.get("pnl") is not None and (t.get("close_time_ist") or "").startswith(today)), 2)
+            sod_balance = round(current_balance - today_pnl, 2)
+            sod_dt = None
+            sod_note = "Start-of-day balance = live MT5 balance minus XAUUSD P&L closed today (IST date)."
+            notes.insert(0, f"Balance and equity are live from MT5 (pulled {live_account['pulled_at_ist']}).")
+        else:
+            notes.insert(0, f"MT5 snapshot is stale (pulled {live_account['pulled_at_ist']}); balance shown is the last live value.")
+            current_balance = round(float(a["balance"]), 2)
+            total_pnl_vs_100k = round(current_balance - STARTING_CAPITAL, 2)
+    else:
+        notes.insert(0, "No MT5 snapshot available; balance is reconstructed from result files and may be stale.")
+
     payload = {
         "generated_at_ist": fmt_ist(now),
         "generated_at_utc": now.astimezone(UTC).strftime("%Y-%m-%dT%H:%M:%SZ"),
@@ -856,6 +1021,9 @@ def build() -> dict[str, Any]:
             "last_terminal_sync_positions": sync_positions,
             "last_terminal_sync_ist": fmt_ist(sync_dt),
         },
+        "live_account": live_account,
+        "books": books,
+        "paper": paper,
         "decision": card,
         "open_position": open_pos,
         "position_status": position_status,
@@ -921,7 +1089,10 @@ def build() -> dict[str, Any]:
 def main() -> int:
     parser = argparse.ArgumentParser(description="Build gold dashboard JSON from box files.")
     parser.add_argument("--out", type=Path, default=DEFAULT_OUT, help="Output JSON path")
+    parser.add_argument("--no-mt5", action="store_true", help="do not pull a fresh MT5 snapshot; use the last one")
     args = parser.parse_args()
+    global PULL_LIVE
+    PULL_LIVE = not args.no_mt5
     payload = build()
     args.out.parent.mkdir(parents=True, exist_ok=True)
     args.out.write_text(json.dumps(payload, indent=2, ensure_ascii=False) + "\n")

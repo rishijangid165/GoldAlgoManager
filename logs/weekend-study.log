@@ -1,0 +1,36 @@
+data loaded 1s  M1=7,100,401
+trail arrays ready 3s
+candidates built 4s {'A1_ny_lon_brk_d4h': 424, 'A2_fomc_cont': 87, 'A3_donch20_long': 489, 'A4_asia_brk_trend': 526}
+A0 A1_ny_lon_brk_d4h: 366 trades
+A0 A2_fomc_cont: 87 trades
+A0 A3_donch20_long: 121 trades
+A0 A4_asia_brk_trend: 458 trades
+A A1_ny_lon_brk_d4h done 40s
+A A2_fomc_cont done 40s
+A A3_donch20_long done 40s
+A A4_asia_brk_trend done 40s
+F F1_cpi_cont_60: n=82 avgR=-0.1682 PF=0.738 p=0.8991 OOS avgR=-0.1682; OOS PF=0.738; green years 5/15; 2012-2023 avgR=-0.164; 2012-2023 PF=0.739
+F F2_cpi_cont_30: n=82 avgR=0.1695 PF=1.326 p=0.1211 meets pre-registered bar
+F F3_nfp_cont_30: n=78 avgR=0.0091 PF=1.015 p=0.4835 OOS PF=1.015
+F F4_nfp_cont_60: n=81 avgR=0.1617 PF=1.286 p=0.1582 green years 7/15
+F F5_pdhl_brk_ny: n=68 avgR=0.2285 PF=1.451 p=0.0828 meets pre-registered bar
+F F6_ny_brk_vol_le80: n=205 avgR=0.1352 PF=1.239 p=0.0796 green years 7/15
+F F7_ny_brk_vol_ge20: n=241 avgR=0.109 PF=1.183 p=0.1192 OOS PF=1.183
+F F8_asia_trend_vol_le80: n=248 avgR=0.0596 PF=1.101 p=0.2467 OOS PF=1.101; green years 7/15
+F F9_asia_trend_vol_ge20: n=271 avgR=0.1403 PF=1.252 p=0.0459 meets pre-registered bar
+F F10_donch_vol_le80: n=61 avgR=0.4292 PF=1.87 p=0.0106 meets pre-registered bar
+/workspace/gold-algo/research/weekend-study-2026-11-15/study.py:193: Pandas4Warning: DatetimeIndex.weekday is deprecated and will be removed in a future version. Use DatetimeIndex.day_of_week instead.
+  for i in np.flatnonzero((idx.weekday == 6) & (idx.hour == 18)):
+F F11_gap_fade: n=56 avgR=-0.1499 PF=0.776 p=0.8163 OOS avgR=-0.1499; OOS PF=0.776; green years 4/15; 2012-2023 avgR=-0.0521; 2012-2023 PF=0.917
+/workspace/gold-algo/research/weekend-study-2026-11-15/study.py:193: Pandas4Warning: DatetimeIndex.weekday is deprecated and will be removed in a future version. Use DatetimeIndex.day_of_week instead.
+  for i in np.flatnonzero((idx.weekday == 6) & (idx.hour == 18)):
+F F12_gap_go: n=56 avgR=-0.0827 PF=0.865 p=0.679 OOS avgR=-0.0827; OOS PF=0.865; green years 6/15; 2012-2023 avgR=-0.0796; 2012-2023 PF=0.869
+F F13_ny_lon_brk_15m: n=385 avgR=0.1183 PF=1.207 p=0.0471 2012-2023 avgR=-0.0082; 2012-2023 PF=0.987
+F F14_asia_trend_15m: n=382 avgR=0.1244 PF=1.218 p=0.0357 green years 7/15
+X A1_ny_lon_brk_d4h done 44s
+X A2_fomc_cont done 44s
+X A3_donch20_long done 44s
+X A4_asia_brk_trend done 44s
+/workspace/gold-algo/research/weekend-study-2026-11-15/study.py:539: Pandas4Warning: DatetimeIndex.weekday is deprecated and will be removed in a future version. Use DatetimeIndex.day_of_week instead.
+  for i in np.flatnonzero((idx.weekday == 6) & (hours == 18) & (idx.year >= OOS0)):
+all done 45s

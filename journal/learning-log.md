@@ -82,3 +82,4 @@ Owner asked for a full-night research pass: gold behaviour from the start of ava
 - Realism: the live EA's Friday close (16:15 ET) keeps FOMC/Donchian passing but takes NY/Asia to ~0R in 2012–2023. The EA's post-TP1 trail is not the tested exit and costs NY/Donchian/Asia 0.02–0.05R per trade. Owner decision pending (PROPOSALS P1).
 - Lesson: check how the live executor really manages trades (Friday flatten, trailing) before trusting a backtest. Live-vs-test gaps were bigger than any new idea's edge.
 - Lesson: with 4–20 trades a year, a 14-test family needs p < 0.004. Expect most "good-looking" ideas to land on the watchlist; that is the system working, not failing.
+- 2026-11-16 02:52 IST: Weekend run, market closed; NONE stays. Lesson: the Sunday 02:30 IST slot falls before the 18:00 ET reopen, so it can only do housekeeping; the dashboard Page's DATA shape has drifted from build_dashboard_data.py output and needs a rewrite.

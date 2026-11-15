@@ -2,9 +2,12 @@
 //| GoldDemoSellOnce.mq5                                             |
 //| Owner-requested one-shot DEMO market SELL on XAUUSD.             |
 //| Aborts on any non-demo account. Runs once and exits.             |
+//| Will not modify or close any existing position (including        |
+//| ticket 11388939566). May open an additional SELL on a hedge      |
+//| demo account.                                                    |
 //+------------------------------------------------------------------+
 #property copyright "GoldAlgoManager"
-#property version   "1.01"
+#property version   "1.02"
 #property script_show_inputs  false
 
 #include <Trade/Trade.mqh>
@@ -12,12 +15,13 @@
 const long   kExpectedLogin   = <demo-login>;
 const string kExpectedServer  = "MetaQuotes-Demo";
 const string kSymbol          = "XAUUSD";
-const double kSL              = 3912.00;
+const double kSL              = 3906.00;
 const double kTP              = 3866.00;
 const double kRiskPct         = 0.50;
 const int    kSlippagePoints  = 30;
-const string kComment         = "owner-requested-demo-2";
-const string kResultFile      = "GoldDemoSellOnce_result.txt";
+const string kComment         = "owner-requested-demo-3";
+const ulong  kProtectedTicket = 11388939566;
+const string kResultFile      = "GoldDemoSellOnce3_result.txt";
 
 int OnStart()
   {
@@ -66,13 +70,11 @@ int OnStart()
 
    // StartUp can run before the account is synchronized (equity=0). Wait.
    bool ready = false;
-   double wait_equity = 0;
    for(int w=0; w<60; ++w)
      {
       const bool connected = (bool)TerminalInfoInteger(TERMINAL_CONNECTED);
       const bool synced = SymbolIsSynchronized(kSymbol);
-      wait_equity = AccountInfoDouble(ACCOUNT_EQUITY);
-      if(connected && synced && wait_equity > 1000.0 && AccountInfoInteger(ACCOUNT_LOGIN)==kExpectedLogin)
+      if(connected && synced && AccountInfoDouble(ACCOUNT_EQUITY) > 1000.0 && AccountInfoInteger(ACCOUNT_LOGIN)==kExpectedLogin)
         {
          ready = true;
          report += "sync_wait_ms=" + IntegerToString(w*500) + "\n";
@@ -120,28 +122,39 @@ int OnStart()
      }
    report += "tick_value=" + DoubleToString(tick_value, 5) + "\n";
 
-   int open_positions = 0;
+   // Log existing positions. Do not close or modify them.
+   bool already_have_this_comment = false;
+   bool protected_still_open = false;
    for(int i=PositionsTotal()-1; i>=0; --i)
      {
       const ulong pt = PositionGetTicket(i);
       if(pt == 0)
          continue;
-      if(PositionGetString(POSITION_SYMBOL) == kSymbol)
-        {
-         open_positions++;
-         report += "existing_position ticket=" + IntegerToString((long)pt) +
-                   " type=" + IntegerToString(PositionGetInteger(POSITION_TYPE)) +
-                   " vol=" + DoubleToString(PositionGetDouble(POSITION_VOLUME), 2) +
-                   " price=" + DoubleToString(PositionGetDouble(POSITION_PRICE_OPEN), digits) + "\n";
-        }
+      if(PositionGetString(POSITION_SYMBOL) != kSymbol)
+         continue;
+      const string cmt = PositionGetString(POSITION_COMMENT);
+      report += "existing_position ticket=" + IntegerToString((long)pt) +
+                " type=" + IntegerToString(PositionGetInteger(POSITION_TYPE)) +
+                " vol=" + DoubleToString(PositionGetDouble(POSITION_VOLUME), 2) +
+                " price=" + DoubleToString(PositionGetDouble(POSITION_PRICE_OPEN), digits) +
+                " sl=" + DoubleToString(PositionGetDouble(POSITION_SL), digits) +
+                " tp=" + DoubleToString(PositionGetDouble(POSITION_TP), digits) +
+                " comment=" + cmt + "\n";
+      if(pt == kProtectedTicket)
+         protected_still_open = true;
+      if(cmt == kComment)
+         already_have_this_comment = true;
      }
-   if(open_positions > 0)
+   report += "protected_ticket=" + IntegerToString((long)kProtectedTicket) +
+             " still_open=" + IntegerToString(protected_still_open ? 1 : 0) +
+             " (will not modify)\n";
+   if(already_have_this_comment)
      {
-      report += "ABORT=already have an open XAUUSD position; will not add another\n";
+      report += "ABORT=already have a position with comment " + kComment + "; will not add another\n";
       return WriteAndExit(report, 1);
      }
 
-   // Planned SL 3912 / TP 3866 only if SL distance is $8-$30; otherwise SL=entry+18, TP=entry-28.
+   // Planned SL 3906 / TP 3866 only if SL distance is $8-$30; otherwise SL=entry+18, TP=entry-22.
    double sl = kSL;
    double tp = kTP;
    double sl_dist_plan = sl - bid;
@@ -151,7 +164,7 @@ int OnStart()
    if(sl_dist_plan < 8.0 || sl_dist_plan > 30.0)
      {
       sl = NormalizeDouble(bid + 18.0, digits);
-      tp = NormalizeDouble(bid - 28.0, digits);
+      tp = NormalizeDouble(bid - 22.0, digits);
       report += "sl_tp_adjusted=1 (planned SL distance outside 8-30)\n";
      }
    else
@@ -230,7 +243,9 @@ int OnStart()
    report += "comment=" + trade.ResultComment() + "\n";
 
    Sleep(500);
-   bool found = false;
+   bool found_new = false;
+   bool protected_after = false;
+   int xau_open = 0;
    for(int i=PositionsTotal()-1; i>=0; --i)
      {
       const ulong pt = PositionGetTicket(i);
@@ -238,7 +253,8 @@ int OnStart()
          continue;
       if(PositionGetString(POSITION_SYMBOL) != kSymbol)
          continue;
-      found = true;
+      xau_open++;
+      const string cmt = PositionGetString(POSITION_COMMENT);
       report += "OPEN_TICKET=" + IntegerToString((long)pt) + "\n";
       report += "OPEN_SIDE=" + (PositionGetInteger(POSITION_TYPE)==POSITION_TYPE_SELL ? "SELL" : "BUY") + "\n";
       report += "OPEN_VOLUME=" + DoubleToString(PositionGetDouble(POSITION_VOLUME), 2) + "\n";
@@ -246,14 +262,20 @@ int OnStart()
       report += "OPEN_SL=" + DoubleToString(PositionGetDouble(POSITION_SL), digits) + "\n";
       report += "OPEN_TP=" + DoubleToString(PositionGetDouble(POSITION_TP), digits) + "\n";
       report += "OPEN_MAGIC=" + IntegerToString(PositionGetInteger(POSITION_MAGIC)) + "\n";
-      report += "OPEN_COMMENT=" + PositionGetString(POSITION_COMMENT) + "\n";
+      report += "OPEN_COMMENT=" + cmt + "\n";
+      if(pt == kProtectedTicket)
+         protected_after = true;
+      if(cmt == kComment || pt == order_id)
+         found_new = true;
      }
-   if(!found)
-      report += "VERIFY=no open position found after send\n";
+   report += "protected_still_open_after=" + IntegerToString(protected_after ? 1 : 0) + "\n";
+   report += "xau_open_after=" + IntegerToString(xau_open) + "\n";
+   if(!found_new)
+      report += "VERIFY=new " + kComment + " position not found after send\n";
    else
-      report += "VERIFY=position open\n";
+      report += "VERIFY=new position open; existing tickets left untouched\n";
 
-   return WriteAndExit(report, sent && found ? 0 : 2);
+   return WriteAndExit(report, sent && found_new ? 0 : 2);
   }
 
 int WriteAndExit(const string report, const int code)

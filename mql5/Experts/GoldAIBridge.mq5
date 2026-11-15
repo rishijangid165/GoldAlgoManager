@@ -10,19 +10,18 @@
 //| (Tools > Options > Expert Advisors). See mql5/docs/SETUP.md.     |
 //+------------------------------------------------------------------+
 #property copyright   "Gold Algo / Rishi Jangid"
-#property version     "1.03"
+#property version     "1.04"
 #property description "AI-directed gold EA. Polls a decision JSON and trades only inside the AI zone."
-#property description "Hard risk rules (risk %, daily loss, spread, max trades, demo lock) stay in the EA."
-#property description "v1.02: Friday auto-close before the weekly gold close, and structure/ATR trailing after TP1."
-#property description "v1.03.1: calendar time base fixed per record (server vs UTC)."
-#property description "v1.03: news auto-blackout (MT5 calendar + news.json) and Telegram commands (/status /pause /resume /closeall)."
-#property description "DEMO only unless AllowRealAccount is explicitly enabled. See SETUP.md."
+#property description "v1.04: prop-firm guard, prop news-flat mode, explicit AllowLiveAccount."
+#property description "v1.03: news blackout + Telegram commands. v1.02: Friday close."
+#property description "DEMO only unless AllowLiveAccount=true. See docs/prop-readiness.md."
 
 #include <Trade\Trade.mqh>
 #include <GoldAIDecision.mqh>
 #include <GoldAIJournal.mqh>
 #include <GoldAITelegram.mqh>
 #include <GoldAINews.mqh>
+#include <GoldAIPropGuard.mqh>
 
 //+------------------------------------------------------------------+
 //| Inputs                                                             |
@@ -47,7 +46,36 @@ input long   InpMagicNumber         = 26011301;      // Magic number for this EA
 input int    InpSlippagePoints      = 30;            // Max deviation for market orders (points)
 
 input group "Safety"
-input bool   InpAllowRealAccount    = false;         // UNSAFE: allow a real account (leave false)
+input bool   InpAllowLiveAccount    = false;         // Allow a NON-demo (REAL/CONTEST) account. Prop/live use must set this deliberately
+input string InpAllowedServers      = "";            // Optional: only trade if server name contains one of these (; separated), e.g. FTMO
+
+input group "Prop-firm guard (v1.04)"
+input bool                 InpPropGuardEnabled      = false;           // Master switch (OFF on the demo preset, ON in prop presets)
+input double               InpPropInitialBalance    = 0.0;             // Firm account size; 0 = capture balance at first attach (persisted)
+input double               InpPropFirmDailyLossPct  = 5.0;             // Firm hard daily loss % (reference only)
+input double               InpPropDailyLossPct      = 4.0;             // GUARD: block entries + flatten at this daily loss % (0 = off)
+input bool                 InpPropDailyPctOfInitial = true;            // Daily % is of the initial balance (FTMO); false = of the day-start base
+input ENUM_GOLDAI_DAY_BASE InpPropDayBase           = GOLDAI_BASE_MAX; // Day-start reference: balance, equity or the higher of both
+input ENUM_GOLDAI_RESET_TZ InpPropResetTz           = GOLDAI_TZ_SERVER;// Time zone of the daily reset (FTMO = CE(S)T)
+input int                  InpPropResetHour         = 0;               // Daily reset hour in that zone (0 = midnight)
+input double               InpPropFirmMaxDDPct      = 10.0;            // Firm max overall loss % (reference only)
+input double               InpPropMaxDDPct          = 8.0;             // GUARD: block + flatten when equity <= initial - this % (0 = off)
+input bool                 InpPropDDTrailing        = false;           // Trailing DD: floor follows the equity/balance high-water mark
+input bool                 InpPropDDTrailLock       = true;            // Trailing floor never rises above the initial balance
+input int                  InpPropMaxOpenPositions  = 1;               // Max open EA positions on ALL symbols (0 = no extra cap)
+input double               InpPropDailyProfitCapPct = 0.0;             // Block new entries after this daily gain % (E8 Pro 2%; 0 = off)
+input bool                 InpPropProfitCapFlatten  = false;           // Also close EA positions when the profit cap is hit
+input bool                 InpPropFlattenOnTrip     = true;            // Close EA positions + delete EA pending when a loss guard trips
+input bool                 InpPropFlattenManual     = false;           // On a loss trip also close magic-0 manual positions (account-wide)
+input double               InpPropHeadroomMult      = 1.25;            // New trade must fit: risk x this <= remaining daily and DD room
+input double               InpPropWarnFraction      = 0.75;            // Telegram warning once this share of an allowance is used (0 = off)
+input bool                 InpPropResetDDLatch      = false;           // Set true ONCE to clear a tripped DD latch, then back to false
+
+input group "Prop news mode (v1.04)"
+input bool   InpPropNewsFlatEnabled   = false;  // Be FLAT around listed news: close EA trades before, no entries until after
+input int    InpPropNewsFlatBeforeMin = 10;     // Close EA positions / delete EA pending this many minutes before the release
+input int    InpPropNewsFlatAfterMin  = 5;      // Stay flat (no entries) this many minutes after the release
+input bool   InpPropNewsFlatManual    = false;  // Also close magic-0 manual positions before the news
 
 input group "Trade management"
 input double InpTP1CloseFraction    = 0.50;          // Fraction to close at TP1 (then SL -> breakeven)
@@ -62,7 +90,7 @@ input int    InpFridayNoEntryMinutes = 120;          // Block new entries this m
 input bool   InpFridayCloseManual    = false;        // Also flatten magic-0 manual positions/orders on this symbol
 
 input group "Trailing after TP1"
-input bool             InpTrailEnabled        = true;     // Trail the remaining half after TP1 + breakeven
+input bool             InpTrailEnabled        = false;    // Trail the remaining half after TP1 + breakeven
 input bool             InpTrailUseSwing       = true;     // Trail behind the last closed M15 swing high/low
 input bool             InpTrailUseATR         = true;     // Also consider ATR(period) * multiplier
 input ENUM_TIMEFRAMES  InpTrailTF             = PERIOD_M15; // Timeframe for swing and ATR
@@ -145,6 +173,22 @@ string          g_news_file_status   = "not loaded";
 string          g_news_alert_key     = "";
 datetime        g_news_alert_at      = 0;
 string          g_news_last_summary  = "";
+
+// v1.04 prop guard state (mirrored in login-scoped global variables)
+double          g_pg_initial         = 0.0;
+double          g_pg_peak            = 0.0;
+datetime        g_pg_day             = 0;
+double          g_pg_day_balance     = 0.0;
+double          g_pg_day_equity      = 0.0;
+bool            g_pg_dd_latched      = false;
+datetime        g_pg_daily_trip_day  = 0;
+datetime        g_pg_profit_cap_day  = 0;
+datetime        g_pg_warn_day        = 0;
+int             g_pg_flags           = 0;
+string          g_pg_status          = "off";
+string          g_pnews_key          = "";
+string          g_pnews_status       = "";
+bool            g_live_warned        = false;
 
 // v1.03 Telegram command state
 bool            g_paused             = false;
@@ -335,9 +379,36 @@ bool DailyLossHit()
 //+------------------------------------------------------------------+
 bool RealAccountBlocked()
   {
-   if(InpAllowRealAccount)
+   if(InpAllowLiveAccount)
       return(false);
    return(!GoldAI_IsDemoAccount());
+  }
+
+//+------------------------------------------------------------------+
+//| v1.04: optional server allow-list (substring, case-insensitive). |
+//+------------------------------------------------------------------+
+bool ServerBlocked()
+  {
+   string list = InpAllowedServers;
+   StringTrimLeft(list);
+   StringTrimRight(list);
+   if(list == "")
+      return(false);
+   string server = AccountInfoString(ACCOUNT_SERVER);
+   StringToUpper(server);
+   StringReplace(list, ",", ";");
+   string parts[];
+   const int n = StringSplit(list, ';', parts);
+   for(int i = 0; i < n; i++)
+     {
+      string k = parts[i];
+      StringTrimLeft(k);
+      StringTrimRight(k);
+      StringToUpper(k);
+      if(k != "" && StringFind(server, k) >= 0)
+         return(false);
+     }
+   return(true);
   }
 
 //+------------------------------------------------------------------+
@@ -1242,13 +1313,34 @@ void TryOpenTrade()
      }
    if(RealAccountBlocked())
      {
-      g_status = "BLOCKED: real account (AllowRealAccount is false)";
+      g_status = "BLOCKED: non-demo account (AllowLiveAccount is false)";
+      LogUnique("REJECT", g_status);
+      return;
+     }
+   if(ServerBlocked())
+     {
+      g_status = "BLOCKED: server " + AccountInfoString(ACCOUNT_SERVER) + " not in AllowedServers";
       LogUnique("REJECT", g_status);
       return;
      }
    if(g_paused)
      {
       g_status = "PAUSED via Telegram - no new entries (/resume to allow)";
+      return;
+     }
+   string pg_why = "";
+   if(PropEntriesBlocked(pg_why))
+     {
+      g_status = "PROP GUARD: " + pg_why;
+      LogUnique("PROP_GUARD_BLOCK", g_status);
+      return;
+     }
+   string pn_why = "";
+   int pn_idx = -1;
+   if(PropNewsFlatActive(pn_why, pn_idx))
+     {
+      g_status = "PROP NEWS FLAT: " + pn_why;
+      LogUnique("PROP_NEWS_BLOCK", g_status);
       return;
      }
    if(!g_have_decision || !g_decision.loaded)
@@ -1378,6 +1470,17 @@ void TryOpenTrade()
 
    const double risk_pct   = EffectiveRiskPct();
    const double risk_money = AccountInfoDouble(ACCOUNT_EQUITY) * risk_pct / 100.0;
+   if(InpPropGuardEnabled)
+     {
+      string fit_why = "";
+      if(!GoldAI_PropRiskFits(AccountInfoDouble(ACCOUNT_EQUITY), PropDayBase(), PropDailyAllowance(),
+                              PropDDFloor(), risk_money, InpPropHeadroomMult, fit_why))
+        {
+         g_status = "PROP GUARD: trade would not fit (" + fit_why + ")";
+         LogUnique("PROP_GUARD_FIT", g_status);
+         return;
+        }
+     }
    const double lots = GoldAI_LotsForRisk(_Symbol, otype, entry_price, sl, risk_money, reason);
    if(lots <= 0.0)
      {
@@ -1583,7 +1686,7 @@ void WriteTextFile(const string name, const string body)
 //+------------------------------------------------------------------+
 void RefreshNews(const bool force)
   {
-   if(!InpNewsBlackoutEnabled)
+   if(!InpNewsBlackoutEnabled && !InpPropNewsFlatEnabled)
       return;
    const datetime now = TimeGMT();
    const int interval = (InpNewsRefreshMinutes < 5 ? 5 : InpNewsRefreshMinutes) * 60;
@@ -1708,6 +1811,402 @@ string NewsPanelText()
    if(nx < 0)
       return("no window loaded");
    return("next " + GoldAI_NewsWindowText(g_news[nx]));
+  }
+
+//+------------------------------------------------------------------+
+//| v1.04 Prop-firm guard                                            |
+//+------------------------------------------------------------------+
+string PgName(const string key)
+  {
+   return("GoldAI_" + IntegerToString(InpMagicNumber) + "_" +
+          IntegerToString(AccountInfoInteger(ACCOUNT_LOGIN)) + "_pg_" + key);
+  }
+
+double PgGet(const string key, const double def)
+  {
+   const string n = PgName(key);
+   if(GlobalVariableCheck(n))
+      return(GlobalVariableGet(n));
+   return(def);
+  }
+
+void PgSet(const string key, const double v)
+  {
+   GlobalVariableSet(PgName(key), v);
+  }
+
+//+------------------------------------------------------------------+
+double PropDayBase()
+  {
+   return(GoldAI_PropDayBase((int)InpPropDayBase, g_pg_day_balance, g_pg_day_equity));
+  }
+
+double PropDailyAllowance()
+  {
+   return(GoldAI_PropDailyAllowance(InpPropDailyLossPct, InpPropDailyPctOfInitial, g_pg_initial, PropDayBase()));
+  }
+
+double PropDDFloor()
+  {
+   return(GoldAI_PropDDFloor(InpPropMaxDDPct, g_pg_initial, g_pg_peak, InpPropDDTrailing, InpPropDDTrailLock));
+  }
+
+//+------------------------------------------------------------------+
+//| Balance at the day reset, rebuilt from deal history (all deals,  |
+//| incl. manual and balance operations) when the EA missed the      |
+//| reset instant.                                                   |
+//+------------------------------------------------------------------+
+double PropBalanceAt(const datetime start_utc)
+  {
+   const double bal = AccountInfoDouble(ACCOUNT_BALANCE);
+   const datetime from_srv = start_utc + (datetime)GoldAI_ServerGmtOffset();
+   if(!HistorySelect(from_srv, TimeTradeServer() + 3600))
+      return(bal);
+   double sum = 0.0;
+   const int n = HistoryDealsTotal();
+   for(int i = 0; i < n; i++)
+     {
+      const ulong d = HistoryDealGetTicket(i);
+      if(d == 0)
+         continue;
+      if((datetime)HistoryDealGetInteger(d, DEAL_TIME) < from_srv)
+         continue;
+      sum += HistoryDealGetDouble(d, DEAL_PROFIT) + HistoryDealGetDouble(d, DEAL_SWAP) +
+             HistoryDealGetDouble(d, DEAL_COMMISSION) + HistoryDealGetDouble(d, DEAL_FEE);
+     }
+   return(bal - sum);
+  }
+
+//+------------------------------------------------------------------+
+void PropRollDay(const bool at_init)
+  {
+   const datetime now = TimeGMT();
+   const datetime day = GoldAI_PropDayStartUtc(now, (int)InpPropResetTz, InpPropResetHour, GoldAI_ServerGmtOffset());
+   if(day == g_pg_day && g_pg_day_balance > 0.0)
+      return;
+   const double bal = AccountInfoDouble(ACCOUNT_BALANCE);
+   const double eq  = AccountInfoDouble(ACCOUNT_EQUITY);
+   string how = "live snapshot";
+   if((now - day) <= 300)
+     {
+      g_pg_day_balance = bal;
+      g_pg_day_equity  = eq;
+     }
+   else
+     {
+      // Missed the reset (EA started later): rebuild balance from history.
+      // Equity at the reset is unknown -> use the higher of the rebuilt
+      // balance and current equity (conservative for the MAX/EQUITY bases).
+      g_pg_day_balance = PropBalanceAt(day);
+      g_pg_day_equity  = MathMax(g_pg_day_balance, eq);
+      how = "rebuilt from history (late " + IntegerToString((int)((now - day) / 60)) + " min)";
+     }
+   g_pg_day = day;
+   PgSet("day", (double)g_pg_day);
+   PgSet("dbal", g_pg_day_balance);
+   PgSet("deq", g_pg_day_equity);
+   Print("GoldAI prop guard: new prop day from ", GoldAI_TimeToIsoUtc(day), " base bal=",
+         DoubleToString(g_pg_day_balance, 2), " eq=", DoubleToString(g_pg_day_equity, 2), " (", how, ")",
+         (at_init ? " [init]" : ""));
+  }
+
+//+------------------------------------------------------------------+
+void PropGuardInit()
+  {
+   g_pg_status = "off";
+   if(!InpPropGuardEnabled)
+      return;
+   g_pg_initial = PgGet("init", 0.0);
+   if(InpPropInitialBalance > 0.0)
+      g_pg_initial = InpPropInitialBalance;
+   if(g_pg_initial <= 0.0)
+     {
+      g_pg_initial = AccountInfoDouble(ACCOUNT_BALANCE);
+      Print("GoldAI prop guard: initial balance captured from the account: ", DoubleToString(g_pg_initial, 2),
+            " (set PropInitialBalance to the firm account size to be exact)");
+     }
+   PgSet("init", g_pg_initial);
+   g_pg_peak = MathMax(PgGet("peak", g_pg_initial), g_pg_initial);
+   PgSet("peak", g_pg_peak);
+   g_pg_day          = (datetime)PgGet("day", 0.0);
+   g_pg_day_balance  = PgGet("dbal", 0.0);
+   g_pg_day_equity   = PgGet("deq", 0.0);
+   g_pg_dd_latched   = (PgGet("ddlatch", 0.0) > 0.5);
+   g_pg_daily_trip_day = (datetime)PgGet("dtrip", 0.0);
+   g_pg_profit_cap_day = (datetime)PgGet("pcap", 0.0);
+   g_pg_warn_day       = (datetime)PgGet("warn", 0.0);
+   if(InpPropResetDDLatch && g_pg_dd_latched)
+     {
+      g_pg_dd_latched = false;
+      PgSet("ddlatch", 0.0);
+      Print("GoldAI prop guard: DD latch CLEARED by PropResetDDLatch=true. Set it back to false.");
+     }
+   PropRollDay(true);
+   if(InpPropFirmDailyLossPct > 0.0 && InpPropDailyLossPct >= InpPropFirmDailyLossPct)
+      Print("GoldAI prop guard WARNING: guard daily ", DoubleToString(InpPropDailyLossPct, 2),
+            "% is not below the firm limit ", DoubleToString(InpPropFirmDailyLossPct, 2), "%");
+   if(InpPropFirmMaxDDPct > 0.0 && InpPropMaxDDPct >= InpPropFirmMaxDDPct)
+      Print("GoldAI prop guard WARNING: guard DD ", DoubleToString(InpPropMaxDDPct, 2),
+            "% is not below the firm limit ", DoubleToString(InpPropFirmMaxDDPct, 2), "%");
+   Print("GoldAI prop guard ON: initial=", DoubleToString(g_pg_initial, 2),
+         " daily guard ", DoubleToString(InpPropDailyLossPct, 2), "% (firm ", DoubleToString(InpPropFirmDailyLossPct, 2),
+         "%), DD guard ", DoubleToString(InpPropMaxDDPct, 2), "% (firm ", DoubleToString(InpPropFirmMaxDDPct, 2),
+         "%) ", (InpPropDDTrailing ? "trailing" : "static"), ", reset ", EnumToString(InpPropResetTz), " ",
+         IntegerToString(InpPropResetHour), ":00, DD latch=", (g_pg_dd_latched ? "TRIPPED" : "clear"));
+  }
+
+//+------------------------------------------------------------------+
+//| Close positions (any symbol) for the EA magic and optionally     |
+//| magic-0 manual ones; delete EA pending orders.                    |
+//+------------------------------------------------------------------+
+string PropFlatten(const bool include_manual, const string reason)
+  {
+   int closed = 0, failed = 0, deleted = 0;
+   for(int i = PositionsTotal() - 1; i >= 0; i--)
+     {
+      const ulong ticket = PositionGetTicket(i);
+      if(ticket == 0)
+         continue;
+      const long magic = PositionGetInteger(POSITION_MAGIC);
+      const bool ours = (magic == InpMagicNumber);
+      if(!ours && !(include_manual && magic == 0))
+         continue;
+      if(ours)
+         g_pending_exit_reason = reason;
+      if(g_trade.PositionClose(ticket))
+        {
+         closed++;
+         if(ours && g_tp1_done_ticket == ticket)
+            PersistTp1(0);
+        }
+      else
+        {
+         failed++;
+         Print("GoldAI ", reason, " close failed ticket=", ticket, " ret=", g_trade.ResultRetcode(),
+               " ", g_trade.ResultRetcodeDescription());
+        }
+     }
+   for(int i = OrdersTotal() - 1; i >= 0; i--)
+     {
+      const ulong ticket = OrderGetTicket(i);
+      if(ticket == 0 || OrderGetInteger(ORDER_MAGIC) != InpMagicNumber)
+         continue;
+      if(g_trade.OrderDelete(ticket))
+         deleted++;
+     }
+   const string res = "closed " + IntegerToString(closed) + ", failed " + IntegerToString(failed) +
+                      ", pending deleted " + IntegerToString(deleted) + (include_manual ? " (manual incl.)" : "");
+   if(closed > 0 || failed > 0 || deleted > 0)
+     {
+      Print("GoldAI ", reason, ": ", res);
+      g_journal.Write("PROP_FLATTEN", 0, _Symbol, "", 0, 0, 0, 0, 0, 0, 0, 0, "", reason + ": " + res);
+     }
+   return(res);
+  }
+
+//+------------------------------------------------------------------+
+string PropLevelsText()
+  {
+   const double eq = AccountInfoDouble(ACCOUNT_EQUITY);
+   const double base = PropDayBase();
+   const double allow = PropDailyAllowance();
+   const double floor = PropDDFloor();
+   string t = "day P/L $" + DoubleToString(eq - base, 2);
+   if(allow > 0.0)
+      t += " (guard -$" + DoubleToString(allow, 2) + ", room $" + DoubleToString(allow - (base - eq), 2) + ")";
+   if(floor > 0.0)
+      t += ", DD floor $" + DoubleToString(floor, 2) + " (room $" + DoubleToString(eq - floor, 2) + ")";
+   return(t);
+  }
+
+//+------------------------------------------------------------------+
+void PropGuardCheck()
+  {
+   if(!InpPropGuardEnabled)
+     {
+      g_pg_status = "off";
+      return;
+     }
+   if(g_pg_initial <= 0.0)
+     {
+      g_pg_status = "NOT READY (no initial balance)";
+      return;
+     }
+   PropRollDay(false);
+   const double bal = AccountInfoDouble(ACCOUNT_BALANCE);
+   const double eq  = AccountInfoDouble(ACCOUNT_EQUITY);
+   const double hw = MathMax(bal, eq);
+   if(hw > g_pg_peak)
+     {
+      g_pg_peak = hw;
+      PgSet("peak", g_pg_peak);
+     }
+   const double dd_amount = (InpPropMaxDDPct > 0.0 ? InpPropMaxDDPct / 100.0 * g_pg_initial : 0.0);
+   g_pg_flags = GoldAI_PropEvaluate(eq, PropDayBase(), PropDailyAllowance(), PropDDFloor(), dd_amount,
+                                    InpPropDailyProfitCapPct, InpPropWarnFraction);
+
+   // Overall drawdown: permanent latch.
+   if((g_pg_flags & GOLDAI_PG_DD_TRIP) != 0 && !g_pg_dd_latched)
+     {
+      g_pg_dd_latched = true;
+      PgSet("ddlatch", 1.0);
+      string res = "flatten off";
+      if(InpPropFlattenOnTrip)
+         res = PropFlatten(InpPropFlattenManual, "prop_dd_guard");
+      LogUnique("PROP_DD_TRIP", PropLevelsText() + " | " + res);
+      NotifyTelegram("GoldAI PROP GUARD TRIPPED: max drawdown\nEquity $" + DoubleToString(eq, 2) +
+                     " <= floor $" + DoubleToString(PropDDFloor(), 2) +
+                     " (guard " + DoubleToString(InpPropMaxDDPct, 2) + "%, firm " + DoubleToString(InpPropFirmMaxDDPct, 2) + "%)\n" +
+                     res + "\nNew entries are blocked until the latch is reset manually.");
+     }
+   // Daily loss: blocked until the next prop day.
+   if((g_pg_flags & GOLDAI_PG_DAILY_TRIP) != 0 && g_pg_daily_trip_day != g_pg_day)
+     {
+      g_pg_daily_trip_day = g_pg_day;
+      PgSet("dtrip", (double)g_pg_daily_trip_day);
+      string res = "flatten off";
+      if(InpPropFlattenOnTrip)
+         res = PropFlatten(InpPropFlattenManual, "prop_daily_guard");
+      LogUnique("PROP_DAILY_TRIP", PropLevelsText() + " | " + res);
+      NotifyTelegram("GoldAI PROP GUARD TRIPPED: daily loss\n" + PropLevelsText() +
+                     "\nGuard " + DoubleToString(InpPropDailyLossPct, 2) + "% vs firm " +
+                     DoubleToString(InpPropFirmDailyLossPct, 2) + "%\n" + res +
+                     "\nNo new entries until the next reset (" + EnumToString(InpPropResetTz) + " " +
+                     IntegerToString(InpPropResetHour) + ":00).");
+     }
+   // Daily profit cap.
+   if((g_pg_flags & GOLDAI_PG_PROFIT_CAP) != 0 && g_pg_profit_cap_day != g_pg_day)
+     {
+      g_pg_profit_cap_day = g_pg_day;
+      PgSet("pcap", (double)g_pg_profit_cap_day);
+      string res = "positions kept";
+      if(InpPropProfitCapFlatten)
+         res = PropFlatten(false, "prop_profit_cap");
+      LogUnique("PROP_PROFIT_CAP", PropLevelsText() + " | " + res);
+      NotifyTelegram("GoldAI prop daily profit cap reached (" + DoubleToString(InpPropDailyProfitCapPct, 2) +
+                     "%)\n" + PropLevelsText() + "\n" + res + "\nNo new entries until the next reset.");
+     }
+   // One warning per day.
+   if((g_pg_flags & GOLDAI_PG_WARN) != 0 && g_pg_warn_day != g_pg_day &&
+      (g_pg_flags & (GOLDAI_PG_DD_TRIP | GOLDAI_PG_DAILY_TRIP)) == 0)
+     {
+      g_pg_warn_day = g_pg_day;
+      PgSet("warn", (double)g_pg_warn_day);
+      LogUnique("PROP_WARN", PropLevelsText());
+      NotifyTelegram("GoldAI prop guard WARNING: " + DoubleToString(InpPropWarnFraction * 100.0, 0) +
+                     "% of an allowance used\n" + PropLevelsText());
+     }
+   // Keep EA positions flat while a loss guard is tripped (retries failed closes).
+   const bool tripped = (g_pg_dd_latched || g_pg_daily_trip_day == g_pg_day);
+   if(tripped && InpPropFlattenOnTrip && (CountEaPositionsAnySymbol() > 0 || CountEaPendingAnySymbol() > 0))
+      PropFlatten(false, "prop_guard_hold_flat");
+
+   string st = "";
+   if(g_pg_dd_latched)
+      st = "DD LATCHED";
+   else if(g_pg_daily_trip_day == g_pg_day)
+      st = "DAILY TRIPPED";
+   else if(g_pg_profit_cap_day == g_pg_day)
+      st = "PROFIT CAP";
+   else
+      st = ((g_pg_flags & GOLDAI_PG_WARN) != 0 ? "WARN" : "OK");
+   g_pg_status = st + " | " + PropLevelsText();
+  }
+
+//+------------------------------------------------------------------+
+bool PropEntriesBlocked(string &why)
+  {
+   why = "";
+   if(!InpPropGuardEnabled)
+      return(false);
+   if(g_pg_initial <= 0.0)
+     {
+      why = "no initial balance";
+      return(true);
+     }
+   if(g_pg_dd_latched)
+     {
+      why = "max drawdown guard latched (" + PropLevelsText() + ")";
+      return(true);
+     }
+   if(g_pg_daily_trip_day == g_pg_day && g_pg_day > 0)
+     {
+      why = "daily loss guard tripped (" + PropLevelsText() + ")";
+      return(true);
+     }
+   if(g_pg_profit_cap_day == g_pg_day && g_pg_day > 0)
+     {
+      why = "daily profit cap reached";
+      return(true);
+     }
+   if(InpPropMaxOpenPositions > 0 && CountEaPositionsAnySymbol() >= InpPropMaxOpenPositions)
+     {
+      why = "max open EA positions " + IntegerToString(InpPropMaxOpenPositions);
+      return(true);
+     }
+   return(false);
+  }
+
+//+------------------------------------------------------------------+
+//| Prop news mode: is now inside a flat window of a listed event?   |
+//+------------------------------------------------------------------+
+bool PropNewsFlatActive(string &why, int &idx)
+  {
+   why = "";
+   idx = -1;
+   if(!InpPropNewsFlatEnabled)
+      return(false);
+   const datetime now = TimeGMT();
+   datetime best_from = 0, best_to = 0;
+   for(int i = 0; i < ArraySize(g_news); i++)
+     {
+      datetime f = 0, t = 0;
+      if(GoldAI_PropNewsFlatWindow(now, g_news[i].start_utc, g_news[i].end_utc,
+                                   InpNewsBlackoutBeforeMin, InpNewsBlackoutAfterMin,
+                                   InpPropNewsFlatBeforeMin, InpPropNewsFlatAfterMin, f, t))
+        {
+         if(idx < 0 || g_news[i].event_utc < g_news[idx].event_utc)
+           {
+            idx = i;
+            best_from = f;
+            best_to = t;
+           }
+        }
+     }
+   if(idx < 0)
+      return(false);
+   why = g_news[idx].name + " @ " + GoldAI_TimeToIsoUtc(g_news[idx].event_utc) + " (flat " +
+         StringSubstr(GoldAI_TimeToIsoUtc(best_from), 11, 5) + "-" + StringSubstr(GoldAI_TimeToIsoUtc(best_to), 11, 5) + "Z)";
+   return(true);
+  }
+
+//+------------------------------------------------------------------+
+void ManagePropNewsFlat()
+  {
+   g_pnews_status = "";
+   if(!InpPropNewsFlatEnabled)
+      return;
+   string why = "";
+   int idx = -1;
+   if(!PropNewsFlatActive(why, idx))
+     {
+      g_pnews_status = "armed";
+      return;
+     }
+   g_pnews_status = "FLAT WINDOW " + why;
+   const bool have_ea = (CountEaPositionsAnySymbol() > 0 || CountEaPendingAnySymbol() > 0);
+   const string key = IntegerToString((long)g_news[idx].event_utc);
+   if(!have_ea && !(InpPropNewsFlatManual && key != g_pnews_key))
+      return;
+   const bool manual = (InpPropNewsFlatManual && key != g_pnews_key);
+   const string res = PropFlatten(manual, "prop_news_flat");
+   if(key != g_pnews_key && (have_ea || StringFind(res, "closed 0,") < 0))
+     {
+      g_pnews_key = key;
+      LogUnique("PROP_NEWS_FLAT", why + " | " + res);
+      NotifyTelegram("GoldAI prop news mode: flat before news\n" + why + "\n" + res +
+                     "\nNo new entries until the window ends.");
+     }
   }
 
 //+------------------------------------------------------------------+
@@ -1840,8 +2339,8 @@ string CloseAllEaPositions()
 string StatusText()
   {
    const int digits = _Digits;
-   string t = "GoldAI v1.03.1 status\n";
-   t += "Account: " + GoldAI_AccountModeText() + "\n";
+   string t = "GoldAI v1.04 status\n";
+   t += "Account: " + GoldAI_AccountModeText() + "  server " + AccountInfoString(ACCOUNT_SERVER) + "\n";
    t += "Balance: $" + DoubleToString(AccountInfoDouble(ACCOUNT_BALANCE), 2) +
         "  Equity: $" + DoubleToString(AccountInfoDouble(ACCOUNT_EQUITY), 2) + "\n";
    t += "Day P/L: " + DoubleToString(-DailyLossPct(), 2) + "% (cap -" + DoubleToString(InpMaxDailyLossPct, 2) + "%)\n";
@@ -1884,7 +2383,9 @@ string StatusText()
    t += "News: " + NewsPanelText() + "\n";
    if(InpNewsBlackoutEnabled)
       t += "News sources: calendar " + g_news_cal_status + ", file " + g_news_file_status + "\n";
-   t += "Friday close: " + (InpFridayCloseEnabled ? (g_friday_status == "" ? "armed" : g_friday_status) : "off");
+   t += "Friday close: " + (InpFridayCloseEnabled ? (g_friday_status == "" ? "armed" : g_friday_status) : "off") + "\n";
+   t += "Prop guard: " + g_pg_status + "\n";
+   t += "Prop news mode: " + (InpPropNewsFlatEnabled ? g_pnews_status : "off");
    return(t);
   }
 
@@ -1897,6 +2398,7 @@ string HelpText()
           "/resume - allow new entries again\n" +
           "/closeall - close ONLY EA positions (magic " + IntegerToString(InpMagicNumber) + "), needs /confirm <code> within " +
           IntegerToString(InpTgConfirmSeconds) + "s\n" +
+          "/guard - prop-firm guard state\n" +
           "/help - this list");
   }
 
@@ -1934,6 +2436,21 @@ void HandleTgCommand(const string text_in)
    if(cmd == "/status")
      {
       TgReply(StatusText());
+      return;
+     }
+   if(cmd == "/guard")
+     {
+      PropGuardCheck();
+      TgReply("GoldAI prop guard: " + g_pg_status +
+              (InpPropGuardEnabled ? ("\nInitial $" + DoubleToString(g_pg_initial, 2) +
+                                     "  peak $" + DoubleToString(g_pg_peak, 2) +
+                                     "\nDay from " + GoldAI_TimeToIsoUtc(g_pg_day) +
+                                     "  base $" + DoubleToString(PropDayBase(), 2) +
+                                     "\nDaily guard " + DoubleToString(InpPropDailyLossPct, 2) + "% (firm " + DoubleToString(InpPropFirmDailyLossPct, 2) +
+                                     "%), DD guard " + DoubleToString(InpPropMaxDDPct, 2) + "% (firm " + DoubleToString(InpPropFirmMaxDDPct, 2) + "%)" +
+                                     (InpPropDailyProfitCapPct > 0.0 ? ("\nProfit cap " + DoubleToString(InpPropDailyProfitCapPct, 2) + "%") : ""))
+                                  : "") +
+              "\nNews mode: " + (InpPropNewsFlatEnabled ? g_pnews_status : "off"));
       return;
      }
    if(cmd == "/pause")
@@ -2084,7 +2601,7 @@ void UpdatePanel(const bool force)
 
    const int digits = _Digits;
    string lines = "";
-   lines += "====== GoldAI Bridge v1.03.1 ======\n";
+   lines += "====== GoldAI Bridge v1.04 ======\n";
    lines += "Account:  " + GoldAI_AccountModeText() +
             "  #" + IntegerToString(AccountInfoInteger(ACCOUNT_LOGIN)) +
             "  " + AccountInfoString(ACCOUNT_CURRENCY) + "\n";
@@ -2160,6 +2677,9 @@ void UpdatePanel(const bool force)
    lines += "TG cmds:  " + ((InpTgCommandsEnabled && InpEnableTelegram && InpTelegramToken != "") ? "on" : "off") +
             (g_paused ? "   ENTRIES PAUSED (/resume)" : "") + "\n";
 
+   lines += "Prop:     " + GoldAI_Truncate(g_pg_status, 110) + "\n";
+   if(InpPropNewsFlatEnabled)
+      lines += "PropNews: " + GoldAI_Truncate(g_pnews_status, 110) + "\n";
    if(g_trade_locked)
       lines += "LOCK:     " + g_lock_reason + "\n";
 
@@ -2170,6 +2690,8 @@ void UpdatePanel(const bool force)
 void ManageAndMaybeEnter()
   {
    RefreshDailyWindow();
+   PropGuardCheck();
+   ManagePropNewsFlat();
    ManageFridayClose();
    EnforceDecisionOnOpenTrade();
    ManageOpenPosition();
@@ -2207,12 +2729,33 @@ int OnInit()
    g_news_file_at = 0;
    g_last_manage  = 0;
 
+   const string login_txt = IntegerToString(AccountInfoInteger(ACCOUNT_LOGIN));
+   Print("GoldAI v1.04 account: mode=", GoldAI_AccountModeText(),
+         " server=", AccountInfoString(ACCOUNT_SERVER),
+         " company=", AccountInfoString(ACCOUNT_COMPANY),
+         " login=***", StringSubstr(login_txt, MathMax(0, StringLen(login_txt) - 3)),
+         " currency=", AccountInfoString(ACCOUNT_CURRENCY),
+         " AllowLiveAccount=", (InpAllowLiveAccount ? "true" : "false"),
+         " AllowedServers='", InpAllowedServers, "'",
+         " PropGuard=", (InpPropGuardEnabled ? "ON" : "off"),
+         " PropNewsFlat=", (InpPropNewsFlatEnabled ? "ON" : "off"));
+   g_trade_locked = false;
+   g_lock_reason  = "";
    if(RealAccountBlocked())
      {
       g_trade_locked = true;
-      g_lock_reason  = "REAL account is blocked. Run on DEMO, or set AllowRealAccount=true (unsafe).";
+      g_lock_reason  = GoldAI_AccountModeText() + " account is blocked. Run on DEMO, or set AllowLiveAccount=true deliberately.";
       Print("GoldAI ", g_lock_reason);
      }
+   if(ServerBlocked())
+     {
+      g_trade_locked = true;
+      g_lock_reason  = "server " + AccountInfoString(ACCOUNT_SERVER) + " is not in AllowedServers '" + InpAllowedServers + "'";
+      Print("GoldAI ", g_lock_reason);
+     }
+   if(!GoldAI_IsDemoAccount() && InpAllowLiveAccount && !InpPropGuardEnabled)
+      Print("GoldAI WARNING: non-demo account allowed but the prop guard is OFF.");
+   PropGuardInit();
 
    if(InpPollMinutes < 1)
       Print("GoldAI: PollMinutes < 1 is not allowed; will use 1 minute");
@@ -2249,7 +2792,7 @@ int OnInit()
                                             InpTelegramToken,
                                             InpTelegramChatId,
                                             InpWebTimeoutMs,
-                                            "GoldAIBridge online (v1.03.1). Send /help for commands.",
+                                            "GoldAIBridge online (v1.04, " + GoldAI_AccountModeText() + ", prop guard " + (InpPropGuardEnabled ? "ON" : "off") + "). Send /help for commands.",
                                             st,
                                             terr);
       if(sent)

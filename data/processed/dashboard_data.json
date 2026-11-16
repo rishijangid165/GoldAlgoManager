@@ -1,6 +1,6 @@
 {
-  "generated_at_ist": "2026-11-16 02:52:14 IST",
-  "generated_at_utc": "2026-11-15T21:22:14Z",
+  "generated_at_ist": "2026-11-16 06:00:18 IST",
+  "generated_at_utc": "2026-11-16T00:30:18Z",
   "timezone_label": "IST (Asia/Kolkata)",
   "account": {
     "server": "MetaQuotes-Demo",
@@ -22,11 +22,11 @@
     "first_ea_start_equity": 99999.95,
     "first_ea_start_equity_at_ist": "2026-11-13 01:06:20 IST",
     "last_terminal_sync_positions": 0,
-    "last_terminal_sync_ist": "2026-11-16 02:52:15 IST"
+    "last_terminal_sync_ist": "2026-11-16 06:00:19 IST"
   },
   "live_account": {
     "state": "live",
-    "pulled_at_ist": "2026-11-16 02:52:15 IST",
+    "pulled_at_ist": "2026-11-16 06:00:19 IST",
     "balance": 100542.45,
     "equity": 100542.45,
     "open_profit": 0.0,
@@ -380,20 +380,26 @@
       "backfill_closed": 8,
       "live_closed": 0
     },
-    "generated_utc": "2026-11-15T21:22Z",
-    "generated_ist": "2026-11-16 02:52 IST",
-    "data_source": "gcf_1h_minus_swissquote_basis(+5.90)",
-    "last_completed_bar_ist": "2026-11-14 02:30 IST",
+    "generated_utc": "2026-11-16T00:27Z",
+    "generated_ist": "2026-11-16 05:57 IST",
+    "data_source": "mt5_broker_live",
+    "last_completed_bar_ist": "2026-11-16 04:30 IST",
     "backfill_start_ist": "2026-10-16 09:30 IST",
     "live_start_ist": "2026-11-14 05:30 IST",
     "pending_signals": {},
-    "new_rows_this_run": [
-      "ny_lon_brk_d4h|2026-10-30T13:00Z|SELL",
-      "fomc_cont|2026-10-28T19:00Z|SELL",
-      "asia_brk_trend|2026-10-27T09:00Z|SELL"
-    ],
+    "new_rows_this_run": [],
     "closed_this_run": [],
     "note": "Paper only. Each setup is its own one-trade book, so books can overlap (live trading allows one trade total). Rows with mode=backfill were reconstructed from broker history on 2026-11-14, not logged in real time.",
+    "mt5_account": {
+      "server": "MetaQuotes-Demo",
+      "trade_mode": 0,
+      "currency": "USD",
+      "balance": 100542.45,
+      "equity": 100542.45,
+      "margin": 0.0,
+      "profit": 0.0,
+      "pulled_at_utc": "2026-11-16T00:27:33.816139+00:00"
+    },
     "trades": [
       {
         "trade_id": "ny_lon_brk_d4h|2026-10-19T14:00Z|SELL",
@@ -603,11 +609,11 @@
         "direction": "SELL",
         "entry_time_utc": "2026-11-13 14:00Z",
         "entry_time_ist": "2026-11-13 19:30 IST",
-        "entry": "3879.54",
-        "sl": "3906.04",
-        "tp1_1p5r": "3839.79",
-        "tp2_3r": "3800.04",
-        "risk_per_oz": "26.5",
+        "entry": "3880.99",
+        "sl": "3907.71",
+        "tp1_1p5r": "3840.92",
+        "tp2_3r": "3800.85",
+        "risk_per_oz": "26.71",
         "status": "OPEN",
         "exit_time_utc": "",
         "exit_time_ist": "",
@@ -615,10 +621,10 @@
         "tp1_hit": "False",
         "result": "OPEN",
         "r": "",
-        "mark_r": "-0.039",
+        "mark_r": "-0.731",
         "data_source": "mt5_broker_live",
         "first_logged_utc": "2026-11-14T05:40Z",
-        "updated_utc": "2026-11-15T21:22Z"
+        "updated_utc": "2026-11-16T00:27Z"
       }
     ]
   },
@@ -636,16 +642,30 @@
     "tp2": 0.0,
     "confidence": 0,
     "max_risk_pct": 0.5,
-    "generated_at_ist": "2026-11-13 20:46:49 IST",
-    "valid_until_ist": "2026-11-14 02:30 IST",
-    "valid_until_utc": "2026-11-13T21:00:00Z",
-    "expired": true,
+    "generated_at_ist": "2026-11-16 05:57:18 IST",
+    "valid_until_ist": "2026-11-16 11:30 IST",
+    "valid_until_utc": "2026-11-16T06:00:00Z",
+    "expired": false,
     "kill_switch": false,
     "in_news_blackout": false,
-    "news_blackout": [],
-    "next_blackout": null,
-    "rationale": "Stand aside into Friday close. PPI (0.3% vs 0.4% m/m, 6.5% y/y) whipsawed 3873-3906 spot and both sides got swept; price back mid Asia range 3865-3923 (~3889), no London/NY close outside it, no clean with-trend sweep. D/4H LH/LL bearish below EMA20, 10y 5.16%, DXY 103.2. GC basis ~+5. No new trades after 16:00 ET Friday.",
-    "status": "expired",
+    "news_blackout": [
+      {
+        "start_ist": "2026-11-16 22:00:00 IST",
+        "end_ist": "2026-11-17 00:00:00 IST",
+        "start_utc": "2026-11-16T16:30:00Z",
+        "end_utc": "2026-11-16T18:30:00Z",
+        "reason": "Fed Chair Warsh speaks 17:00Z"
+      }
+    ],
+    "next_blackout": {
+      "start_ist": "2026-11-16 22:00:00 IST",
+      "end_ist": "2026-11-17 00:00:00 IST",
+      "start_utc": "2026-11-16T16:30:00Z",
+      "end_utc": "2026-11-16T18:30:00Z",
+      "reason": "Fed Chair Warsh speaks 17:00Z"
+    },
+    "rationale": "Mon Asia open, stand aside. No Donchian: Fri close 3878 far below 20d high 4199. D/4H LH/LL bearish below EMA20/SMA50/200 (D ATR ~115). Sun gap-down to 3868.7 then pop to 3901 (Fri range 3865.5-3923); now ~3890 mid-range. Asia range forming, locks 08:00Z; next look London/NY. 10y 5.15%, DXY 103.4. GC basis ~+6.",
+    "status": "flat",
     "source": "/workspace/gold-algo/decisions/current.json"
   },
   "open_position": null,
@@ -653,7 +673,7 @@
   "ea": {
     "name": "GoldAIBridge",
     "chart": "XAUUSD M15",
-    "last_decision_read_ist": "2026-11-16 02:50:21 IST",
+    "last_decision_read_ist": "2026-11-16 05:59:20 IST",
     "last_decision_bias": "NONE"
   },
   "trades": [
@@ -734,10 +754,10 @@
       "sort": "2026-11-13T07:41:28+02:00"
     },
     {
-      "t": "2026-11-16 02:52 IST",
+      "t": "2026-11-16 06:00 IST",
       "label": "Last known balance",
       "equity": 100046.1,
-      "sort": "2026-11-16T02:52:14.530011+05:30"
+      "sort": "2026-11-16T06:00:18.182668+05:30"
     }
   ],
   "stats": {
@@ -854,7 +874,7 @@
     }
   ],
   "notes": [
-    "Balance and equity are live from MT5 (pulled 2026-11-16 02:52:15 IST).",
+    "Balance and equity are live from MT5 (pulled 2026-11-16 06:00:19 IST).",
     "All live money figures come from MT5 result files, the EA journal, and MQL5 logs. No live broker quote is shown unless a file has a fresh one.",
     "Today's P&L vs the $100,046.10 start-of-day reference is $0.00 because both closed demo trades settled before that reference was recorded. Their combined P&L is +46.15 (including swap), which is already inside the current balance."
   ],

@@ -1,7 +1,7 @@
 {
   "version": 1,
-  "generated_at": "2026-11-13T15:16:49Z",
-  "valid_until": "2026-11-13T21:00:00Z",
+  "generated_at": "2026-11-16T00:27:18Z",
+  "valid_until": "2026-11-16T06:00:00Z",
   "symbol": "XAUUSD",
   "bias": "NONE",
   "entry_zone": {
@@ -15,7 +15,13 @@
   ],
   "confidence": 0,
   "max_risk_pct": 0.5,
-  "rationale": "Stand aside into Friday close. PPI (0.3% vs 0.4% m/m, 6.5% y/y) whipsawed 3873-3906 spot and both sides got swept; price back mid Asia range 3865-3923 (~3889), no London/NY close outside it, no clean with-trend sweep. D/4H LH/LL bearish below EMA20, 10y 5.16%, DXY 103.2. GC basis ~+5. No new trades after 16:00 ET Friday.",
-  "news_blackout": [],
+  "rationale": "Mon Asia open, stand aside. No Donchian: Fri close 3878 far below 20d high 4199. D/4H LH/LL bearish below EMA20/SMA50/200 (D ATR ~115). Sun gap-down to 3868.7 then pop to 3901 (Fri range 3865.5-3923); now ~3890 mid-range. Asia range forming, locks 08:00Z; next look London/NY. 10y 5.15%, DXY 103.4. GC basis ~+6.",
+  "news_blackout": [
+    {
+      "start": "2026-11-16T16:30:00Z",
+      "end": "2026-11-16T18:30:00Z",
+      "reason": "Fed Chair Warsh speaks 17:00Z"
+    }
+  ],
   "kill_switch": false
 }

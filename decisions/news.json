@@ -1,19 +1,218 @@
 {
   "version": 1,
-  "updated_at": "2026-11-14T05:45:00Z",
+  "updated_at": "2026-11-16T00:45:00Z",
   "timezone": "UTC",
-  "note": "Static fallback list for GoldAIBridge v1.03 news auto-blackout. The EA blocks NEW entries from before_min to after_min around each time_utc (inputs default 30/90; per-event values can only widen). US is on EST (UTC-5) for all of Nov-Dec 2026, so 08:30 ET = 13:30Z and 14:00 ET = 19:00Z. Sources: bls.gov/schedule/2026, federalreserve.gov/monetarypolicy/fomccalendars.htm, bea.gov/news/schedule, census.gov/retail/release_schedule.html, cross-checked with the MT5 MetaQuotes-Demo economic calendar on 2026-11-14.",
+  "note": "Static fallback list for GoldAIBridge v1.03 news auto-blackout. The EA blocks NEW entries from before_min to after_min around each time_utc (inputs default 30/90; per-event values can only widen). US is on EST (UTC-5) for all of Nov-Dec 2026, so 08:30 ET = 13:30Z and 14:00 ET = 19:00Z. Sources: bls.gov/schedule/2026, federalreserve.gov/monetarypolicy/fomccalendars.htm, bea.gov/news/schedule, census.gov/retail/release_schedule.html, cross-checked with the MT5 MetaQuotes-Demo economic calendar on 2026-11-14. 2026-11-16: added Jan-Apr 2027 NFP/CPI/PPI (bls.gov schedule pages + FY2027 PFEI) and 2027 FOMC dates (federalreserve.gov, updated 12 Nov 2026); US DST 14 Mar-7 Nov 2027 so 08:30 ET = 12:30Z and 14:00 ET = 18:00Z in that window. 2027 Retail Sales/GDP/PCE not yet added (unverified).",
   "events": [
-    {"time_utc": "2026-11-17T13:30:00Z", "currency": "USD", "name": "Retail Sales (Oct)", "source": "census"},
-    {"time_utc": "2026-11-18T19:00:00Z", "currency": "USD", "name": "FOMC Minutes (Oct 27-28 meeting)", "source": "fed"},
-    {"time_utc": "2026-11-25T13:30:00Z", "currency": "USD", "name": "GDP Q3 2nd est + PCE/Personal Income (Oct)", "source": "bea"},
-    {"time_utc": "2026-12-04T13:30:00Z", "currency": "USD", "name": "Nonfarm Payrolls / Employment Situation (Nov)", "source": "bls"},
-    {"time_utc": "2026-12-09T19:00:00Z", "currency": "USD", "name": "FOMC rate decision + SEP", "source": "fed"},
-    {"time_utc": "2026-12-09T19:30:00Z", "currency": "USD", "name": "Fed Chair press conference", "source": "fed"},
-    {"time_utc": "2026-12-10T13:30:00Z", "currency": "USD", "name": "CPI (Nov)", "source": "bls"},
-    {"time_utc": "2026-12-15T13:30:00Z", "currency": "USD", "name": "PPI (Nov)", "source": "bls"},
-    {"time_utc": "2026-12-16T13:30:00Z", "currency": "USD", "name": "Retail Sales (Nov)", "source": "census"},
-    {"time_utc": "2026-12-23T13:30:00Z", "currency": "USD", "name": "GDP Q3 3rd est + PCE/Personal Income (Nov)", "source": "bea"},
-    {"time_utc": "2026-12-30T19:00:00Z", "currency": "USD", "name": "FOMC Minutes (Dec 8-9 meeting)", "source": "fed (3-week rule; confirm on the Fed calendar)"}
+    {
+      "time_utc": "2026-11-17T13:30:00Z",
+      "currency": "USD",
+      "name": "Retail Sales (Oct)",
+      "source": "census"
+    },
+    {
+      "time_utc": "2026-11-18T19:00:00Z",
+      "currency": "USD",
+      "name": "FOMC Minutes (Oct 27-28 meeting)",
+      "source": "fed"
+    },
+    {
+      "time_utc": "2026-11-25T13:30:00Z",
+      "currency": "USD",
+      "name": "GDP Q3 2nd est + PCE/Personal Income (Oct)",
+      "source": "bea"
+    },
+    {
+      "time_utc": "2026-12-04T13:30:00Z",
+      "currency": "USD",
+      "name": "Nonfarm Payrolls / Employment Situation (Nov)",
+      "source": "bls"
+    },
+    {
+      "time_utc": "2026-12-09T19:00:00Z",
+      "currency": "USD",
+      "name": "FOMC rate decision + SEP",
+      "source": "fed"
+    },
+    {
+      "time_utc": "2026-12-09T19:30:00Z",
+      "currency": "USD",
+      "name": "Fed Chair press conference",
+      "source": "fed"
+    },
+    {
+      "time_utc": "2026-12-10T13:30:00Z",
+      "currency": "USD",
+      "name": "CPI (Nov)",
+      "source": "bls"
+    },
+    {
+      "time_utc": "2026-12-15T13:30:00Z",
+      "currency": "USD",
+      "name": "PPI (Nov)",
+      "source": "bls"
+    },
+    {
+      "time_utc": "2026-12-16T13:30:00Z",
+      "currency": "USD",
+      "name": "Retail Sales (Nov)",
+      "source": "census"
+    },
+    {
+      "time_utc": "2026-12-23T13:30:00Z",
+      "currency": "USD",
+      "name": "GDP Q3 3rd est + PCE/Personal Income (Nov)",
+      "source": "bea"
+    },
+    {
+      "time_utc": "2026-12-30T19:00:00Z",
+      "currency": "USD",
+      "name": "FOMC Minutes (Dec 8-9 meeting)",
+      "source": "fed (3-week rule; confirm on the Fed calendar)"
+    },
+    {
+      "time_utc": "2027-01-08T13:30:00Z",
+      "currency": "USD",
+      "name": "Nonfarm Payrolls / Employment Situation (Dec)",
+      "source": "bls"
+    },
+    {
+      "time_utc": "2027-01-13T13:30:00Z",
+      "currency": "USD",
+      "name": "CPI (Dec)",
+      "source": "bls"
+    },
+    {
+      "time_utc": "2027-01-14T13:30:00Z",
+      "currency": "USD",
+      "name": "PPI (Dec)",
+      "source": "bls"
+    },
+    {
+      "time_utc": "2027-01-27T19:00:00Z",
+      "currency": "USD",
+      "name": "FOMC rate decision",
+      "source": "fed"
+    },
+    {
+      "time_utc": "2027-01-27T19:30:00Z",
+      "currency": "USD",
+      "name": "Fed Chair press conference",
+      "source": "fed"
+    },
+    {
+      "time_utc": "2027-02-05T13:30:00Z",
+      "currency": "USD",
+      "name": "Nonfarm Payrolls / Employment Situation (Jan)",
+      "source": "bls"
+    },
+    {
+      "time_utc": "2027-02-11T13:30:00Z",
+      "currency": "USD",
+      "name": "CPI (Jan)",
+      "source": "bls"
+    },
+    {
+      "time_utc": "2027-02-12T13:30:00Z",
+      "currency": "USD",
+      "name": "PPI (Jan)",
+      "source": "bls"
+    },
+    {
+      "time_utc": "2027-02-17T19:00:00Z",
+      "currency": "USD",
+      "name": "FOMC Minutes (Jan 26-27 meeting)",
+      "source": "fed (3-week rule; confirm on the Fed calendar)"
+    },
+    {
+      "time_utc": "2027-03-05T13:30:00Z",
+      "currency": "USD",
+      "name": "Nonfarm Payrolls / Employment Situation (Feb)",
+      "source": "bls"
+    },
+    {
+      "time_utc": "2027-03-10T13:30:00Z",
+      "currency": "USD",
+      "name": "CPI (Feb)",
+      "source": "bls"
+    },
+    {
+      "time_utc": "2027-03-12T13:30:00Z",
+      "currency": "USD",
+      "name": "PPI (Feb)",
+      "source": "bls"
+    },
+    {
+      "time_utc": "2027-03-17T18:00:00Z",
+      "currency": "USD",
+      "name": "FOMC rate decision + SEP (EDT from 14 Mar)",
+      "source": "fed"
+    },
+    {
+      "time_utc": "2027-03-17T18:30:00Z",
+      "currency": "USD",
+      "name": "Fed Chair press conference",
+      "source": "fed"
+    },
+    {
+      "time_utc": "2027-04-02T12:30:00Z",
+      "currency": "USD",
+      "name": "Nonfarm Payrolls / Employment Situation (Mar)",
+      "source": "bls"
+    },
+    {
+      "time_utc": "2027-04-07T18:00:00Z",
+      "currency": "USD",
+      "name": "FOMC Minutes (Mar 16-17 meeting)",
+      "source": "fed (3-week rule; confirm on the Fed calendar)"
+    },
+    {
+      "time_utc": "2027-04-13T12:30:00Z",
+      "currency": "USD",
+      "name": "CPI (Mar)",
+      "source": "bls"
+    },
+    {
+      "time_utc": "2027-04-14T12:30:00Z",
+      "currency": "USD",
+      "name": "PPI (Mar)",
+      "source": "bls"
+    },
+    {
+      "time_utc": "2027-04-28T18:00:00Z",
+      "currency": "USD",
+      "name": "FOMC rate decision",
+      "source": "fed"
+    },
+    {
+      "time_utc": "2027-06-09T18:00:00Z",
+      "currency": "USD",
+      "name": "FOMC rate decision + SEP (tentative)",
+      "source": "fed"
+    },
+    {
+      "time_utc": "2027-07-28T18:00:00Z",
+      "currency": "USD",
+      "name": "FOMC rate decision (tentative)",
+      "source": "fed"
+    },
+    {
+      "time_utc": "2027-09-15T18:00:00Z",
+      "currency": "USD",
+      "name": "FOMC rate decision + SEP (tentative)",
+      "source": "fed"
+    },
+    {
+      "time_utc": "2027-10-27T18:00:00Z",
+      "currency": "USD",
+      "name": "FOMC rate decision (tentative)",
+      "source": "fed"
+    },
+    {
+      "time_utc": "2027-11-17T19:00:00Z",
+      "currency": "USD",
+      "name": "FOMC rate decision (tentative, EST)",
+      "source": "fed"
+    }
   ]
 }

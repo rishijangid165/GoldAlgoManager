@@ -3,22 +3,22 @@
     "ny_lon_brk_d4h": {
       "label": "NY London-range break (D+4H)",
       "all": {
-        "closed": 4,
-        "open": 1,
-        "wins": 2,
-        "win_rate_pct": 50.0,
-        "avg_r": 0.257,
-        "total_r": 1.029,
-        "profit_factor": 1.51
+        "closed": 5,
+        "open": 0,
+        "wins": 3,
+        "win_rate_pct": 60.0,
+        "avg_r": 0.519,
+        "total_r": 2.593,
+        "profit_factor": 2.28
       },
       "backfill": {
-        "closed": 4,
-        "open": 1,
-        "wins": 2,
-        "win_rate_pct": 50.0,
-        "avg_r": 0.257,
-        "total_r": 1.029,
-        "profit_factor": 1.51
+        "closed": 5,
+        "open": 0,
+        "wins": 3,
+        "win_rate_pct": 60.0,
+        "avg_r": 0.519,
+        "total_r": 2.593,
+        "profit_factor": 2.28
       },
       "live": {
         "closed": 0,
@@ -169,6 +169,12 @@
       "setup": "ny_lon_brk_d4h",
       "mode": "backfill",
       "cum_r": -2.993
+    },
+    {
+      "t": "2026-11-16 10:30 IST",
+      "setup": "ny_lon_brk_d4h",
+      "mode": "backfill",
+      "cum_r": -1.429
     }
   ],
   "equity_curve_usd": [
@@ -203,22 +209,26 @@
     {
       "t": "2026-11-02 19:30 IST",
       "equity": 98499.96
+    },
+    {
+      "t": "2026-11-16 10:30 IST",
+      "equity": 99270.23
     }
   ],
   "total": {
-    "closed": 8,
-    "open": 1,
-    "wins": 2,
-    "win_rate_pct": 25.0,
-    "avg_r": -0.374,
-    "total_r": -2.993,
-    "backfill_closed": 8,
+    "closed": 9,
+    "open": 0,
+    "wins": 3,
+    "win_rate_pct": 33.3,
+    "avg_r": -0.159,
+    "total_r": -1.429,
+    "backfill_closed": 9,
     "live_closed": 0
   },
-  "generated_utc": "2026-11-16T03:25Z",
-  "generated_ist": "2026-11-16 08:55 IST",
+  "generated_utc": "2026-11-16T06:17Z",
+  "generated_ist": "2026-11-16 11:47 IST",
   "data_source": "mt5_broker_live",
-  "last_completed_bar_ist": "2026-11-16 07:30 IST",
+  "last_completed_bar_ist": "2026-11-16 10:30 IST",
   "backfill_start_ist": "2026-10-16 09:30 IST",
   "live_start_ist": "2026-11-14 05:30 IST",
   "pending_signals": {},
@@ -233,6 +243,6 @@
     "equity": 100542.45,
     "margin": 0.0,
     "profit": 0.0,
-    "pulled_at_utc": "2026-11-16T03:25:04.420065+00:00"
+    "pulled_at_utc": "2026-11-16T06:17:53.772116+00:00"
   }
 }

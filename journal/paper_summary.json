@@ -225,10 +225,10 @@
     "backfill_closed": 9,
     "live_closed": 0
   },
-  "generated_utc": "2026-11-16T15:16Z",
-  "generated_ist": "2026-11-16 20:46 IST",
+  "generated_utc": "2026-11-16T16:20Z",
+  "generated_ist": "2026-11-16 21:50 IST",
   "data_source": "mt5_broker_live",
-  "last_completed_bar_ist": "2026-11-16 19:30 IST",
+  "last_completed_bar_ist": "2026-11-16 20:30 IST",
   "backfill_start_ist": "2026-10-16 09:30 IST",
   "live_start_ist": "2026-11-14 05:30 IST",
   "pending_signals": {},
@@ -243,6 +243,6 @@
     "equity": 100155.39,
     "margin": 0.0,
     "profit": 0.0,
-    "pulled_at_utc": "2026-11-16T15:16:52.079243+00:00"
+    "pulled_at_utc": "2026-11-16T16:20:24.129635+00:00"
   }
 }

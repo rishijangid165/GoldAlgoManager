@@ -1,7 +1,7 @@
 {
   "version": 1,
-  "generated_at": "2026-11-16T06:17:21Z",
-  "valid_until": "2026-11-16T12:00:00Z",
+  "generated_at": "2026-11-16T11:26:29Z",
+  "valid_until": "2026-11-16T16:30:00Z",
   "symbol": "XAUUSD",
   "bias": "NONE",
   "entry_zone": {
@@ -15,7 +15,7 @@
   ],
   "confidence": 0,
   "max_risk_pct": 0.5,
-  "rationale": "Mon early London, stand aside. 00:45 ET flush 3867->3832 swept Thu/PWL 3852.4, now back ~3857 (sweep+reclaim, no trigger). D/4H LH/LL below EMA20/SMA50/200, D ATR ~102, 4H RSI 32. No Donchian (20d high 4155+). Asia so far 3832-3901 = ~69, wider than 3x H1 ATR (~59): Asia breakout skip unless range changes. Next: London range 08:00 ET for NY probation break. GC basis ~+1, DXY 103.4.",
+  "rationale": "Mon late London, stand aside. Price broke London triple-top 3866 to 3876 (short-cover squeeze), London range so far 3851-3876, locks 13:00Z. D/4H still LH/LL below EMA20/SMA50/200 (D ATR ~102, 4H RSI 36) so only a NY close-break SHORT below London low is eligible (probation). No Donchian (20d high 4190). Asia 3832-3901 too wide: skip. EA daily-loss cap hit (owner 8-lot no-SL short + manual SL -503). GC basis ~+3, DXY 103.5.",
   "news_blackout": [
     {
       "start": "2026-11-16T16:30:00Z",

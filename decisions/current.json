@@ -1,7 +1,7 @@
 {
   "version": 1,
-  "generated_at": "2026-11-16T03:24:59Z",
-  "valid_until": "2026-11-16T09:00:00Z",
+  "generated_at": "2026-11-16T06:17:21Z",
+  "valid_until": "2026-11-16T12:00:00Z",
   "symbol": "XAUUSD",
   "bias": "NONE",
   "entry_zone": {
@@ -15,7 +15,7 @@
   ],
   "confidence": 0,
   "max_risk_pct": 0.5,
-  "rationale": "Mon Asia, stand aside. No Donchian (20d high 4155, price ~3871). D/4H LH/LL below EMA20/SMA50/200, D ATR ~115, 4H RSI 31. Asia so far 3860-3901: pop to 3901 sold, swept Fri low 3865.5 to 3860 and reclaimed; now ~3871 low-mid range below H1 EMA20 3886. Asia range locks 08:00Z; Thu low 3852 next liquidity. Next look London/NY. GC basis ~+3, DXY 103.4.",
+  "rationale": "Mon early London, stand aside. 00:45 ET flush 3867->3832 swept Thu/PWL 3852.4, now back ~3857 (sweep+reclaim, no trigger). D/4H LH/LL below EMA20/SMA50/200, D ATR ~102, 4H RSI 32. No Donchian (20d high 4155+). Asia so far 3832-3901 = ~69, wider than 3x H1 ATR (~59): Asia breakout skip unless range changes. Next: London range 08:00 ET for NY probation break. GC basis ~+1, DXY 103.4.",
   "news_blackout": [
     {
       "start": "2026-11-16T16:30:00Z",

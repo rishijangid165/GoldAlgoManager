@@ -1,6 +1,6 @@
 {
-  "generated_at_ist": "2026-11-16 21:50:25 IST",
-  "generated_at_utc": "2026-11-16T16:20:25Z",
+  "generated_at_ist": "2026-11-16 22:49:01 IST",
+  "generated_at_utc": "2026-11-16T17:19:01Z",
   "timezone_label": "IST (Asia/Kolkata)",
   "account": {
     "server": "MetaQuotes-Demo",
@@ -22,11 +22,11 @@
     "first_ea_start_equity": 99999.95,
     "first_ea_start_equity_at_ist": "2026-11-13 01:06:20 IST",
     "last_terminal_sync_positions": 0,
-    "last_terminal_sync_ist": "2026-11-16 21:50:26 IST"
+    "last_terminal_sync_ist": "2026-11-16 22:49:02 IST"
   },
   "live_account": {
     "state": "live",
-    "pulled_at_ist": "2026-11-16 21:50:26 IST",
+    "pulled_at_ist": "2026-11-16 22:49:02 IST",
     "balance": 100155.39,
     "equity": 100155.39,
     "open_profit": 0.0,
@@ -441,10 +441,10 @@
       "backfill_closed": 9,
       "live_closed": 0
     },
-    "generated_utc": "2026-11-16T16:20Z",
-    "generated_ist": "2026-11-16 21:50 IST",
+    "generated_utc": "2026-11-16T17:19Z",
+    "generated_ist": "2026-11-16 22:49 IST",
     "data_source": "mt5_broker_live",
-    "last_completed_bar_ist": "2026-11-16 20:30 IST",
+    "last_completed_bar_ist": "2026-11-16 21:30 IST",
     "backfill_start_ist": "2026-10-16 09:30 IST",
     "live_start_ist": "2026-11-14 05:30 IST",
     "pending_signals": {},
@@ -459,7 +459,7 @@
       "equity": 100155.39,
       "margin": 0.0,
       "profit": 0.0,
-      "pulled_at_utc": "2026-11-16T16:20:24.129635+00:00"
+      "pulled_at_utc": "2026-11-16T17:19:00.358010+00:00"
     },
     "trades": [
       {
@@ -708,7 +708,7 @@
     "valid_until_utc": "2026-11-16T22:00:00Z",
     "expired": false,
     "kill_switch": false,
-    "in_news_blackout": false,
+    "in_news_blackout": true,
     "news_blackout": [
       {
         "start_ist": "2026-11-16 22:00:00 IST",
@@ -726,14 +726,14 @@
       }
     ],
     "next_blackout": {
-      "start_ist": "2026-11-16 22:00:00 IST",
-      "end_ist": "2026-11-17 00:00:00 IST",
-      "start_utc": "2026-11-16T16:30:00Z",
-      "end_utc": "2026-11-16T18:30:00Z",
-      "reason": "Fed Chair Warsh speaks 17:00Z"
+      "start_ist": "2026-11-17 18:30:00 IST",
+      "end_ist": "2026-11-17 20:30:00 IST",
+      "start_utc": "2026-11-17T13:00:00Z",
+      "end_utc": "2026-11-17T15:00:00Z",
+      "reason": "US Retail Sales 13:30Z"
     },
     "rationale": "Mon NY late, stand aside. NY spike to 3888.9 above London high failed (counter-trend), price faded to 3858.6, still above London low 3851.2 - no close-break. NY window ends 17:00Z and Warsh blackout starts 16:30Z, so no probation short today. D/4H LH/LL below EMA20/SMA50/200 (D ATR ~117, 4H RSI 33). No Donchian (20d high 4190). Asia 3832-3901 too wide. Next: Tue Asia/London, Retail Sales 13:30Z.",
-    "status": "flat",
+    "status": "news_blackout",
     "source": "/workspace/gold-algo/decisions/current.json"
   },
   "open_position": null,
@@ -741,7 +741,7 @@
   "ea": {
     "name": "GoldAIBridge",
     "chart": "XAUUSD M15",
-    "last_decision_read_ist": "2026-11-16 18:50:46 IST",
+    "last_decision_read_ist": "2026-11-16 22:47:52 IST",
     "last_decision_bias": "NONE"
   },
   "trades": [
@@ -822,10 +822,10 @@
       "sort": "2026-11-13T07:41:28+02:00"
     },
     {
-      "t": "2026-11-16 21:50 IST",
+      "t": "2026-11-16 22:49 IST",
       "label": "Last known balance",
       "equity": 100046.1,
-      "sort": "2026-11-16T21:50:25.223190+05:30"
+      "sort": "2026-11-16T22:49:01.186736+05:30"
     }
   ],
   "stats": {
@@ -942,7 +942,7 @@
     }
   ],
   "notes": [
-    "Balance and equity are live from MT5 (pulled 2026-11-16 21:50:26 IST).",
+    "Balance and equity are live from MT5 (pulled 2026-11-16 22:49:02 IST).",
     "All live money figures come from MT5 result files, the EA journal, and MQL5 logs. No live broker quote is shown unless a file has a fresh one.",
     "Today's P&L vs the $100,046.10 start-of-day reference is $0.00 because both closed demo trades settled before that reference was recorded. Their combined P&L is +46.15 (including swap), which is already inside the current balance."
   ],

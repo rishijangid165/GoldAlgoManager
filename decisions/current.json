@@ -1,7 +1,7 @@
 {
   "version": 1,
-  "generated_at": "2026-11-16T11:26:29Z",
-  "valid_until": "2026-11-16T16:30:00Z",
+  "generated_at": "2026-11-16T16:19:49Z",
+  "valid_until": "2026-11-16T22:00:00Z",
   "symbol": "XAUUSD",
   "bias": "NONE",
   "entry_zone": {
@@ -15,7 +15,7 @@
   ],
   "confidence": 0,
   "max_risk_pct": 0.5,
-  "rationale": "Mon late London, stand aside. Price broke London triple-top 3866 to 3876 (short-cover squeeze), London range so far 3851-3876, locks 13:00Z. D/4H still LH/LL below EMA20/SMA50/200 (D ATR ~102, 4H RSI 36) so only a NY close-break SHORT below London low is eligible (probation). No Donchian (20d high 4190). Asia 3832-3901 too wide: skip. EA daily-loss cap hit (owner 8-lot no-SL short + manual SL -503). GC basis ~+3, DXY 103.5.",
+  "rationale": "Mon NY late, stand aside. NY spike to 3888.9 above London high failed (counter-trend), price faded to 3858.6, still above London low 3851.2 - no close-break. NY window ends 17:00Z and Warsh blackout starts 16:30Z, so no probation short today. D/4H LH/LL below EMA20/SMA50/200 (D ATR ~117, 4H RSI 33). No Donchian (20d high 4190). Asia 3832-3901 too wide. Next: Tue Asia/London, Retail Sales 13:30Z.",
   "news_blackout": [
     {
       "start": "2026-11-16T16:30:00Z",

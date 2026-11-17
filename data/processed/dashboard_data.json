@@ -1,6 +1,6 @@
 {
-  "generated_at_ist": "2026-11-17 05:47:27 IST",
-  "generated_at_utc": "2026-11-17T00:17:27Z",
+  "generated_at_ist": "2026-11-17 08:49:31 IST",
+  "generated_at_utc": "2026-11-17T03:19:31Z",
   "timezone_label": "IST (Asia/Kolkata)",
   "account": {
     "server": "MetaQuotes-Demo",
@@ -8,7 +8,7 @@
     "mode": "demo",
     "symbol": "XAUUSD",
     "balance": 100155.39,
-    "equity": 100155.39,
+    "equity": null,
     "balance_display": "$100,155.39",
     "start_of_day_balance": 100155.39,
     "start_of_day_balance_display": "$100,155.39",
@@ -21,16 +21,16 @@
     "starting_capital": 100000.0,
     "first_ea_start_equity": 99999.95,
     "first_ea_start_equity_at_ist": "2026-11-13 01:06:20 IST",
-    "last_terminal_sync_positions": 0,
-    "last_terminal_sync_ist": "2026-11-17 05:47:28 IST"
+    "last_terminal_sync_positions": 1,
+    "last_terminal_sync_ist": "2026-11-17 08:49:31 IST"
   },
   "live_account": {
     "state": "live",
-    "pulled_at_ist": "2026-11-17 05:47:28 IST",
+    "pulled_at_ist": "2026-11-17 08:49:31 IST",
     "balance": 100155.39,
-    "equity": 100155.39,
-    "open_profit": 0.0,
-    "positions": 0,
+    "equity": 99993.7,
+    "open_profit": -161.69,
+    "positions": 1,
     "demo": true
   },
   "books": {
@@ -201,11 +201,28 @@
           "comment": "manual-owner",
           "magic": 0,
           "status": "closed"
+        },
+        {
+          "position_id": "11427574952",
+          "side": "SELL",
+          "lots": 0.19,
+          "entry": 3864.66,
+          "sl": 3890.0,
+          "exit": null,
+          "pnl": null,
+          "pnl_display": "open",
+          "r": null,
+          "r_display": "n/a",
+          "open_time_ist": "2026-11-17 08:23 IST",
+          "close_time_ist": null,
+          "comment": "manual-book",
+          "magic": 0,
+          "status": "open"
         }
       ],
       "stats": {
         "closed": 9,
-        "open": 0,
+        "open": 1,
         "wins": 7,
         "win_rate_pct": 77.8,
         "net_pnl": 155.44,
@@ -441,10 +458,10 @@
       "backfill_closed": 9,
       "live_closed": 0
     },
-    "generated_utc": "2026-11-17T00:17Z",
-    "generated_ist": "2026-11-17 05:47 IST",
+    "generated_utc": "2026-11-17T03:19Z",
+    "generated_ist": "2026-11-17 08:49 IST",
     "data_source": "mt5_broker_live",
-    "last_completed_bar_ist": "2026-11-17 04:30 IST",
+    "last_completed_bar_ist": "2026-11-17 07:30 IST",
     "backfill_start_ist": "2026-10-16 09:30 IST",
     "live_start_ist": "2026-11-14 05:30 IST",
     "pending_signals": {},
@@ -456,10 +473,10 @@
       "trade_mode": 0,
       "currency": "USD",
       "balance": 100155.39,
-      "equity": 100155.39,
-      "margin": 0.0,
-      "profit": 0.0,
-      "pulled_at_utc": "2026-11-17T00:17:23.712149+00:00"
+      "equity": 99992.94,
+      "margin": 734.29,
+      "profit": -162.45,
+      "pulled_at_utc": "2026-11-17T03:19:28.139604+00:00"
     },
     "trades": [
       {
@@ -703,9 +720,9 @@
     "tp2": 0.0,
     "confidence": 0,
     "max_risk_pct": 0.5,
-    "generated_at_ist": "2026-11-17 05:46:50 IST",
-    "valid_until_ist": "2026-11-17 11:30 IST",
-    "valid_until_utc": "2026-11-17T06:00:00Z",
+    "generated_at_ist": "2026-11-17 08:49:12 IST",
+    "valid_until_ist": "2026-11-17 14:30 IST",
+    "valid_until_utc": "2026-11-17T09:00:00Z",
     "expired": false,
     "kill_switch": false,
     "in_news_blackout": false,
@@ -725,16 +742,16 @@
       "end_utc": "2026-11-17T15:00:00Z",
       "reason": "US Retail Sales 13:30Z"
     },
-    "rationale": "Tue Asia early, stand aside. Gold 3860.7 after Mon close 3851.5; Asia range forming 3847.3-3864.6 (locks 08:00Z/03:00 ET - not tradable yet). D/4H LH/LL below EMA20/SMA50/200 (D ATR ~115, 4H RSI 35); no Donchian long (20d high 4155). Only a clean downside Asia close-break (probation) or NY London-break short later. Retail Sales 13:30Z blackout.",
+    "rationale": "Tue Asia, stand aside. Gold 3872.5 testing Mon London high 3877 (Asia range 3843.4-3877.2 still forming, locks 08:00Z). D/4H LH/LL below EMA20 3997/3899, SMA50/200; no Donchian long (20d high 4155). Owner manual-book SELL 0.19 @3864.66 open (magic 0) - one trade at a time. Retail Sales 13:30Z blackout.",
     "status": "flat",
     "source": "/workspace/gold-algo/decisions/current.json"
   },
   "open_position": null,
-  "position_status": "flat",
+  "position_status": "open",
   "ea": {
     "name": "GoldAIBridge",
     "chart": "XAUUSD M15",
-    "last_decision_read_ist": "2026-11-17 05:03:39 IST",
+    "last_decision_read_ist": "2026-11-17 05:50:57 IST",
     "last_decision_bias": "NONE"
   },
   "trades": [
@@ -815,10 +832,10 @@
       "sort": "2026-11-13T07:41:28+02:00"
     },
     {
-      "t": "2026-11-17 05:47 IST",
+      "t": "2026-11-17 08:49 IST",
       "label": "Last known balance",
       "equity": 100046.1,
-      "sort": "2026-11-17T05:47:27.465177+05:30"
+      "sort": "2026-11-17T08:49:31.048987+05:30"
     }
   ],
   "stats": {
@@ -935,7 +952,7 @@
     }
   ],
   "notes": [
-    "Balance and equity are live from MT5 (pulled 2026-11-17 05:47:28 IST).",
+    "Balance and equity are live from MT5 (pulled 2026-11-17 08:49:31 IST).",
     "All live money figures come from MT5 result files, the EA journal, and MQL5 logs. No live broker quote is shown unless a file has a fresh one.",
     "Today's P&L vs the $100,046.10 start-of-day reference is $0.00 because both closed demo trades settled before that reference was recorded. Their combined P&L is +46.15 (including swap), which is already inside the current balance."
   ],

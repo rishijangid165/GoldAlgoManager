@@ -1,7 +1,7 @@
 {
   "version": 1,
-  "generated_at": "2026-11-17T08:17:51Z",
-  "valid_until": "2026-11-17T13:00:00Z",
+  "generated_at": "2026-11-17T12:21:30Z",
+  "valid_until": "2026-11-17T17:00:00Z",
   "symbol": "XAUUSD",
   "bias": "NONE",
   "entry_zone": {
@@ -15,7 +15,7 @@
   ],
   "confidence": 0,
   "max_risk_pct": 0.5,
-  "rationale": "Tue London, stand aside. Asia range locked 3843.4-3886.7 ($43, ~3x 1h ATR); gold 3862 mid-range after London fade from 3879. D/4H LH/LL below EMA20 3996/3896; no Donchian (20d high 4155). Downside break stop would exceed 3x ATR. Owner manual SELL 0.19 @3864.66 open - one trade. Retail Sales 13:30Z blackout.",
+  "rationale": "Tue pre-NY, stand aside. Gold 3863 bounced from London low 3852.9 (equal lows) to 3870.9, inside Asia range 3843.4-3886.7 and London range 3852.9-3874.2. D/4H LH/LL below EMA20 3996/3893; no Donchian (20d high 4155). Retail Sales 13:30Z blackout 13-15Z; only NY close below London low after 15Z (probation). Owner manual SELL 0.19 @3864.66 open - one trade.",
   "news_blackout": [
     {
       "start": "2026-11-17T13:00:00Z",

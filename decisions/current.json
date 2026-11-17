@@ -1,7 +1,7 @@
 {
   "version": 1,
-  "generated_at": "2026-11-17T16:19:19Z",
-  "valid_until": "2026-11-17T22:00:00Z",
+  "generated_at": "2026-11-17T21:19:30Z",
+  "valid_until": "2026-11-18T03:00:00Z",
   "symbol": "XAUUSD",
   "bias": "NONE",
   "entry_zone": {
@@ -15,7 +15,7 @@
   ],
   "confidence": 0,
   "max_risk_pct": 0.5,
-  "rationale": "Tue NY late, stand aside. Squeeze 15:30Z to 3890.9 (above Asia high 3886.7) rejected, gold 3869 back near London high 3874.2. D/4H LH/LL below EMA20 3997/3890; no Donchian (20d high 4155). NY London-range break used up (first close-break was 13Z blackout bar; 15Z up-close is 2nd and against trend). Manual SELL stopped 3890 (-481). Flat. Next: FOMC Minutes 19:00Z Wed (blackout 18:30-20:30Z).",
+  "rationale": "Tue close/daily break, stand aside. Tue closed 3847.4 near day low 3836.9, below London low 3852.9 (bearish close); D/4H LH/LL below EMA20 3995/3885, D RSI 37. No Donchian at 18:00 ET (20d high 4148.5, ~300 away). No session window open; Wed Asia range not formed. Flat. Next: Wed Asia lock 08:00Z, NY 13-17Z, FOMC Minutes 19:00Z (blackout 18:30-20:30Z).",
   "news_blackout": [
     {
       "start": "2026-11-18T18:30:00Z",

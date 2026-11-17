@@ -1,12 +1,14 @@
 # XAUUSD playbook
 
-Version 2026-11-15 (v3.2). Gold only. Demo first. The assistant reads the chart and writes the decision; the EA (`GoldAIBridge`) only executes inside the published zone, with the hard risk caps below locked in the EA.
+Version 2026-11-17 (v3.3). Gold only. Demo first. The assistant reads the chart and writes the decision; the EA (`GoldAIBridge`) only executes inside the published zone, with the hard risk caps below locked in the EA.
 
 **v2 change (out-of-sample):** the unfiltered Asia-range breakout is no longer described as a durable, automatic edge. The 2024-07-07 to 2026-11-13 `GC=F` book (132 trades, +0.37R, PF 1.79; see `research/backtest/README.md`) and the same window on spot XAUUSD (128 trades, +0.27R, PF 1.52) are real — but a 2012–2026 walk-forward on HistData spot 1h does **not** confirm it (A-setup OOS −0.03R, PF 0.93, only 6 of 15 years green; 2012–2023 was −0.09R). Evidence and the tests we refused to adopt are in `research/deep-study-2026-11-14/REPORT.md`. Hard risk rules are unchanged.
 
 **v3 change (Phase 2, 12 pre-registered variants, 0 post-hoc adds):** three ideas *did* clear a bar that also requires 2012–2023 not to be a hidden loss (OOS n≥40, avg R>0, PF≥1.20, ≥8/15 green years, and 2012–2023 avg R≥0 and PF≥1.0). They are now sections 5–7: a New York close-break of the completed London range *with* the daily+4H MA trend (OOS +0.13R, PF 1.23, 10/15 years, and 2012–2023 also +0.12R); FOMC continuation after the first 60 minutes (OOS +0.38R, PF 1.86, 11/15 years, thin sample); and a 20-day Donchian *long-only* core (OOS +0.34R, PF 1.74, 11/15 years). Two-way and 200-SMA-regime Donchian officially passed as well, but we operationalize long-only — shorts are not the source of that edge. Seven other Phase 2 ideas, including London-mid pullbacks, news fades, NFP continuation, and prior-day sweep-and-reclaim, stay on the watchlist. Details: `research/deep-study-2026-11-14/PHASE2.md`.
 
 **v3.2 change (2026-11-15 weekend study, full broker M1 2004–2026, pre-registered, Holm-corrected; `research/weekend-study-2026-11-15/REPORT.md`):** every trade was re-run minute by minute on MetaQuotes-Demo data with the real spread. The old conservative same-bar rule turned out not to matter (0–2 trades per setup). FOMC continuation and the Donchian long still pass. The **NY London-range break failed the bar on broker data twice** (PF 1.18–1.20; 2012–2023 about 0R once the EA's Friday close is applied), so section 5 is now on **probation**: rules unchanged, the forward record decides. None of the 14 new ideas (CPI/NFP continuation, prior-day high/low break, ATR-percentile filters, weekly-gap fade/go, 15m versions) and none of the 12 exit variants survived the multiple-testing correction, so no new rule was added.
+
+**v3.3 change (2026-11-17, real-money management):** treat the demo book as if it were real money. A 17 Nov 2026 manual SELL (ticket 11427574952) ran to +$527 (~+1R) and then hit a stop that sat just above an obvious liquidity high (3888.9 / Asia high 3886.7), finishing −$481. The new Real-money management section is binding on system and manual books: bank half at +1R and move the rest to breakeven; place the SL beyond the *next* structure, not just past a session extreme; and do not take an owner-requested or manual entry without a valid setup or a clear structural reason.
 
 Those tests are still rule-based approximations, not a promise that live broker-spot trades will match the numbers. If a setup did not show a clear *and stable* edge, it is not an automatic trigger here.
 
@@ -18,12 +20,26 @@ Clock: **America/New_York** (COMEX). Add 9.5 hours for IST in US summer (EDT) or
 
 1. **One open trade at a time.** No averaging, no second position, no hedge.
 2. **Risk 0.5% of current equity per trade.** Size from the *actual* stop distance at fill. If that would be below 0.01 lots, skip.
-3. **Always a stop.** No mental stops. SL sits beyond structure, not a round number chosen for comfort.
+3. **Always a stop.** No mental stops. SL sits beyond the *next* structure, not just past an obvious high/low or session extreme, and not a round number chosen for comfort. If that stop makes the risk too wide, reduce the lot (risk % unchanged) or skip — see Real-money management.
 4. **Do not take a trade that cannot offer at least 1.5R** to the first target at the planned fill. If slippage or a gap makes the live R:R worse than 1.5 at entry, skip.
-5. **Scale:** close half at **1.5R (TP1)**, move the rest to **breakeven** (entry). Leave the runner to **3R** or to the next clear structure level if that level is between 1.5R and 3R.
+5. **Scale:** close half at **+1R**, move the rest to **breakeven** (entry). Leave the runner to **3R** or to the next clear structure level if that level is between 1R and 3R. A trade must still be able to offer at least 1.5R at the planned fill (rule 4). Details in the Real-money management section.
 6. **Daily loss stop: −2% realized.** No new trades that COMEX session. An open trade already on is managed to its SL/TP; we do not “revenge” a second ticket.
 7. **Max two *new* attempts per session**, and only if the first is already closed. In practice a Donchian or a London-range break often holds overnight or longer, so most days are zero or one trade.
 8. **Kill switch / `valid_until` / news blackout** in the decision file are binding. If any one of them says stand aside, stand aside — with the single, explicit exception in section 3 for the FOMC-continuation setup at 15:00 ET.
+
+---
+
+## 1a. Real-money management (v3.3, 17 Nov 2026)
+
+Treat every demo trade as if the money were real. These rules are binding on the system book and the manual book.
+
+1. **Partial at +1R.** When a trade reaches +1R (unrealized, measured from the fill to the *original* stop), close **50%** and move the stop on the remainder to **breakeven** (entry, plus a tiny offset only if the broker's stop level requires it). Leave the runner to 3R, or to the next clear structure level if that level is between 1R and 3R. Do not sit on a full-size winner hoping the final target prints — the 17 Nov 2026 manual SELL ran to +$527 and was then stopped out for −$481 because nothing was banked.
+2. **Stop beyond the next structure.** The SL must sit beyond the *next* structure level, not just a few ticks past an obvious high, low, or session extreme (an Asia high, London high/low, or a just-printed swing that is the obvious liquidity pool). If placing it there makes the dollar risk too wide for the usual risk percent, **reduce the lot size** (risk % stays the same) or **skip** the trade. A tight stop parked on top of obvious stops is not "controlled risk"; it is an invitation to be swept.
+3. **No manual or owner-requested entry without a reason.** Do not fill a "take a trade now" request unless a named playbook setup is valid, or there is at least a clear structural reason (higher-timeframe trend, a defined invalidation, and 1.5R to a real target). If neither is present, explain why and wait. A request is not itself a setup. The 17 Nov 2026 short was taken on an owner request with no playbook setup; the direction was right for a time, the management was not.
+4. **The manual book obeys the same rules.** Owner-requested and magic-0 trades use the same +1R partial, the same breakeven move, the same stop-placement standard, and the same "no setup, no trade" bar. They remain a separate journal book (section 16), but they are not a looser book.
+
+The EA (`GoldAIBridge` v1.05) can enforce (1) on its own magic and, when `InpManageManual` is true, on magic-0 XAUUSD positions that already have a hard SL. It will not invent a stop for a no-SL manual ticket. Placement of the *initial* stop and the no-setup rule stay with the assistant at order time.
+
 
 ---
 
@@ -285,7 +301,7 @@ The original supporting test used `GC=F` 1h history of about 28 months, a cost m
 Week 1 lesson: all 6 gold trades were test or owner-requested fills, 0 were system trades. They netted +$542 only because they were closed by hand at +0.14 to +0.46R; one fill came 25 minutes before PPI and one was opened while another sell was still on.
 
 - Two separate books: **setup trades** (system/EA magic, from sections above) and **manual trades** (owner-requested or magic 0). Manual trades are a **separate book**. Journal them as manual and report them apart from system (EA magic) results in every review.
-- The hard rules in section 1 still apply: one position at a time, a hard SL, and at least 1.5R to the first target at the planned fill.
+- The hard rules in section 1 and the Real-money management rules still apply: one position at a time, a hard SL beyond the next structure, at least 1.5R to the first target at the planned fill, +1R partial + breakeven, and no entry without a valid setup or a clear structural reason.
 - **News:** no new manual entry from 30 minutes before to 90 minutes after a high-impact release (section 3). If the owner asks inside that window, flag it and fill only after an explicit second confirmation.
-- **Exits:** decide the target before entry (1.5R TP1 + breakeven, or a nearer structure level with size set for it). Closing by hand at +0.2R while risking 0.5% is not a plan.
+- **Exits:** the Real-money management section applies here too: close half at +1R and move the rest to breakeven; leave the runner to 3R or the next structure. Decide that plan before entry. Closing by hand at +0.2R while risking 0.5% is not a plan.
 - No more `test` trades on the live demo book. Connectivity checks use read-only queries.

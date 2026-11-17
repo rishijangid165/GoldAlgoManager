@@ -10,8 +10,9 @@
 //| (Tools > Options > Expert Advisors). See mql5/docs/SETUP.md.     |
 //+------------------------------------------------------------------+
 #property copyright   "Gold Algo / Rishi Jangid"
-#property version     "1.04"
+#property version     "1.05"
 #property description "AI-directed gold EA. Polls a decision JSON and trades only inside the AI zone."
+#property description "v1.05: +1R partial + BE, persist daily-loss baseline, quieter daily-loss log."
 #property description "v1.04: prop-firm guard, prop news-flat mode, explicit AllowLiveAccount."
 #property description "v1.03: news blackout + Telegram commands. v1.02: Friday close."
 #property description "DEMO only unless AllowLiveAccount=true. See docs/prop-readiness.md."
@@ -78,10 +79,16 @@ input int    InpPropNewsFlatAfterMin  = 5;      // Stay flat (no entries) this m
 input bool   InpPropNewsFlatManual    = false;  // Also close magic-0 manual positions before the news
 
 input group "Trade management"
-input double InpTP1CloseFraction    = 0.50;          // Fraction to close at TP1 (then SL -> breakeven)
+input double InpTP1CloseFraction    = 0.50;          // Fraction to close at decision TP1 (then SL -> breakeven)
 input int    InpBreakevenOffsetPoints = 0;           // Extra points beyond entry for the BE stop
 input bool   InpCloseOnBiasFlip     = true;          // Close if a new decision flips bias or goes NONE
 input bool   InpCloseOnKillSwitch   = true;          // Close if the file raises kill_switch
+
+input group "Real-money management (v1.05)"
+input double InpPartialAtR          = 1.0;           // Close a partial when unrealized R reaches this (0 = off)
+input double InpPartialPct          = 50.0;          // Percent of volume to close at PartialAtR
+input bool   InpBEAfterPartial      = true;          // Move SL to breakeven after the partial
+input bool   InpManageManual        = true;          // Also manage magic-0 manual XAUUSD positions
 
 input group "Friday close"
 input bool   InpFridayCloseEnabled   = true;         // Flatten GoldAI trades before the weekly close
@@ -161,6 +168,8 @@ string          g_tg_decision_fp     = "";
 datetime        g_day_start          = 0;
 double          g_day_start_equity   = 0.0;
 ulong           g_tp1_done_ticket    = 0;
+string          g_partial_tickets    = "";
+string          g_daily_loss_state   = "";
 
 // v1.03 news blackout state
 GoldAINewsEvent g_news_cal[];
@@ -202,19 +211,54 @@ datetime        g_confirm_until      = 0;
 datetime        g_last_manage        = 0;
 
 //+------------------------------------------------------------------+
+string GvLoginPart()
+  {
+   return(IntegerToString((long)AccountInfoInteger(ACCOUNT_LOGIN)));
+  }
+
 string GvDayStartName()
+  {
+   return("GoldAI_" + IntegerToString(InpMagicNumber) + "_" + GvLoginPart() + "_day");
+  }
+
+string GvDayStartNameLegacy()
   {
    return("GoldAI_" + IntegerToString(InpMagicNumber) + "_day");
   }
 
 string GvDayEquityName()
   {
+   return("GoldAI_" + IntegerToString(InpMagicNumber) + "_" + GvLoginPart() + "_eq");
+  }
+
+string GvDayEquityNameLegacy()
+  {
    return("GoldAI_" + IntegerToString(InpMagicNumber) + "_eq");
   }
 
 string GvTp1Name()
   {
+   return("GoldAI_" + IntegerToString(InpMagicNumber) + "_" + GvLoginPart() + "_tp1");
+  }
+
+string GvTp1NameLegacy()
+  {
    return("GoldAI_" + IntegerToString(InpMagicNumber) + "_tp1");
+  }
+
+string GvPartialName()
+  {
+   return("GoldAI_" + IntegerToString(InpMagicNumber) + "_" + GvLoginPart() + "_partials");
+  }
+
+string DayStateFileName()
+  {
+   return("GoldAI_" + IntegerToString(InpMagicNumber) + "_" + GvLoginPart() + "_daystart.txt");
+  }
+
+string PartialStateFileName()
+  {
+   return("GoldAI_" + IntegerToString(InpMagicNumber) + "_" + GvLoginPart() + "_partials.txt");
   }
 
 //+------------------------------------------------------------------+
@@ -317,48 +361,194 @@ void NotifyTelegramOnce(const string key, const string text)
   }
 
 //+------------------------------------------------------------------+
+bool ReadTwoFieldFile(const string fname, string &a, string &b)
+  {
+   a = "";
+   b = "";
+   const int h = FileOpen(fname, FILE_READ | FILE_TXT | FILE_ANSI);
+   if(h == INVALID_HANDLE)
+      return(false);
+   const string line = FileReadString(h);
+   FileClose(h);
+   const int sp = StringFind(line, " ");
+   if(sp <= 0)
+     {
+      a = line;
+      return(a != "");
+     }
+   a = StringSubstr(line, 0, sp);
+   b = StringSubstr(line, sp + 1);
+   StringTrimLeft(b);
+   StringTrimRight(b);
+   return(true);
+  }
+
+
+//+------------------------------------------------------------------+
+bool GvGetFirst(const string name_new, const string name_legacy, double &value)
+  {
+   if(GlobalVariableCheck(name_new))
+     {
+      value = GlobalVariableGet(name_new);
+      return(true);
+     }
+   if(name_legacy != "" && GlobalVariableCheck(name_legacy))
+     {
+      value = GlobalVariableGet(name_legacy);
+      return(true);
+     }
+   return(false);
+  }
+
+//+------------------------------------------------------------------+
+void LoadDayStateFromStore(datetime &day, double &equity)
+  {
+   day = 0;
+   equity = 0.0;
+   double gv_day = 0.0;
+   double gv_eq  = 0.0;
+   const bool have_gv_day = GvGetFirst(GvDayStartName(), GvDayStartNameLegacy(), gv_day);
+   const bool have_gv_eq  = GvGetFirst(GvDayEquityName(), GvDayEquityNameLegacy(), gv_eq);
+   if(have_gv_day && have_gv_eq && gv_day > 0.0 && gv_eq > 0.0)
+     {
+      day = (datetime)gv_day;
+      equity = gv_eq;
+     }
+   string fa = "";
+   string fb = "";
+   if(ReadTwoFieldFile(DayStateFileName(), fa, fb))
+     {
+      const datetime file_day = (datetime)StringToInteger(fa);
+      const double file_eq = StringToDouble(fb);
+      if(file_day > 0 && file_eq > 0.0)
+        {
+         // File wins when both exist: it survives Wine/portable restarts that drop GlobalVariables.
+         day = file_day;
+         equity = file_eq;
+        }
+     }
+  }
+
+//+------------------------------------------------------------------+
 void LoadPersistedState()
   {
-   if(GlobalVariableCheck(GvDayStartName()) && GlobalVariableCheck(GvDayEquityName()))
+   datetime day = 0;
+   double equity = 0.0;
+   LoadDayStateFromStore(day, equity);
+   if(day > 0 && equity > 0.0)
      {
-      g_day_start        = (datetime)GlobalVariableGet(GvDayStartName());
-      g_day_start_equity = GlobalVariableGet(GvDayEquityName());
+      g_day_start        = day;
+      g_day_start_equity = equity;
      }
-   if(GlobalVariableCheck(GvTp1Name()))
-      g_tp1_done_ticket = (ulong)GlobalVariableGet(GvTp1Name());
+   double gv_tp1 = 0.0;
+   if(GvGetFirst(GvTp1Name(), GvTp1NameLegacy(), gv_tp1))
+      g_tp1_done_ticket = (ulong)gv_tp1;
+   if(GlobalVariableCheck(GvPartialName()))
+     {
+      // Stored as a packed list is not possible in a double GV; tickets live in the file.
+     }
+   string fa = "";
+   string fb = "";
+   if(ReadTwoFieldFile(PartialStateFileName(), fa, fb))
+     {
+      g_partial_tickets = (fb == "" ? fa : fa + " " + fb);
+      StringReplace(g_partial_tickets, " ", "");
+     }
   }
 
 //+------------------------------------------------------------------+
 void PersistDayState()
   {
+   if(g_day_start <= 0 || g_day_start_equity <= 0.0)
+      return;
    GlobalVariableSet(GvDayStartName(), (double)g_day_start);
    GlobalVariableSet(GvDayEquityName(), g_day_start_equity);
+   WriteTextFile(DayStateFileName(),
+                 IntegerToString((long)g_day_start) + " " + DoubleToString(g_day_start_equity, 2));
+  }
+
+//+------------------------------------------------------------------+
+void PersistPartialState()
+  {
+   GlobalVariableSet(GvTp1Name(), (double)g_tp1_done_ticket);
+   WriteTextFile(PartialStateFileName(), g_partial_tickets);
   }
 
 //+------------------------------------------------------------------+
 void PersistTp1(const ulong ticket)
   {
    g_tp1_done_ticket = ticket;
-   GlobalVariableSet(GvTp1Name(), (double)ticket);
+   if(ticket > 0)
+     {
+      const string id = IntegerToString((long)ticket);
+      const string wrapped = "," + g_partial_tickets + ",";
+      if(StringFind(wrapped, "," + id + ",") < 0)
+        {
+         if(g_partial_tickets != "")
+            g_partial_tickets += ",";
+         g_partial_tickets += id;
+        }
+     }
+   PersistPartialState();
+  }
+
+//+------------------------------------------------------------------+
+bool IsPartialDone(const ulong ticket)
+  {
+   if(ticket == 0)
+      return(false);
+   if(ticket == g_tp1_done_ticket)
+      return(true);
+   const string id = IntegerToString((long)ticket);
+   return(StringFind("," + g_partial_tickets + ",", "," + id + ",") >= 0);
+  }
+
+//+------------------------------------------------------------------+
+datetime TodayServerStart()
+  {
+   const datetime now = TimeCurrent();
+   if(now <= 0)
+      return(0);
+   MqlDateTime st;
+   TimeToStruct(now, st);
+   st.hour = 0;
+   st.min  = 0;
+   st.sec  = 0;
+   return(StructToTime(st));
   }
 
 //+------------------------------------------------------------------+
 void RefreshDailyWindow()
   {
-   MqlDateTime st;
-   TimeToStruct(TimeCurrent(), st);
-   st.hour = 0;
-   st.min  = 0;
-   st.sec  = 0;
-   const datetime start = StructToTime(st);
-   if(g_day_start != start)
+   const datetime start = TodayServerStart();
+   if(start <= 0)
+      return; // server time not ready; do not reset the baseline
+
+   if(g_day_start == start && g_day_start_equity > 0.0)
      {
-      g_day_start        = start;
-      g_day_start_equity = AccountInfoDouble(ACCOUNT_EQUITY);
-      PersistDayState();
-      Print("GoldAI new trading day (server). Start equity=",
-            DoubleToString(g_day_start_equity, 2));
+      PersistDayState(); // keep the file/GVs in sync after a restart
+      return;
      }
+
+   datetime stored_day = 0;
+   double stored_eq = 0.0;
+   LoadDayStateFromStore(stored_day, stored_eq);
+   if(stored_day == start && stored_eq > 0.0)
+     {
+      g_day_start        = stored_day;
+      g_day_start_equity = stored_eq;
+      PersistDayState();
+      Print("GoldAI restored daily-loss baseline for this server day, start equity=",
+            DoubleToString(g_day_start_equity, 2));
+      return;
+     }
+
+   g_day_start        = start;
+   g_day_start_equity = AccountInfoDouble(ACCOUNT_EQUITY);
+   g_daily_loss_state = "";
+   PersistDayState();
+   Print("GoldAI new trading day (server). Start equity=",
+         DoubleToString(g_day_start_equity, 2));
   }
 
 //+------------------------------------------------------------------+
@@ -368,6 +558,34 @@ double DailyLossPct()
       return(0.0);
    const double eq = AccountInfoDouble(ACCOUNT_EQUITY);
    return((g_day_start_equity - eq) / g_day_start_equity * 100.0);
+  }
+
+//+------------------------------------------------------------------+
+//| Log the 2% daily-loss entry block once per state change, not     |
+//| every tick as the floating percentage moves.                     |
+//+------------------------------------------------------------------+
+void LogDailyLossChange(const bool blocked, const string details)
+  {
+   const string state = (blocked ? "blocked" : "clear");
+   if(state == g_daily_loss_state)
+      return;
+   const string previous = g_daily_loss_state;
+   g_daily_loss_state = state;
+   if(blocked)
+     {
+      Print("GoldAI DAILY_LOSS: ", details);
+      g_journal.Write("DAILY_LOSS",
+                      0,
+                      _Symbol,
+                      (g_have_decision ? g_decision.bias_text : ""),
+                      0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+                      (g_have_decision ? g_decision.confidence : 0),
+                      (g_have_decision ? g_decision.generated_at : 0),
+                      (g_have_decision ? g_decision.rationale : ""),
+                      details);
+     }
+   else if(previous == "blocked")
+      Print("GoldAI DAILY_LOSS cleared");
   }
 
 //+------------------------------------------------------------------+
@@ -1165,72 +1383,57 @@ void EnforceDecisionOnOpenTrade()
   }
 
 //+------------------------------------------------------------------+
-void ManageOpenPosition()
+bool PositionIsManaged()
   {
-   ulong ticket = 0;
-   if(!SelectOurPosition(ticket))
-      return;
+   const long magic = PositionGetInteger(POSITION_MAGIC);
+   if(PositionGetString(POSITION_SYMBOL) != _Symbol)
+      return(false);
+   if(magic == InpMagicNumber)
+      return(true);
+   if(InpManageManual && magic == 0)
+      return(true);
+   return(false);
+  }
 
-   const long   type  = PositionGetInteger(POSITION_TYPE);
-   const double volume = PositionGetDouble(POSITION_VOLUME);
-   const double entry  = PositionGetDouble(POSITION_PRICE_OPEN);
-   const double sl     = PositionGetDouble(POSITION_SL);
-   const double tp     = PositionGetDouble(POSITION_TP);
-   const double bid    = SymbolInfoDouble(_Symbol, SYMBOL_BID);
-   const double ask    = SymbolInfoDouble(_Symbol, SYMBOL_ASK);
-   const double point  = SymbolInfoDouble(_Symbol, SYMBOL_POINT);
-
-   if(ticket == g_tp1_done_ticket)
+//+------------------------------------------------------------------+
+double PartialFractionToClose(const bool r_hit)
+  {
+   if(r_hit)
      {
-      TrailOpenPosition(ticket);
-      return;
+      if(InpPartialPct > 1.0)
+         return(InpPartialPct / 100.0);
+      if(InpPartialPct > 0.0)
+         return(InpPartialPct);
+      return(0.0);
      }
-   if(!g_have_decision || !GoldAI_HasPartialTp(g_decision))
-      return;
+   return(InpTP1CloseFraction);
+  }
 
-   const double tp1 = GoldAI_NormalizePrice(_Symbol, g_decision.tp1);
-   bool hit = false;
-   if(type == POSITION_TYPE_BUY && bid >= tp1)
-      hit = true;
-   if(type == POSITION_TYPE_SELL && ask <= tp1)
-      hit = true;
-   if(!hit)
-      return;
+//+------------------------------------------------------------------+
+double UnrealizedR(const long type, const double entry, const double sl,
+                   const double bid, const double ask)
+  {
+   if(sl <= 0.0)
+      return(-1.0e10);
+   const double dist = MathAbs(entry - sl);
+   if(dist <= 0.0)
+      return(-1.0e10);
+   const double move = (type == POSITION_TYPE_BUY ? (bid - entry) : (entry - ask));
+   return(move / dist);
+  }
 
-   const double vmin = SymbolInfoDouble(_Symbol, SYMBOL_VOLUME_MIN);
-   double close_vol = GoldAI_NormalizeVolume(_Symbol, volume * InpTP1CloseFraction);
-   if(close_vol > 0.0 && (volume - close_vol) < vmin - 1e-12)
-      close_vol = 0.0; // would leave less than min lot - skip the partial
-
-   if(close_vol > 0.0 && close_vol < volume)
-     {
-      if(!g_trade.PositionClosePartial(ticket, close_vol))
-        {
-         Print("GoldAI TP1 partial failed ticket=", ticket,
-               " ", g_trade.ResultRetcodeDescription());
-         return;
-        }
-      g_journal.Write("TP1_PARTIAL",
-                      ticket,
-                      _Symbol,
-                      (type == POSITION_TYPE_BUY ? "BUY" : "SELL"),
-                      close_vol,
-                      (type == POSITION_TYPE_BUY ? bid : ask),
-                      sl, g_decision.tp1, g_decision.tp2,
-                      0.0,
-                      g_decision.confidence,
-                      g_decision.generated_at,
-                      g_decision.rationale,
-                      "closed fraction at TP1");
-      Print("GoldAI TP1 partial close ", DoubleToString(close_vol, 4), " of ticket ", ticket);
-     }
-
-   // Move SL to breakeven (entry +/- optional offset), for the remainder.
+//+------------------------------------------------------------------+
+bool TryMoveToBreakeven(const ulong ticket, const long type, const double entry,
+                        const double bid, const double ask, const double point,
+                        const string note)
+  {
+   if(!InpBEAfterPartial)
+      return(false);
    if(point <= 0.0)
-     {
-      PersistTp1(ticket);
-      return;
-     }
+      return(false);
+   if(!PositionSelectByTicket(ticket))
+      return(false);
+
    double be = entry;
    if(type == POSITION_TYPE_BUY)
       be = entry + InpBreakevenOffsetPoints * point;
@@ -1238,12 +1441,6 @@ void ManageOpenPosition()
       be = entry - InpBreakevenOffsetPoints * point;
    be = GoldAI_NormalizePrice(_Symbol, be);
 
-   // Re-select in case the ticket was refreshed after a partial
-   if(!PositionSelectByTicket(ticket))
-     {
-      PersistTp1(ticket);
-      return;
-     }
    const double cur_sl = PositionGetDouble(POSITION_SL);
    const double cur_tp = PositionGetDouble(POSITION_TP);
    bool should_move = false;
@@ -1251,54 +1448,162 @@ void ManageOpenPosition()
       should_move = true;
    if(type == POSITION_TYPE_SELL && (cur_sl == 0.0 || be < cur_sl))
       should_move = true;
+   if(!should_move)
+      return(false);
 
-   if(should_move)
+   string reason = "";
+   const ENUM_ORDER_TYPE ot = (type == POSITION_TYPE_BUY ? ORDER_TYPE_BUY : ORDER_TYPE_SELL);
+   const double cur_price = (type == POSITION_TYPE_BUY ? bid : ask);
+   if(!GoldAI_StopsAreValid(_Symbol, ot, cur_price, be, cur_tp, reason))
      {
-      string reason = "";
-      const ENUM_ORDER_TYPE ot = (type == POSITION_TYPE_BUY ? ORDER_TYPE_BUY : ORDER_TYPE_SELL);
-      const double cur_price = (type == POSITION_TYPE_BUY ? bid : ask);
-      if(GoldAI_StopsAreValid(_Symbol, ot, cur_price, be, cur_tp, reason))
+      Print("GoldAI BE skip ticket=", ticket, " ", reason);
+      return(false);
+     }
+   if(!g_trade.PositionModify(ticket, be, cur_tp))
+     {
+      Print("GoldAI BE modify failed ticket=", ticket,
+            " ", g_trade.ResultRetcodeDescription());
+      return(false);
+     }
+   Print("GoldAI moved SL to breakeven ", DoubleToString(be, _Digits),
+         " on ticket ", ticket);
+   g_journal.Write("BE_MOVE",
+                   ticket,
+                   _Symbol,
+                   (type == POSITION_TYPE_BUY ? "BUY" : "SELL"),
+                   PositionGetDouble(POSITION_VOLUME),
+                   cur_price,
+                   be,
+                   (g_have_decision ? g_decision.tp1 : 0.0),
+                   (g_have_decision ? g_decision.tp2 : 0.0),
+                   0.0,
+                   (g_have_decision ? g_decision.confidence : 0),
+                   (g_have_decision ? g_decision.generated_at : 0),
+                   (g_have_decision ? g_decision.rationale : ""),
+                   note);
+   return(true);
+  }
+
+//+------------------------------------------------------------------+
+void ManageOnePosition(const ulong ticket)
+  {
+   if(!PositionSelectByTicket(ticket))
+      return;
+
+   const long   type   = PositionGetInteger(POSITION_TYPE);
+   const long   magic  = PositionGetInteger(POSITION_MAGIC);
+   const double volume = PositionGetDouble(POSITION_VOLUME);
+   const double entry  = PositionGetDouble(POSITION_PRICE_OPEN);
+   const double sl     = PositionGetDouble(POSITION_SL);
+   const double bid    = SymbolInfoDouble(_Symbol, SYMBOL_BID);
+   const double ask    = SymbolInfoDouble(_Symbol, SYMBOL_ASK);
+   const double point  = SymbolInfoDouble(_Symbol, SYMBOL_POINT);
+   const bool   ours   = (magic == InpMagicNumber);
+
+   if(IsPartialDone(ticket))
+     {
+      TryMoveToBreakeven(ticket, type, entry, bid, ask, point,
+                         "SL moved to breakeven after partial (retry)");
+      if(ours)
+         TrailOpenPosition(ticket);
+      return;
+     }
+
+   bool r_hit = false;
+   bool tp1_hit = false;
+   if(InpPartialAtR > 0.0 && sl > 0.0)
+     {
+      if(UnrealizedR(type, entry, sl, bid, ask) >= InpPartialAtR)
+         r_hit = true;
+     }
+   if(ours && g_have_decision && GoldAI_HasPartialTp(g_decision))
+     {
+      const double tp1 = GoldAI_NormalizePrice(_Symbol, g_decision.tp1);
+      if(type == POSITION_TYPE_BUY && bid >= tp1)
+         tp1_hit = true;
+      if(type == POSITION_TYPE_SELL && ask <= tp1)
+         tp1_hit = true;
+     }
+   if(!r_hit && !tp1_hit)
+      return;
+
+   const double frac = PartialFractionToClose(r_hit);
+   const double vmin = SymbolInfoDouble(_Symbol, SYMBOL_VOLUME_MIN);
+   double close_vol = GoldAI_NormalizeVolume(_Symbol, volume * frac);
+   if(close_vol > 0.0 && (volume - close_vol) < vmin - 1e-12)
+      close_vol = 0.0; // would leave less than min lot - skip the partial
+
+   if(close_vol > 0.0 && close_vol < volume)
+     {
+      if(!g_trade.PositionClosePartial(ticket, close_vol))
         {
-         if(g_trade.PositionModify(ticket, be, cur_tp))
-           {
-            Print("GoldAI moved SL to breakeven ", DoubleToString(be, _Digits),
-                  " on ticket ", ticket);
-            g_journal.Write("BE_MOVE",
-                            ticket,
-                            _Symbol,
-                            (type == POSITION_TYPE_BUY ? "BUY" : "SELL"),
-                            PositionGetDouble(POSITION_VOLUME),
-                            cur_price,
-                            be, g_decision.tp1, g_decision.tp2,
-                            0.0,
-                            g_decision.confidence,
-                            g_decision.generated_at,
-                            g_decision.rationale,
-                            "SL moved to breakeven after TP1");
-           }
-         else
-           {
-            Print("GoldAI BE modify failed ticket=", ticket,
-                  " ", g_trade.ResultRetcodeDescription());
-           }
+         Print("GoldAI partial failed ticket=", ticket,
+               " ", g_trade.ResultRetcodeDescription());
+         return;
         }
-      else
-         Print("GoldAI BE skip: ", reason);
+      const string why = (r_hit ? ("closed fraction at +" + DoubleToString(InpPartialAtR, 2) + "R")
+                                : "closed fraction at TP1");
+      g_journal.Write((r_hit ? "R_PARTIAL" : "TP1_PARTIAL"),
+                      ticket,
+                      _Symbol,
+                      (type == POSITION_TYPE_BUY ? "BUY" : "SELL"),
+                      close_vol,
+                      (type == POSITION_TYPE_BUY ? bid : ask),
+                      sl,
+                      (g_have_decision ? g_decision.tp1 : 0.0),
+                      (g_have_decision ? g_decision.tp2 : 0.0),
+                      0.0,
+                      (g_have_decision ? g_decision.confidence : 0),
+                      (g_have_decision ? g_decision.generated_at : 0),
+                      (g_have_decision ? g_decision.rationale : ""),
+                      why + (ours ? "" : " (manual)"));
+      Print("GoldAI partial close ", DoubleToString(close_vol, 4),
+            " of ticket ", ticket, " ", why);
      }
 
    PersistTp1(ticket);
 
+   bool moved = false;
+   if(InpBEAfterPartial)
+      moved = TryMoveToBreakeven(ticket, type, entry, bid, ask, point,
+                                (r_hit ? "SL moved to breakeven after +R partial"
+                                       : "SL moved to breakeven after TP1"));
+
    {
     const string side = (type == POSITION_TYPE_BUY ? "BUY" : "SELL");
-    string msg = "GoldAI TP1 partial close + BE\n";
+    string msg = "GoldAI partial close";
+    if(r_hit)
+       msg += " at +" + DoubleToString(InpPartialAtR, 2) + "R";
+    else
+       msg += " at TP1";
+    if(moved)
+       msg += " + BE";
+    msg += "\n";
     msg += side + " ticket " + IntegerToString((long)ticket);
+    if(!ours)
+       msg += " (manual)";
     if(close_vol > 0.0 && close_vol < volume)
        msg += "\nClosed: " + DoubleToString(close_vol, 4) + " lots";
     else
        msg += "\nPartial skipped (remainder would be below min lot)";
-    msg += "\nSL moved to breakeven " + DoubleToString(be, _Digits);
+    if(moved)
+       msg += "\nSL moved to breakeven";
     NotifyTelegram(msg);
    }
+  }
+
+//+------------------------------------------------------------------+
+void ManageOpenPosition()
+  {
+   for(int i = PositionsTotal() - 1; i >= 0; i--)
+     {
+      const ulong ticket = PositionGetTicket(i);
+      if(ticket == 0)
+         continue;
+      if(!PositionIsManaged())
+         continue;
+      ManageOnePosition(ticket);
+     }
   }
 
 //+------------------------------------------------------------------+
@@ -1380,10 +1685,11 @@ void TryOpenTrade()
       g_status = "BLOCKED: max daily loss reached (" +
                  DoubleToString(DailyLossPct(), 2) + "% / cap " +
                  DoubleToString(InpMaxDailyLossPct, 2) + "%)";
-      LogUnique("DAILY_LOSS", g_status);
+      LogDailyLossChange(true, g_status);
       NotifyTelegramOnce("DAILY_LOSS", "GoldAI error: daily loss stop\n" + g_status);
       return;
      }
+   LogDailyLossChange(false, "");
 
    if(g_decision.bias == GOLD_AI_BIAS_NONE)
      {
@@ -2339,7 +2645,7 @@ string CloseAllEaPositions()
 string StatusText()
   {
    const int digits = _Digits;
-   string t = "GoldAI v1.04 status\n";
+   string t = "GoldAI v1.05 status\n";
    t += "Account: " + GoldAI_AccountModeText() + "  server " + AccountInfoString(ACCOUNT_SERVER) + "\n";
    t += "Balance: $" + DoubleToString(AccountInfoDouble(ACCOUNT_BALANCE), 2) +
         "  Equity: $" + DoubleToString(AccountInfoDouble(ACCOUNT_EQUITY), 2) + "\n";
@@ -2601,7 +2907,7 @@ void UpdatePanel(const bool force)
 
    const int digits = _Digits;
    string lines = "";
-   lines += "====== GoldAI Bridge v1.04 ======\n";
+   lines += "====== GoldAI Bridge v1.05 ======\n";
    lines += "Account:  " + GoldAI_AccountModeText() +
             "  #" + IntegerToString(AccountInfoInteger(ACCOUNT_LOGIN)) +
             "  " + AccountInfoString(ACCOUNT_CURRENCY) + "\n";
@@ -2730,7 +3036,7 @@ int OnInit()
    g_last_manage  = 0;
 
    const string login_txt = IntegerToString(AccountInfoInteger(ACCOUNT_LOGIN));
-   Print("GoldAI v1.04 account: mode=", GoldAI_AccountModeText(),
+   Print("GoldAI v1.05 account: mode=", GoldAI_AccountModeText(),
          " server=", AccountInfoString(ACCOUNT_SERVER),
          " company=", AccountInfoString(ACCOUNT_COMPANY),
          " login=***", StringSubstr(login_txt, MathMax(0, StringLen(login_txt) - 3)),
@@ -2792,7 +3098,7 @@ int OnInit()
                                             InpTelegramToken,
                                             InpTelegramChatId,
                                             InpWebTimeoutMs,
-                                            "GoldAIBridge online (v1.04, " + GoldAI_AccountModeText() + ", prop guard " + (InpPropGuardEnabled ? "ON" : "off") + "). Send /help for commands.",
+                                            "GoldAIBridge online (v1.05, " + GoldAI_AccountModeText() + ", prop guard " + (InpPropGuardEnabled ? "ON" : "off") + "). Send /help for commands.",
                                             st,
                                             terr);
       if(sent)
@@ -2810,6 +3116,8 @@ int OnInit()
 //+------------------------------------------------------------------+
 void OnDeinit(const int reason)
   {
+   PersistDayState();
+   PersistPartialState();
    EventKillTimer();
    if(g_atr_handle != INVALID_HANDLE)
      {

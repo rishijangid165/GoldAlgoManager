@@ -1,6 +1,6 @@
 {
-  "generated_at_ist": "2026-11-17 14:51:01 IST",
-  "generated_at_utc": "2026-11-17T09:21:01Z",
+  "generated_at_ist": "2026-11-17 15:48:22 IST",
+  "generated_at_utc": "2026-11-17T10:18:22Z",
   "timezone_label": "IST (Asia/Kolkata)",
   "account": {
     "server": "MetaQuotes-Demo",
@@ -22,14 +22,14 @@
     "first_ea_start_equity": 99999.95,
     "first_ea_start_equity_at_ist": "2026-11-13 01:06:20 IST",
     "last_terminal_sync_positions": 1,
-    "last_terminal_sync_ist": "2026-11-17 14:51:02 IST"
+    "last_terminal_sync_ist": "2026-11-17 15:48:23 IST"
   },
   "live_account": {
     "state": "live",
-    "pulled_at_ist": "2026-11-17 14:51:02 IST",
+    "pulled_at_ist": "2026-11-17 15:48:23 IST",
     "balance": 100155.39,
-    "equity": 100226.07,
-    "open_profit": 70.68,
+    "equity": 100356.98,
+    "open_profit": 201.59,
     "positions": 1,
     "demo": true
   },
@@ -458,10 +458,10 @@
       "backfill_closed": 9,
       "live_closed": 0
     },
-    "generated_utc": "2026-11-17T09:20Z",
-    "generated_ist": "2026-11-17 14:50 IST",
+    "generated_utc": "2026-11-17T10:17Z",
+    "generated_ist": "2026-11-17 15:47 IST",
     "data_source": "mt5_broker_live",
-    "last_completed_bar_ist": "2026-11-17 13:30 IST",
+    "last_completed_bar_ist": "2026-11-17 14:30 IST",
     "backfill_start_ist": "2026-10-16 09:30 IST",
     "live_start_ist": "2026-11-14 05:30 IST",
     "pending_signals": {},
@@ -473,10 +473,10 @@
       "trade_mode": 0,
       "currency": "USD",
       "balance": 100155.39,
-      "equity": 100233.29,
+      "equity": 100373.51,
       "margin": 734.29,
-      "profit": 77.9,
-      "pulled_at_utc": "2026-11-17T09:20:34.540783+00:00"
+      "profit": 218.12,
+      "pulled_at_utc": "2026-11-17T10:17:54.044177+00:00"
     },
     "trades": [
       {
@@ -832,10 +832,10 @@
       "sort": "2026-11-13T07:41:28+02:00"
     },
     {
-      "t": "2026-11-17 14:51 IST",
+      "t": "2026-11-17 15:48 IST",
       "label": "Last known balance",
       "equity": 100046.1,
-      "sort": "2026-11-17T14:51:01.557491+05:30"
+      "sort": "2026-11-17T15:48:22.448815+05:30"
     }
   ],
   "stats": {
@@ -952,7 +952,7 @@
     }
   ],
   "notes": [
-    "Balance and equity are live from MT5 (pulled 2026-11-17 14:51:02 IST).",
+    "Balance and equity are live from MT5 (pulled 2026-11-17 15:48:23 IST).",
     "All live money figures come from MT5 result files, the EA journal, and MQL5 logs. No live broker quote is shown unless a file has a fresh one.",
     "Today's P&L vs the $100,046.10 start-of-day reference is $0.00 because both closed demo trades settled before that reference was recorded. Their combined P&L is +46.15 (including swap), which is already inside the current balance."
   ],

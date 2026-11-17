@@ -1102,7 +1102,10 @@ def main() -> int:
     print(f"Wrote {args.out}")
     print(f"generated_at_ist={payload['generated_at_ist']}")
     print(f"balance={payload['account']['balance_display']} today_pnl={payload['account']['today_pnl_display']}")
-    print(f"trades={payload['stats']['trades']} win_rate={payload['stats']['win_rate_pct']} net={payload['stats']['net_pnl_display']}")
+    print(f"legacy_result_files_stats trades={payload['stats']['trades']} win_rate={payload['stats']['win_rate_pct']} net={payload['stats']['net_pnl_display']} (old reconstructed result files only; not the MT5 books)")
+    for _bk in ("system", "manual"):
+        _st = payload["books"][_bk]["stats"]
+        print(f"mt5_{_bk}_book closed={_st['closed']} open={_st['open']} wins={_st['wins']} win_rate={_st['win_rate_pct']} net={_st['net_pnl_display']}")
     print(f"decision={payload['decision']['bias']} status={payload['decision']['status']}")
     print(f"open_position={payload['position_status']}")
     return 0

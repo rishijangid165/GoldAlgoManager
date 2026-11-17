@@ -1,7 +1,7 @@
 {
   "version": 1,
-  "generated_at": "2026-11-16T21:20:33Z",
-  "valid_until": "2026-11-17T03:00:00Z",
+  "generated_at": "2026-11-17T00:16:50Z",
+  "valid_until": "2026-11-17T06:00:00Z",
   "symbol": "XAUUSD",
   "bias": "NONE",
   "entry_zone": {
@@ -15,7 +15,7 @@
   ],
   "confidence": 0,
   "max_risk_pct": 0.5,
-  "rationale": "Mon close, stand aside. Gold closed day 3851.5 at London low 3851.2 after post-Warsh drop to 3841 (outside NY window, in blackout - not eligible). D/4H LH/LL below EMA20/SMA50/200 (D ATR ~117, 4H RSI 32), below prior 20d low 3852 - no Donchian long (20d high 4190). Tue Asia range not formed yet; re-check 00:00Z. Retail Sales 13:30Z blackout.",
+  "rationale": "Tue Asia early, stand aside. Gold 3860.7 after Mon close 3851.5; Asia range forming 3847.3-3864.6 (locks 08:00Z/03:00 ET - not tradable yet). D/4H LH/LL below EMA20/SMA50/200 (D ATR ~115, 4H RSI 35); no Donchian long (20d high 4155). Only a clean downside Asia close-break (probation) or NY London-break short later. Retail Sales 13:30Z blackout.",
   "news_blackout": [
     {
       "start": "2026-11-17T13:00:00Z",

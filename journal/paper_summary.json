@@ -225,13 +225,20 @@
     "backfill_closed": 9,
     "live_closed": 0
   },
-  "generated_utc": "2026-11-17T13:20Z",
-  "generated_ist": "2026-11-17 18:50 IST",
+  "generated_utc": "2026-11-17T14:17Z",
+  "generated_ist": "2026-11-17 19:47 IST",
   "data_source": "mt5_broker_live",
-  "last_completed_bar_ist": "2026-11-17 17:30 IST",
+  "last_completed_bar_ist": "2026-11-17 18:30 IST",
   "backfill_start_ist": "2026-10-16 09:30 IST",
   "live_start_ist": "2026-11-14 05:30 IST",
-  "pending_signals": {},
+  "pending_signals": {
+    "ny_lon_brk_d4h": {
+      "direction": "SELL",
+      "sl": 3876.6,
+      "signal_bar_et": "2026-11-17 08:00:00-05:00",
+      "enter_at": "next 1h open"
+    }
+  },
   "new_rows_this_run": [],
   "closed_this_run": [],
   "note": "Paper only. Each setup is its own one-trade book, so books can overlap (live trading allows one trade total). Rows with mode=backfill were reconstructed from broker history on 2026-11-14, not logged in real time.",
@@ -240,9 +247,9 @@
     "trade_mode": 0,
     "currency": "USD",
     "balance": 100155.39,
-    "equity": 100337.22,
+    "equity": 100261.6,
     "margin": 734.29,
-    "profit": 181.83,
-    "pulled_at_utc": "2026-11-17T13:20:08.550334+00:00"
+    "profit": 106.21,
+    "pulled_at_utc": "2026-11-17T14:17:26.991364+00:00"
   }
 }

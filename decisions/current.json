@@ -1,7 +1,7 @@
 {
   "version": 1,
-  "generated_at": "2026-11-17T12:21:30Z",
-  "valid_until": "2026-11-17T17:00:00Z",
+  "generated_at": "2026-11-17T16:19:19Z",
+  "valid_until": "2026-11-17T22:00:00Z",
   "symbol": "XAUUSD",
   "bias": "NONE",
   "entry_zone": {
@@ -15,12 +15,12 @@
   ],
   "confidence": 0,
   "max_risk_pct": 0.5,
-  "rationale": "Tue pre-NY, stand aside. Gold 3863 bounced from London low 3852.9 (equal lows) to 3870.9, inside Asia range 3843.4-3886.7 and London range 3852.9-3874.2. D/4H LH/LL below EMA20 3996/3893; no Donchian (20d high 4155). Retail Sales 13:30Z blackout 13-15Z; only NY close below London low after 15Z (probation). Owner manual SELL 0.19 @3864.66 open - one trade.",
+  "rationale": "Tue NY late, stand aside. Squeeze 15:30Z to 3890.9 (above Asia high 3886.7) rejected, gold 3869 back near London high 3874.2. D/4H LH/LL below EMA20 3997/3890; no Donchian (20d high 4155). NY London-range break used up (first close-break was 13Z blackout bar; 15Z up-close is 2nd and against trend). Manual SELL stopped 3890 (-481). Flat. Next: FOMC Minutes 19:00Z Wed (blackout 18:30-20:30Z).",
   "news_blackout": [
     {
-      "start": "2026-11-17T13:00:00Z",
-      "end": "2026-11-17T15:00:00Z",
-      "reason": "US Retail Sales 13:30Z"
+      "start": "2026-11-18T18:30:00Z",
+      "end": "2026-11-18T20:30:00Z",
+      "reason": "FOMC Minutes (Oct) 19:00Z"
     }
   ],
   "kill_switch": false

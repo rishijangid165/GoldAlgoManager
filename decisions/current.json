@@ -1,7 +1,7 @@
 {
   "version": 1,
-  "generated_at": "2026-11-17T21:19:30Z",
-  "valid_until": "2026-11-18T03:00:00Z",
+  "generated_at": "2026-11-18T00:21:54Z",
+  "valid_until": "2026-11-18T06:00:00Z",
   "symbol": "XAUUSD",
   "bias": "NONE",
   "entry_zone": {
@@ -15,7 +15,7 @@
   ],
   "confidence": 0,
   "max_risk_pct": 0.5,
-  "rationale": "Tue close/daily break, stand aside. Tue closed 3847.4 near day low 3836.9, below London low 3852.9 (bearish close); D/4H LH/LL below EMA20 3995/3885, D RSI 37. No Donchian at 18:00 ET (20d high 4148.5, ~300 away). No session window open; Wed Asia range not formed. Flat. Next: Wed Asia lock 08:00Z, NY 13-17Z, FOMC Minutes 19:00Z (blackout 18:30-20:30Z).",
+  "rationale": "Wed Asia forming, stand aside. Price 3840 slipping toward Tue low 3836.9 / 2026 low 3832.35 (sell-stop pool); D/4H LH/LL below EMA20 3980/3881, D RSI 36. No Donchian at 18:00 ET open (3846.5 vs 20d high 4148.5). Asia range 3838.7-3857.5 not locked (08:00Z); no session window open; shorting into the 3832 low = poor R. Next: Asia lock 08:00Z, London/NY 13-17Z, FOMC Minutes 19:00Z (blackout 18:30-20:30Z).",
   "news_blackout": [
     {
       "start": "2026-11-18T18:30:00Z",

@@ -1,7 +1,7 @@
 {
   "version": 1,
-  "generated_at": "2026-11-18T12:21:21Z",
-  "valid_until": "2026-11-18T18:30:00Z",
+  "generated_at": "2026-11-18T18:21:26Z",
+  "valid_until": "2026-11-18T21:30:00Z",
   "symbol": "XAUUSD",
   "bias": "NONE",
   "entry_zone": {
@@ -15,7 +15,7 @@
   ],
   "confidence": 0,
   "max_risk_pct": 0.5,
-  "rationale": "Pre-NY, stand aside. 4th down day on Fed-hike bets + firm USD: low 3757.37 (08:15Z), now ~3771 (-75). D/4H LH/LL far below EMA20 3973/3852; 1H RSI 30, 4H 26. No Donchian (long-only, 20d high 4148.5). Asia 93 wide -> skip. London range 3757.37-3786.67 locks 13Z. Next: NY 15M close-break of London range 13-17Z with D/4H trend (probation 0.25%), stop beyond structure, TP1>=1.5R. FOMC Minutes 19:00Z (blackout 18:30-20:30Z).",
+  "rationale": "Post-NY, stand aside into FOMC Minutes. 4th down day on Fed-hike bets (Waller/Williams/Musalem) + firm USD: new low 3728.53 (17:45Z) after window, now ~3736 (-110). D/4H/1H LH/LL far below EMA20 3970/3832/3777; 4H RSI 23 oversold. No probation NY break: no 1H close outside London range 3742.82-3786.67 in 13-17Z. No Donchian (long-only, 20d high 4148.5). FOMC Minutes 19:00Z blackout 18:30-20:30Z. Next: Asia/Donchian check at 23:00Z open.",
   "news_blackout": [
     {
       "start": "2026-11-18T18:30:00Z",

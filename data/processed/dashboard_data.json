@@ -1,6 +1,6 @@
 {
-  "generated_at_ist": "2026-11-18 05:52:38 IST",
-  "generated_at_utc": "2026-11-18T00:22:38Z",
+  "generated_at_ist": "2026-11-18 08:57:20 IST",
+  "generated_at_utc": "2026-11-18T03:27:20Z",
   "timezone_label": "IST (Asia/Kolkata)",
   "account": {
     "server": "MetaQuotes-Demo",
@@ -22,11 +22,11 @@
     "first_ea_start_equity": 99999.95,
     "first_ea_start_equity_at_ist": "2026-11-13 01:06:20 IST",
     "last_terminal_sync_positions": 0,
-    "last_terminal_sync_ist": "2026-11-18 05:52:39 IST"
+    "last_terminal_sync_ist": "2026-11-18 08:57:21 IST"
   },
   "live_account": {
     "state": "live",
-    "pulled_at_ist": "2026-11-18 05:52:39 IST",
+    "pulled_at_ist": "2026-11-18 08:57:21 IST",
     "balance": 99673.93,
     "equity": 99673.93,
     "open_profit": 0.0,
@@ -468,10 +468,10 @@
       "backfill_closed": 9,
       "live_closed": 1
     },
-    "generated_utc": "2026-11-18T00:22Z",
-    "generated_ist": "2026-11-18 05:52 IST",
+    "generated_utc": "2026-11-18T03:26Z",
+    "generated_ist": "2026-11-18 08:56 IST",
     "data_source": "mt5_broker_live",
-    "last_completed_bar_ist": "2026-11-18 04:30 IST",
+    "last_completed_bar_ist": "2026-11-18 07:30 IST",
     "backfill_start_ist": "2026-10-16 09:30 IST",
     "live_start_ist": "2026-11-14 05:30 IST",
     "pending_signals": {},
@@ -486,7 +486,7 @@
       "equity": 99673.93,
       "margin": 0.0,
       "profit": 0.0,
-      "pulled_at_utc": "2026-11-18T00:22:37.252244+00:00"
+      "pulled_at_utc": "2026-11-18T03:26:47.984457+00:00"
     },
     "trades": [
       {
@@ -755,9 +755,9 @@
     "tp2": 0.0,
     "confidence": 0,
     "max_risk_pct": 0.5,
-    "generated_at_ist": "2026-11-18 05:51:54 IST",
-    "valid_until_ist": "2026-11-18 11:30 IST",
-    "valid_until_utc": "2026-11-18T06:00:00Z",
+    "generated_at_ist": "2026-11-18 08:56:27 IST",
+    "valid_until_ist": "2026-11-18 14:30 IST",
+    "valid_until_utc": "2026-11-18T09:00:00Z",
     "expired": false,
     "kill_switch": false,
     "in_news_blackout": false,
@@ -777,7 +777,7 @@
       "end_utc": "2026-11-18T20:30:00Z",
       "reason": "FOMC Minutes (Oct) 19:00Z"
     },
-    "rationale": "Wed Asia forming, stand aside. Price 3840 slipping toward Tue low 3836.9 / 2026 low 3832.35 (sell-stop pool); D/4H LH/LL below EMA20 3980/3881, D RSI 36. No Donchian at 18:00 ET open (3846.5 vs 20d high 4148.5). Asia range 3838.7-3857.5 not locked (08:00Z); no session window open; shorting into the 3832 low = poor R. Next: Asia lock 08:00Z, London/NY 13-17Z, FOMC Minutes 19:00Z (blackout 18:30-20:30Z).",
+    "rationale": "Wed Asia flush, stand aside. Hawkish Fed talk (Musalem/Williams) broke 2026 low 3832.35: 3846.5 -> 3785.6, now ~3792, 14-month low. D/4H LH/LL far below EMA20 3975/3870; 1H/15M RSI 26/19 oversold. No Donchian (long-only). Asia range 3785.6-3857.5 = 72 wide > 3x1H ATR 53 -> Asia breakout skip. Shorting after a -60 flush with stop beyond 3830.7 = chase. Next: London range 08-13Z, NY close-break 13-17Z (probation), FOMC Minutes 19:00Z (blackout 18:30-20:30Z).",
     "status": "flat",
     "source": "/workspace/gold-algo/decisions/current.json"
   },
@@ -786,7 +786,7 @@
   "ea": {
     "name": "GoldAIBridge",
     "chart": "XAUUSD M15",
-    "last_decision_read_ist": "2026-11-18 03:05:35 IST",
+    "last_decision_read_ist": "2026-11-18 05:56:21 IST",
     "last_decision_bias": "NONE"
   },
   "trades": [
@@ -867,10 +867,10 @@
       "sort": "2026-11-13T07:41:28+02:00"
     },
     {
-      "t": "2026-11-18 05:52 IST",
+      "t": "2026-11-18 08:57 IST",
       "label": "Last known balance",
       "equity": 100046.1,
-      "sort": "2026-11-18T05:52:38.188713+05:30"
+      "sort": "2026-11-18T08:57:20.437779+05:30"
     }
   ],
   "stats": {
@@ -987,7 +987,7 @@
     }
   ],
   "notes": [
-    "Balance and equity are live from MT5 (pulled 2026-11-18 05:52:39 IST).",
+    "Balance and equity are live from MT5 (pulled 2026-11-18 08:57:21 IST).",
     "All live money figures come from MT5 result files, the EA journal, and MQL5 logs. No live broker quote is shown unless a file has a fresh one.",
     "Today's P&L vs the $100,046.10 start-of-day reference is $0.00 because both closed demo trades settled before that reference was recorded. Their combined P&L is +46.15 (including swap), which is already inside the current balance."
   ],

@@ -1,7 +1,7 @@
 {
   "version": 1,
-  "generated_at": "2026-11-18T03:26:27Z",
-  "valid_until": "2026-11-18T09:00:00Z",
+  "generated_at": "2026-11-18T08:20:06Z",
+  "valid_until": "2026-11-18T13:00:00Z",
   "symbol": "XAUUSD",
   "bias": "NONE",
   "entry_zone": {
@@ -15,7 +15,7 @@
   ],
   "confidence": 0,
   "max_risk_pct": 0.5,
-  "rationale": "Wed Asia flush, stand aside. Hawkish Fed talk (Musalem/Williams) broke 2026 low 3832.35: 3846.5 -> 3785.6, now ~3792, 14-month low. D/4H LH/LL far below EMA20 3975/3870; 1H/15M RSI 26/19 oversold. No Donchian (long-only). Asia range 3785.6-3857.5 = 72 wide > 3x1H ATR 53 -> Asia breakout skip. Shorting after a -60 flush with stop beyond 3830.7 = chase. Next: London range 08-13Z, NY close-break 13-17Z (probation), FOMC Minutes 19:00Z (blackout 18:30-20:30Z).",
+  "rationale": "London open, stand aside. Hawkish Fed (Musalem/Williams) + USD 103.6: 4th down day, new 14-month low 3758.1 at 08:00Z, now ~3761 (-85 on day). D/4H LH/LL far below EMA20 3973/3859; 1H RSI 21, 4H 25. No Donchian (long-only, 20d high 4148.5). Asia 3764.7-3857.5 = 93 wide > 3x1H ATR 50 -> skip. London range 08-13Z only forming; short at RSI 21 after -85 = chase. Next: NY close-break of London range 13-17Z (probation), FOMC Minutes 19:00Z (blackout 18:30-20:30Z).",
   "news_blackout": [
     {
       "start": "2026-11-18T18:30:00Z",

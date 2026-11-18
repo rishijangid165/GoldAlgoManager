@@ -1,6 +1,6 @@
 {
-  "generated_at_ist": "2026-11-18 11:50:35 IST",
-  "generated_at_utc": "2026-11-18T06:20:35Z",
+  "generated_at_ist": "2026-11-18 13:51:02 IST",
+  "generated_at_utc": "2026-11-18T08:21:02Z",
   "timezone_label": "IST (Asia/Kolkata)",
   "account": {
     "server": "MetaQuotes-Demo",
@@ -22,11 +22,11 @@
     "first_ea_start_equity": 99999.95,
     "first_ea_start_equity_at_ist": "2026-11-13 01:06:20 IST",
     "last_terminal_sync_positions": 0,
-    "last_terminal_sync_ist": "2026-11-18 11:50:36 IST"
+    "last_terminal_sync_ist": "2026-11-18 13:51:03 IST"
   },
   "live_account": {
     "state": "live",
-    "pulled_at_ist": "2026-11-18 11:50:36 IST",
+    "pulled_at_ist": "2026-11-18 13:51:03 IST",
     "balance": 99673.93,
     "equity": 99673.93,
     "open_profit": 0.0,
@@ -468,10 +468,10 @@
       "backfill_closed": 9,
       "live_closed": 1
     },
-    "generated_utc": "2026-11-18T06:19Z",
-    "generated_ist": "2026-11-18 11:49 IST",
+    "generated_utc": "2026-11-18T08:20Z",
+    "generated_ist": "2026-11-18 13:50 IST",
     "data_source": "mt5_broker_live",
-    "last_completed_bar_ist": "2026-11-18 10:30 IST",
+    "last_completed_bar_ist": "2026-11-18 12:30 IST",
     "backfill_start_ist": "2026-10-16 09:30 IST",
     "live_start_ist": "2026-11-14 05:30 IST",
     "pending_signals": {},
@@ -486,7 +486,7 @@
       "equity": 99673.93,
       "margin": 0.0,
       "profit": 0.0,
-      "pulled_at_utc": "2026-11-18T06:19:47.874552+00:00"
+      "pulled_at_utc": "2026-11-18T08:20:07.841351+00:00"
     },
     "trades": [
       {
@@ -755,9 +755,9 @@
     "tp2": 0.0,
     "confidence": 0,
     "max_risk_pct": 0.5,
-    "generated_at_ist": "2026-11-18 08:56:27 IST",
-    "valid_until_ist": "2026-11-18 14:30 IST",
-    "valid_until_utc": "2026-11-18T09:00:00Z",
+    "generated_at_ist": "2026-11-18 13:50:06 IST",
+    "valid_until_ist": "2026-11-18 18:30 IST",
+    "valid_until_utc": "2026-11-18T13:00:00Z",
     "expired": false,
     "kill_switch": false,
     "in_news_blackout": false,
@@ -777,7 +777,7 @@
       "end_utc": "2026-11-18T20:30:00Z",
       "reason": "FOMC Minutes (Oct) 19:00Z"
     },
-    "rationale": "Wed Asia flush, stand aside. Hawkish Fed talk (Musalem/Williams) broke 2026 low 3832.35: 3846.5 -> 3785.6, now ~3792, 14-month low. D/4H LH/LL far below EMA20 3975/3870; 1H/15M RSI 26/19 oversold. No Donchian (long-only). Asia range 3785.6-3857.5 = 72 wide > 3x1H ATR 53 -> Asia breakout skip. Shorting after a -60 flush with stop beyond 3830.7 = chase. Next: London range 08-13Z, NY close-break 13-17Z (probation), FOMC Minutes 19:00Z (blackout 18:30-20:30Z).",
+    "rationale": "London open, stand aside. Hawkish Fed (Musalem/Williams) + USD 103.6: 4th down day, new 14-month low 3758.1 at 08:00Z, now ~3761 (-85 on day). D/4H LH/LL far below EMA20 3973/3859; 1H RSI 21, 4H 25. No Donchian (long-only, 20d high 4148.5). Asia 3764.7-3857.5 = 93 wide > 3x1H ATR 50 -> skip. London range 08-13Z only forming; short at RSI 21 after -85 = chase. Next: NY close-break of London range 13-17Z (probation), FOMC Minutes 19:00Z (blackout 18:30-20:30Z).",
     "status": "flat",
     "source": "/workspace/gold-algo/decisions/current.json"
   },
@@ -867,10 +867,10 @@
       "sort": "2026-11-13T07:41:28+02:00"
     },
     {
-      "t": "2026-11-18 11:50 IST",
+      "t": "2026-11-18 13:51 IST",
       "label": "Last known balance",
       "equity": 100046.1,
-      "sort": "2026-11-18T11:50:35.307019+05:30"
+      "sort": "2026-11-18T13:51:02.127231+05:30"
     }
   ],
   "stats": {
@@ -987,7 +987,7 @@
     }
   ],
   "notes": [
-    "Balance and equity are live from MT5 (pulled 2026-11-18 11:50:36 IST).",
+    "Balance and equity are live from MT5 (pulled 2026-11-18 13:51:03 IST).",
     "All live money figures come from MT5 result files, the EA journal, and MQL5 logs. No live broker quote is shown unless a file has a fresh one.",
     "Today's P&L vs the $100,046.10 start-of-day reference is $0.00 because both closed demo trades settled before that reference was recorded. Their combined P&L is +46.15 (including swap), which is already inside the current balance."
   ],

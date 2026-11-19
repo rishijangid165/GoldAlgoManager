@@ -7,3 +7,6 @@
 __pycache__/
 *.py[cod]
 .DS_Store
+
+# Uncompressed pattern table (the .gz is what we keep)
+brain/patterns/situations.csv

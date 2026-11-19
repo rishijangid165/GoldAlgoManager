@@ -8,6 +8,18 @@ Ye folder `rishijangid165/GoldAlgoManager` ke andar hai, lekin **gold trading se
 
 > **This GitHub repository is PUBLIC.** Never commit passwords, tokens, API keys, Telegram chat IDs, or account numbers. Is repo mein kabhi secret mat daalna.
 
+## Trader brain / dimaag
+
+Decision entry point: **[`brain/BRAIN.md`](brain/BRAIN.md)**.
+
+Kisi bhi paper trade se pehle, `btc-brain` folder se ye chalao aur output padho:
+
+```bash
+python3 brain/brain.py context
+```
+
+Isse core rules, abhi ka regime aur Fear & Greed, relevant lessons, pichhli paper trades, aur milti-julti purani situations dikhti hain. Lessons warning hain; wo apne aap naya trading rule nahi bante (pehle backtest, walk-forward, phir paper).
+
 ## Current status / Abhi ki halat
 
 - **No strategy has a proven edge. Koi strategy ka fayda abhi saabit nahi hua.**
@@ -20,6 +32,7 @@ Ye folder `rishijangid165/GoldAlgoManager` ke andar hai, lekin **gold trading se
 
 | Path | What is here |
 |---|---|
+| `brain/` | Trader dimaag: context command, episodes, lessons, patterns, mood, reflections. Start at `brain/BRAIN.md`. |
 | `rules/` | Trading and discipline rules, training phases, and live pass criteria |
 | `research/v1/` | First 3-month strategy, backtest report, trade list, and scripts |
 | `research/advanced/` | 12-month three-strategy test, walk-forward, stress test, and risk engine |
@@ -27,7 +40,7 @@ Ye folder `rishijangid165/GoldAlgoManager` ke andar hai, lekin **gold trading se
 | `paper/` | Paper trade log, journal, lessons, and synced alert levels (no secrets) |
 | `reviews/weekly/` | Sunday reviews (empty until the first weekly report) |
 | `reviews/monthly/` | Monthly exams (empty until the first month-end exam) |
-| `sync.sh` | Copies the latest paper-trade file and alert levels into `paper/`, then commits and pushes if anything changed |
+| `sync.sh` | Copies the latest paper-trade file and alert levels into `paper/`, also commits `brain/` changes, then pushes if anything changed |
 
 ## How to sync
 

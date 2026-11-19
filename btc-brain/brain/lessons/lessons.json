@@ -1,0 +1,158 @@
+{
+  "updated_ist": "2026-11-19 23:40 IST",
+  "strength_rule": "Laplace (for+1)/(for+against+2). obs<3 => weak/untested; obs>=5 and strength<0.4 => forgotten; else active if strength>=0.4 else weak. Lessons never become trading rules automatically.",
+  "lessons": [
+    {
+      "id": "L01",
+      "text": "XM par 1 ghante ke chhote trades ka spread, slippage aur overnight fee edge kha jaata hai. Bina cost ke backtest jhootha lagta hai.",
+      "condition": "timeframe=1h",
+      "predicts": "meta",
+      "auto_update": false,
+      "evidence_for": 4,
+      "evidence_against": 0,
+      "sources": [
+        "advanced/S1 12m: before costs -7.56 USDT, after -466.72 (costs 459.16)",
+        "advanced/S2 12m: before -227.22, after -431.16 (costs 203.95)",
+        "advanced/S3 12m: before +20.00, after -231.03 (costs 251.03)",
+        "v1 3m: no-cost -43.11 / expectancy -1.87; with 0.05%/side costs -74.36 / -3.23 (costs 31.25 over 23 trades)"
+      ],
+      "notes": "4 backtests (3 strategies + v1). None stayed solidly profitable after estimated XM costs. This is a standing lesson, not updated from a single paper P/L.",
+      "applied_episodes": [],
+      "strength": 0.8333,
+      "status": "active",
+      "observations": 4
+    },
+    {
+      "id": "L02",
+      "text": "UP-trend ke baad der se liye gaye BUY (price 4H EMA50 se 5 ATR se zyada upar) aksar haar te hain. Topping market mein late long mat lo.",
+      "condition": "side=long, late_entry_atr>5",
+      "predicts": "loss",
+      "auto_update": true,
+      "evidence_for": 5,
+      "evidence_against": 0,
+      "sources": [
+        "v1 losing trades #1,#2,#3,#4,#10 (25 Aug–23 Sep 2026): longs 5.7–7.9 ATR above 4H EMA50, all stopped out"
+      ],
+      "notes": "Only the 5 documented stretched v1 longs were counted. Advanced trades were not tagged for extension, so this sample is still small.",
+      "applied_episodes": [],
+      "strength": 0.8571,
+      "status": "active",
+      "observations": 5
+    },
+    {
+      "id": "L03",
+      "text": "Kamzor / doji trigger candle (body range ka 20% se kam) par entry aksar fail hui. Conviction kam ho to skip.",
+      "condition": "entry_candle=doji",
+      "predicts": "loss",
+      "auto_update": true,
+      "evidence_for": 6,
+      "evidence_against": 1,
+      "sources": [
+        "v1 losing trades #2,#4,#5,#6,#12,#15: body about 0.10–0.19 of the range"
+      ],
+      "notes": "Winning doji entries were not systematically counted in v1, so evidence_against may be understated. Treat as provisional until paper/backtest tags both sides.",
+      "applied_episodes": [
+        "E0001"
+      ],
+      "strength": 0.7778,
+      "status": "active",
+      "observations": 7
+    },
+    {
+      "id": "L04",
+      "text": "Sideways regime mein 1H setups, cost ke baad, net ghaate mein rahe. Level bounce kaafi nahi jab trend saaf na ho — NO TRADE normal hai.",
+      "condition": "regime=SIDEWAYS",
+      "predicts": "loss",
+      "auto_update": true,
+      "evidence_for": 75,
+      "evidence_against": 28,
+      "sources": [
+        "advanced S1 sideways: 53 trades, 13 wins, net -237.56 USDT, -0.45R, PF 0.50",
+        "advanced S2 sideways: 23 trades, 5 wins, net -126.66, -0.55R, PF 0.43",
+        "advanced S3 sideways: 21 trades, 8 wins, net -30.39, -0.14R, PF 0.80",
+        "v1 sideways: 6 trades, 2 wins, net -14.99"
+      ],
+      "notes": "Combined 103 trades, 28 wins, 75 losses. Mixed strategies on the same 12-month (and 3-month v1) window.",
+      "applied_episodes": [],
+      "strength": 0.7238,
+      "status": "active",
+      "observations": 103
+    },
+    {
+      "id": "L05",
+      "text": "1,000 USDT account par XM ka sabse chhota lot 0.01 hai. Stop lagbhag $1,000 se door ho (1% risk par) to setup le nahi sakte — skip. Ye mechanical limit hai, strategy ka fayda nahi.",
+      "condition": "stop_distance>1000",
+      "predicts": "skip",
+      "auto_update": true,
+      "evidence_for": 316,
+      "evidence_against": 0,
+      "sources": [
+        "advanced Phase 6 risk engine, 1% risk, 0.01 lot step: S1 skipped 155, S2 skipped 46, S3 skipped 115 (plus 47 S1 pauses from the 3-loss rule)"
+      ],
+      "notes": "evidence_for is the count of setups that could not be sized at 1% on 1,000 USDT. Trades that were taken with a legal size are not counted as against.",
+      "applied_episodes": [],
+      "strength": 0.9969,
+      "status": "active",
+      "observations": 316
+    },
+    {
+      "id": "L06",
+      "text": "High-volatility / news window (CPI, NFP, FOMC ke ±2h, ya ATR p90, ya volume 3x) mein 1H strategies cost ke baad ghaate mein rahi.",
+      "condition": "regime=HIGHVOL_NEWS",
+      "predicts": "loss",
+      "auto_update": true,
+      "evidence_for": 115,
+      "evidence_against": 59,
+      "sources": [
+        "advanced S1 HV/News: 53 trades, 16 wins, net -111.90, -0.21R, PF 0.73",
+        "advanced S2 HV/News: 33 trades, 12 wins, net -21.61, -0.07R, PF 0.91",
+        "advanced S3 HV/News: 86 trades, 29 wins, net -172.81, -0.20R, PF 0.74"
+      ],
+      "notes": "172 trades, 57 wins, 115 losses. This regime mixes news, wide ATR, and volume spikes.",
+      "applied_episodes": [
+        "E0003",
+        "E0004"
+      ],
+      "strength": 0.6591,
+      "status": "active",
+      "observations": 174
+    },
+    {
+      "id": "L07",
+      "text": "Jo combination training window mein acchi lage, test window mein aksar fail ho jaati hai. Walk-forward ke bagair rule mat apnao (overfit).",
+      "condition": "",
+      "predicts": "meta",
+      "auto_update": false,
+      "evidence_for": 8,
+      "evidence_against": 1,
+      "sources": [
+        "advanced Phase 4: 3 strategies x 3 windows = 9 test windows; 8 failed. Only S2 window C passed, and that was 6 test trades (+0.23R, PF 1.37)."
+      ],
+      "notes": "Standing process lesson. Not updated from a single paper trade.",
+      "applied_episodes": [],
+      "strength": 0.8182,
+      "status": "active",
+      "observations": 9
+    },
+    {
+      "id": "L08",
+      "text": "Teeno 12-mahine strategies aur v1 3-mahine test, cost ke baad, live pass criteria fail. Chhote paper jeet (jaise 4 trade, +26 USDT, bina XM cost) ko edge mat samjho.",
+      "condition": "",
+      "predicts": "meta",
+      "auto_update": false,
+      "evidence_for": 4,
+      "evidence_against": 0,
+      "sources": [
+        "S1 expectancy -0.18R PF 0.77 DD 62.6%",
+        "S2 expectancy -0.43R PF 0.53 DD 46.7%",
+        "S3 expectancy -0.15R PF 0.79 DD 36.7%",
+        "v1 expectancy -0.33R, 23 trades, DD 11.4%"
+      ],
+      "notes": "4 failed official backtests vs the live pass bar (positive expectancy, PF>=1.3, DD<10%, walk-forward hold). Paper wins are not counted as against because they are a tiny, cost-free sample.",
+      "applied_episodes": [],
+      "strength": 0.8333,
+      "status": "active",
+      "observations": 4
+    }
+  ]
+}

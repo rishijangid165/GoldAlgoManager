@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Copy the latest paper-trade file and alert levels into btc-brain/paper/,
-# then commit and push if anything changed. Touches only btc-brain/.
+# and any updates under btc-brain/brain/, then commit and push if anything changed. Touches only btc-brain/.
 # Reads GOLDALGO_GITHUB_TOKEN from the environment and never echoes it.
 set -euo pipefail
 set +x
@@ -51,10 +51,14 @@ fi
 
 cd "$REPO_ROOT"
 
-# Stage only the synced paper files. Never add anything outside btc-brain/.
+# Stage synced paper files and any brain/ updates. Never add anything outside btc-brain/.
 to_add=()
 [[ -f btc-brain/paper/btc_paper_trades.json ]] && to_add+=("btc-brain/paper/btc_paper_trades.json")
 [[ -f btc-brain/paper/alert_levels.json ]] && to_add+=("btc-brain/paper/alert_levels.json")
+if [[ -d btc-brain/brain ]]; then
+  # Directory add is still scoped to btc-brain/brain/.
+  to_add+=("btc-brain/brain")
+fi
 
 if [[ ${#to_add[@]} -eq 0 ]]; then
   echo "Nothing to stage."
@@ -69,7 +73,7 @@ ist_now() {
 if git diff --cached --quiet; then
   echo "Nothing to commit."
 else
-  git commit -m "sync(btc-brain): paper trades and alert levels $(ist_now)"
+  git commit -m "sync(btc-brain): paper trades, alert levels, and brain $(ist_now)"
 fi
 
 # If HEAD is not ahead of the upstream, do not push.

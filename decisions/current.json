@@ -1,7 +1,7 @@
 {
   "version": 1,
-  "generated_at": "2026-11-19T17:55:40Z",
-  "valid_until": "2026-11-19T23:30:00Z",
+  "generated_at": "2026-11-19T23:48:12Z",
+  "valid_until": "2026-11-20T05:45:00Z",
   "symbol": "XAUUSD",
   "bias": "NONE",
   "entry_zone": {
@@ -15,7 +15,7 @@
   ],
   "confidence": 0,
   "max_risk_pct": 0.25,
-  "rationale": "Stand aside after NY. Today's only edge was the 14Z setup-3 short (paper). Price ~3682, D/4H/1H downtrend below 20/50/200, new 14-mo low 3667.56, 4H RSI 23 oversold. No FOMC; Donchian is long-only (today broke 20d LOW). Asia range locks 08:00Z Fri. No high-impact US news till 25 Nov.",
+  "rationale": "Stand aside in Fri Asia. Weekend-style gap down 3660->3626 at open, flush to 3590.57 on hawkish Fed minutes/Dec hike pricing; D/4H/1H downtrend, 4H RSI 17 extreme. No FOMC; Donchian long-only (20d LOW broke). Asia range locks 08:00Z; no chase/fade. No high-impact US news till 25 Nov.",
   "news_blackout": [],
   "kill_switch": false
 }

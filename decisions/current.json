@@ -1,21 +1,21 @@
 {
   "version": 1,
-  "generated_at": "2026-11-19T12:23:09Z",
+  "generated_at": "2026-11-19T15:25:01Z",
   "valid_until": "2026-11-19T17:00:00Z",
   "symbol": "XAUUSD",
-  "bias": "NONE",
+  "bias": "SELL",
   "entry_zone": {
-    "low": 0.0,
-    "high": 0.0
+    "low": 3694.5,
+    "high": 3705.0
   },
-  "stop_loss": 0.0,
+  "stop_loss": 3745.2,
   "take_profits": [
-    0.0,
-    0.0
+    3618.0,
+    3542.0
   ],
-  "confidence": 0,
-  "max_risk_pct": 0.5,
-  "rationale": "Pre-NY, stand aside. Gold broke London low 3725.3 at 11Z (pre-window), now ~3716, London range so far 3713.91-3742.51 locks 13:00Z. D/4H LH/LL below 50/200 -> shorts only. Probation NY short needs first 1H close below locked London low inside 13-17Z, not >half range beyond. No FOMC/Donchian; Asia skipped (width). Claims 13:30Z medium.",
+  "confidence": 60,
+  "max_risk_pct": 0.25,
+  "rationale": "probation 0.25% - setup 3 NY London-range close-break SHORT: 14Z 1H closed 3708.80 below locked London low 3710.52 (first close-break, 1.7 beyond, < half range 16). D+4H below 50/200. SL 3745.2 = London high 3742.51 + 0.15x1H ATR. Rule entry 15Z open 3708.75 missed; market fill only while >=3694.5 (half-range chase cap), no retrace limit. TP1 3618 (>=1.5R from zone low), TP2 3542 (~3R). Cancel 17Z/12:00 ET. No high-impact news till 25 Nov.",
   "news_blackout": [],
   "kill_switch": false
 }

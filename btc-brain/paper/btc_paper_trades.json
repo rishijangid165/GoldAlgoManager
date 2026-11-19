@@ -1,0 +1,139 @@
+[
+ {
+  "id": 1,
+  "side": "long",
+  "entry": 64273.8,
+  "stop": 64273.8,
+  "tp1": 64900,
+  "tp2": 65500,
+  "qty_btc": 0.017,
+  "contracts": 17,
+  "opened": "2026-11-17 15:41 IST",
+  "status": "closed",
+  "note": "Paper trade, 1000 USDT account, ~1% risk. At TP1 close half, move stop to entry.",
+  "original_stop": 63700,
+  "qty_open_btc": 0,
+  "exits": [
+   {
+    "type": "TP1",
+    "price": 64900,
+    "qty_btc": 0.0085,
+    "time": "2026-11-17 ~17:00 IST (1h candle 16:30-17:30 IST, high 64,986)",
+    "pnl_usdt": 5.32
+   },
+   {
+    "type": "STOP (breakeven)",
+    "price": 64273.8,
+    "qty_btc": 0.0085,
+    "time": "2026-11-17 ~21:00 IST (1h candle 20:30-21:30 IST, low 63,973)",
+    "pnl_usdt": 0.0
+   }
+  ],
+  "realized_pnl_usdt": 5.32,
+  "closed": "2026-11-17 ~21:00 IST"
+ },
+ {
+  "id": 2,
+  "side": "long",
+  "entry": 64309.3,
+  "stop": 64309.3,
+  "original_stop": 63850,
+  "tp1": 64900,
+  "tp2": 65500,
+  "qty_btc": 0.022,
+  "qty_open_btc": 0,
+  "contracts": 22,
+  "opened": "2026-11-18 03:30 IST",
+  "opened_candle_utc": "2026-11-17T22:00Z",
+  "status": "closed",
+  "exits": [
+   {
+    "type": "TP1",
+    "price": 64900,
+    "qty_btc": 0.011,
+    "time": "2026-11-18 ~04:40 IST (1h candle 04:30-05:30 IST, high 65,243)",
+    "pnl_usdt": 6.5
+   },
+   {
+    "type": "STOP (breakeven)",
+    "price": 64309.3,
+    "qty_btc": 0.011,
+    "time": "2026-11-18 ~07:20 IST (1h candle 06:30-07:30 IST, low 64,264)",
+    "pnl_usdt": 0.0
+   }
+  ],
+  "realized_pnl_usdt": 6.5,
+  "note": "Paper trade on confirmed 1h close >64100 breakout. ~1% risk. At TP1 close half, move stop to entry.",
+  "closed": "2026-11-18 ~07:20 IST"
+ },
+ {
+  "id": 3,
+  "side": "short",
+  "entry": 63625.0,
+  "stop": 63625.0,
+  "original_stop": 64150,
+  "tp1": 62800,
+  "tp2": 62000,
+  "qty_btc": 0.019,
+  "qty_open_btc": 0,
+  "contracts": 19,
+  "opened": "2026-11-18 20:42 IST",
+  "opened_candle_utc": "2026-11-18T15:00Z",
+  "status": "closed",
+  "exits": [
+   {
+    "type": "TP1",
+    "price": 62800,
+    "qty_btc": 0.0095,
+    "time": "2026-11-18 ~21:45 IST (1h candle 21:30-22:30 IST, low 62,286)",
+    "pnl_usdt": 7.84
+   },
+   {
+    "type": "STOP (breakeven)",
+    "price": 63625.0,
+    "qty_btc": 0.0095,
+    "time": "2026-11-19 ~10:20 IST (1h candle 09:30-10:30 IST, high 63,732)",
+    "pnl_usdt": 0.0
+   }
+  ],
+  "realized_pnl_usdt": 7.84,
+  "note": "Paper short on confirmed 1h close <63,700 (14:00 UTC close 63,640) + retest. ~1% risk. At TP1 close half, move stop to entry.",
+  "closed": "2026-11-19 ~10:20 IST"
+ },
+ {
+  "id": 4,
+  "side": "short",
+  "entry": 63300.0,
+  "stop": 63300.0,
+  "original_stop": 63900.0,
+  "tp1": 62500,
+  "tp2": 62000,
+  "qty_btc": 0.017,
+  "qty_open_btc": 0,
+  "opened": "2026-11-19 ~21:45 IST",
+  "opened_candle_ist": "2026-11-19 21:30 IST (H 63,347)",
+  "status": "closed",
+  "exits": [
+   {
+    "type": "TP1",
+    "price": 62500,
+    "qty_btc": 0.0085,
+    "time": "2026-11-19 ~22:40 IST (1h candle 22:30-23:30 IST, low 62,280.5)",
+    "pnl_usdt": 6.8
+   },
+   {
+    "type": "STOP (breakeven)",
+    "price": 63300.0,
+    "qty_btc": 0.0085,
+    "time": "2026-11-19 ~23:00 IST (5m candle 23:00 IST high 63,392.5)",
+    "pnl_usdt": 0.0
+   }
+  ],
+  "realized_pnl_usdt": 6.8,
+  "note": "Planned bounce-and-sell from 21:18 IST alert filled at 63,300 (zone 63,300-63,500), rejected back to ~63,100. ~1% risk. At TP1 close half, move stop to entry.",
+  "closed": "2026-11-19 ~23:00 IST",
+  "result": "win",
+  "r_multiple": 0.67,
+  "reason": "Bounce-and-sell at 63,300-63,500 resistance zone, TP1 62,500 hit, rest stopped at entry on bounce to 63,392"
+ }
+]

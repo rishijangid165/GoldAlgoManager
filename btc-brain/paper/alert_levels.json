@@ -1,0 +1,18 @@
+{
+  "levels": {
+    "support": [
+      63000,
+      62000,
+      60000,
+      58000
+    ],
+    "resistance": [
+      63700,
+      64100,
+      65500,
+      66800
+    ],
+    "note": "Long zone 63,900-64,100 obsolete as of 20:15 IST 18 Nov; now resistance."
+  },
+  "last_check": "2026-11-19 23:10 IST: BTC ~63,025. Paper #4 closed BE on 2nd half. No new closed 1H candle since 22:41 check; no new setup. Total paper P&L +26.46."
+}

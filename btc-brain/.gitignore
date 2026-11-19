@@ -1,0 +1,9 @@
+# Scoped to this folder (btc-brain/). Do not put secrets in this repo — it is PUBLIC.
+.env
+*.env
+*token*
+*secret*
+.btc_tg_chat
+__pycache__/
+*.py[cod]
+.DS_Store

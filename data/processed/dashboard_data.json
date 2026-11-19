@@ -1,6 +1,6 @@
 {
-  "generated_at_ist": "2026-11-19 11:47:03 IST",
-  "generated_at_utc": "2026-11-19T06:17:03Z",
+  "generated_at_ist": "2026-11-19 13:48:59 IST",
+  "generated_at_utc": "2026-11-19T08:18:59Z",
   "timezone_label": "IST (Asia/Kolkata)",
   "account": {
     "server": "MetaQuotes-Demo",
@@ -22,11 +22,11 @@
     "first_ea_start_equity": 99999.95,
     "first_ea_start_equity_at_ist": "2026-11-13 01:06:20 IST",
     "last_terminal_sync_positions": 0,
-    "last_terminal_sync_ist": "2026-11-19 11:47:04 IST"
+    "last_terminal_sync_ist": "2026-11-19 13:48:59 IST"
   },
   "live_account": {
     "state": "live",
-    "pulled_at_ist": "2026-11-19 11:47:04 IST",
+    "pulled_at_ist": "2026-11-19 13:48:59 IST",
     "balance": 99673.93,
     "equity": 99673.93,
     "open_profit": 0.0,
@@ -468,10 +468,10 @@
       "backfill_closed": 9,
       "live_closed": 1
     },
-    "generated_utc": "2026-11-19T06:17Z",
-    "generated_ist": "2026-11-19 11:47 IST",
+    "generated_utc": "2026-11-19T08:18Z",
+    "generated_ist": "2026-11-19 13:48 IST",
     "data_source": "mt5_broker_live",
-    "last_completed_bar_ist": "2026-11-19 10:30 IST",
+    "last_completed_bar_ist": "2026-11-19 12:30 IST",
     "backfill_start_ist": "2026-10-16 09:30 IST",
     "live_start_ist": "2026-11-14 05:30 IST",
     "pending_signals": {},
@@ -486,7 +486,7 @@
       "equity": 99673.93,
       "margin": 0.0,
       "profit": 0.0,
-      "pulled_at_utc": "2026-11-19T06:17:02.984453+00:00"
+      "pulled_at_utc": "2026-11-19T08:18:54.726420+00:00"
     },
     "trades": [
       {
@@ -755,15 +755,15 @@
     "tp2": 0.0,
     "confidence": 0,
     "max_risk_pct": 0.5,
-    "generated_at_ist": "2026-11-19 11:46:47 IST",
-    "valid_until_ist": "2026-11-19 15:30 IST",
-    "valid_until_utc": "2026-11-19T10:00:00Z",
+    "generated_at_ist": "2026-11-19 13:48:22 IST",
+    "valid_until_ist": "2026-11-19 18:30 IST",
+    "valid_until_utc": "2026-11-19T13:00:00Z",
     "expired": false,
     "kill_switch": false,
     "in_news_blackout": false,
     "news_blackout": [],
     "next_blackout": null,
-    "rationale": "Late Asia, stand aside. Rebound from new low 3693.38 to ~3738 (dip-buying, oversold 4H RSI 29) but D/4H/1H still LH/LL below EMA20 3947/3808/3749. No FOMC setup, no Donchian (long-only, 20d high 4148.5). Asia range 3693.38-3758.54 (65 wide) locks 08:00Z: only a clean with-4H downside break counts (probation 0.25%). Mid-range now, no edge.",
+    "rationale": "London open, stand aside. Asia range 3693.38-3758.54 locked 08:00Z is 65 wide > 3x 1H ATR (60): Asia breakout skipped today (playbook sec 3). D/4H LH/LL below EMA20 3947/3808, ~3738 mid-range, 4H RSI 29. No FOMC/Donchian (long-only, 20d high 4148.5). Next: probation NY close-break of London range 13-17Z, shorts only with D+4H.",
     "status": "flat",
     "source": "/workspace/gold-algo/decisions/current.json"
   },
@@ -772,7 +772,7 @@
   "ea": {
     "name": "GoldAIBridge",
     "chart": "XAUUSD M15",
-    "last_decision_read_ist": "2026-11-19 08:58:53 IST",
+    "last_decision_read_ist": "2026-11-19 13:46:36 IST",
     "last_decision_bias": "NONE"
   },
   "trades": [
@@ -853,10 +853,10 @@
       "sort": "2026-11-13T07:41:28+02:00"
     },
     {
-      "t": "2026-11-19 11:47 IST",
+      "t": "2026-11-19 13:48 IST",
       "label": "Last known balance",
       "equity": 100046.1,
-      "sort": "2026-11-19T11:47:03.918003+05:30"
+      "sort": "2026-11-19T13:48:59.077793+05:30"
     }
   ],
   "stats": {
@@ -973,7 +973,7 @@
     }
   ],
   "notes": [
-    "Balance and equity are live from MT5 (pulled 2026-11-19 11:47:04 IST).",
+    "Balance and equity are live from MT5 (pulled 2026-11-19 13:48:59 IST).",
     "All live money figures come from MT5 result files, the EA journal, and MQL5 logs. No live broker quote is shown unless a file has a fresh one.",
     "Today's P&L vs the $100,046.10 start-of-day reference is $0.00 because both closed demo trades settled before that reference was recorded. Their combined P&L is +46.15 (including swap), which is already inside the current balance."
   ],

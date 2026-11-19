@@ -1,21 +1,21 @@
 {
   "version": 1,
-  "generated_at": "2026-11-19T15:25:01Z",
+  "generated_at": "2026-11-19T15:32:36Z",
   "valid_until": "2026-11-19T17:00:00Z",
   "symbol": "XAUUSD",
-  "bias": "SELL",
+  "bias": "NONE",
   "entry_zone": {
-    "low": 3694.5,
-    "high": 3705.0
+    "low": 0.0,
+    "high": 0.0
   },
-  "stop_loss": 3745.2,
+  "stop_loss": 0.0,
   "take_profits": [
-    3618.0,
-    3542.0
+    0.0,
+    0.0
   ],
-  "confidence": 60,
+  "confidence": 0,
   "max_risk_pct": 0.25,
-  "rationale": "probation 0.25% - setup 3 NY London-range close-break SHORT: 14Z 1H closed 3708.80 below locked London low 3710.52 (first close-break, 1.7 beyond, < half range 16). D+4H below 50/200. SL 3745.2 = London high 3742.51 + 0.15x1H ATR. Rule entry 15Z open 3708.75 missed; market fill only while >=3694.5 (half-range chase cap), no retrace limit. TP1 3618 (>=1.5R from zone low), TP2 3542 (~3R). Cancel 17Z/12:00 ET. No high-impact news till 25 Nov.",
+  "rationale": "Stand aside. Setup 3 (probation) triggered: 14Z 1H closed 3708.80 below locked London low 3710.52, D+4H down. Rule entry = 15Z open 3708.75, missed (run 15:25Z); 15:25Z SELL zone 3694.5-3705 published but price ran to ~3688, past half-range chase cap 3694.5 before EA fill -> no chase, no retest/limit entry. Second close-break of same range invalid. Paper book tracks it. Window ends 17Z. Next: Asia range; no high-impact news till 25 Nov.",
   "news_blackout": [],
   "kill_switch": false
 }

@@ -1,7 +1,7 @@
 {
   "version": 1,
-  "generated_at": "2026-11-19T08:18:22Z",
-  "valid_until": "2026-11-19T13:00:00Z",
+  "generated_at": "2026-11-19T12:23:09Z",
+  "valid_until": "2026-11-19T17:00:00Z",
   "symbol": "XAUUSD",
   "bias": "NONE",
   "entry_zone": {
@@ -15,7 +15,7 @@
   ],
   "confidence": 0,
   "max_risk_pct": 0.5,
-  "rationale": "London open, stand aside. Asia range 3693.38-3758.54 locked 08:00Z is 65 wide > 3x 1H ATR (60): Asia breakout skipped today (playbook sec 3). D/4H LH/LL below EMA20 3947/3808, ~3738 mid-range, 4H RSI 29. No FOMC/Donchian (long-only, 20d high 4148.5). Next: probation NY close-break of London range 13-17Z, shorts only with D+4H.",
+  "rationale": "Pre-NY, stand aside. Gold broke London low 3725.3 at 11Z (pre-window), now ~3716, London range so far 3713.91-3742.51 locks 13:00Z. D/4H LH/LL below 50/200 -> shorts only. Probation NY short needs first 1H close below locked London low inside 13-17Z, not >half range beyond. No FOMC/Donchian; Asia skipped (width). Claims 13:30Z medium.",
   "news_blackout": [],
   "kill_switch": false
 }

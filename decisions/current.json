@@ -1,7 +1,7 @@
 {
   "version": 1,
-  "generated_at": "2026-11-19T06:16:47Z",
-  "valid_until": "2026-11-19T10:00:00Z",
+  "generated_at": "2026-11-19T08:18:22Z",
+  "valid_until": "2026-11-19T13:00:00Z",
   "symbol": "XAUUSD",
   "bias": "NONE",
   "entry_zone": {
@@ -15,7 +15,7 @@
   ],
   "confidence": 0,
   "max_risk_pct": 0.5,
-  "rationale": "Late Asia, stand aside. Rebound from new low 3693.38 to ~3738 (dip-buying, oversold 4H RSI 29) but D/4H/1H still LH/LL below EMA20 3947/3808/3749. No FOMC setup, no Donchian (long-only, 20d high 4148.5). Asia range 3693.38-3758.54 (65 wide) locks 08:00Z: only a clean with-4H downside break counts (probation 0.25%). Mid-range now, no edge.",
+  "rationale": "London open, stand aside. Asia range 3693.38-3758.54 locked 08:00Z is 65 wide > 3x 1H ATR (60): Asia breakout skipped today (playbook sec 3). D/4H LH/LL below EMA20 3947/3808, ~3738 mid-range, 4H RSI 29. No FOMC/Donchian (long-only, 20d high 4148.5). Next: probation NY close-break of London range 13-17Z, shorts only with D+4H.",
   "news_blackout": [],
   "kill_switch": false
 }

@@ -1,7 +1,7 @@
 {
   "version": 1,
-  "generated_at": "2026-11-19T03:25:03Z",
-  "valid_until": "2026-11-19T08:00:00Z",
+  "generated_at": "2026-11-19T06:16:47Z",
+  "valid_until": "2026-11-19T10:00:00Z",
   "symbol": "XAUUSD",
   "bias": "NONE",
   "entry_zone": {
@@ -15,7 +15,7 @@
   ],
   "confidence": 0,
   "max_risk_pct": 0.5,
-  "rationale": "Asia, stand aside. Asia leg flushed to new low 3693.38 (below 3700 and yesterday's 3714.5), ~3709. D/4H/1H LH/LL far below EMA20 3944/3813/3753; 4H RSI 26 oversold. No FOMC setup, no Donchian (long-only, 20d high 4148.5). Asia range 3693.38-3758.54 so far, locks 08:00Z: only a clean with-4H downside break counts (probation 0.25%). Not chasing the flush.",
+  "rationale": "Late Asia, stand aside. Rebound from new low 3693.38 to ~3738 (dip-buying, oversold 4H RSI 29) but D/4H/1H still LH/LL below EMA20 3947/3808/3749. No FOMC setup, no Donchian (long-only, 20d high 4148.5). Asia range 3693.38-3758.54 (65 wide) locks 08:00Z: only a clean with-4H downside break counts (probation 0.25%). Mid-range now, no edge.",
   "news_blackout": [],
   "kill_switch": false
 }

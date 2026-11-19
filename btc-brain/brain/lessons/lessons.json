@@ -1,5 +1,5 @@
 {
-  "updated_ist": "2026-11-19 23:40 IST",
+  "updated_ist": "2026-11-19 23:53 IST",
   "strength_rule": "Laplace (for+1)/(for+against+2). obs<3 => weak/untested; obs>=5 and strength<0.4 => forgotten; else active if strength>=0.4 else weak. Lessons never become trading rules automatically.",
   "lessons": [
     {
@@ -153,6 +153,33 @@
       "strength": 0.8333,
       "status": "active",
       "observations": 4
+    },
+    {
+      "id": "L09",
+      "text": "Bahut dar (Fear & Greed 20 ya 10 se neeche) mein automatic BUY ek mazboot edge nahi hai. 30 din ka average normal din jaisa, 90 din par normal din se kam. 2018–2022 ki best threshold (≤10) 2023 ke baad 30d hold par fail hui. Bear mein dar ke baad 90d par average loss. XM par 30–90 din ka long swap se ghaate mein. Fear-weighted spot DCA thoda behtar, buy-and-hold nahi. Auto-rule nahi.",
+      "condition": "",
+      "predicts": "meta",
+      "auto_update": false,
+      "evidence_for": 6,
+      "evidence_against": 2,
+      "applied_episodes": [],
+      "sources": [
+        "research/fear/report.md and numbers.json, Binance BTCUSDT 1d + Alternative.me F&G, 2018-02-01 to 2026-11-18, enter next close",
+        "FAIL 90d non-overlap F&G<=20: n=18, mean -1.81% vs all-day baseline +14.01%, 50% up, worst -53%",
+        "FAIL 30d non-overlap F&G<=20: n=39, mean +3.54% vs baseline +3.79%",
+        "FAIL walk-forward: threshold 10 chosen on 2018-2022 (30d excess +8.83%, 9 trades); 2023-now 30d: 5 trades, expectancy -1.26%, PF 0.43, excess -4.88%",
+        "FAIL hold 90d spot F&G<=20: 18 trades, 8 wins / 10 losses, expectancy -2.28%, PF 0.76, total return -62%",
+        "FAIL confirm 90d spot: 26 trades, 8 wins / 18 losses, expectancy -0.91%, PF 0.90, total return -51%",
+        "FAIL XM 30d and 90d holds (and 0.01 lot on $1000: 38x30d, -$282, end $718) — overnight swap makes long holds unviable",
+        "AGAINST (partial support): 30d spot hold F&G<=20 was net profitable, 38 trades, 21 wins / 17 losses, expectancy +3.30%, PF 1.75, total +117% (but far below buy-and-hold +582%)",
+        "AGAINST (partial support): fear-weighted weekly DCA +310% vs plain weekly DCA +285% (same total cash; still below buy-and-hold)",
+        "Bear 2018+2022, 30d non-overlap n=17 mean +4.1% vs baseline -5.3% (better than other bear days) but 90d n=8 mean -12.7%",
+        "110 independent F&G<=20 episodes; 41 with F&G<=10"
+      ],
+      "notes": "Meta lesson, no auto-update from a single paper trade. Standing warning only. Current episode (from 2026-11-13, F&G 10 on 2026-11-19, 7 days <=20) has no forward outcome yet.",
+      "strength": 0.7,
+      "status": "active",
+      "observations": 8
     }
   ]
 }

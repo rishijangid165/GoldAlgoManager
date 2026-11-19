@@ -1,7 +1,7 @@
 {
   "version": 1,
-  "generated_at": "2026-11-19T16:06:46Z",
-  "valid_until": "2026-11-19T18:00:00Z",
+  "generated_at": "2026-11-19T17:55:40Z",
+  "valid_until": "2026-11-19T23:30:00Z",
   "symbol": "XAUUSD",
   "bias": "NONE",
   "entry_zone": {
@@ -15,7 +15,7 @@
   ],
   "confidence": 0,
   "max_risk_pct": 0.25,
-  "rationale": "Stand aside. Today's setup 3 short (14Z close 3708.80 < London low 3710.52) already fired and ran: 15Z 1H closed 3672.71, price ~3675, far past half-range chase cap 3694.5. Second close-break of same range invalid; no retest entry. NY window ends 17Z. Paper book tracks the short. Next: Asia range; no high-impact US news till 25 Nov.",
+  "rationale": "Stand aside after NY. Today's only edge was the 14Z setup-3 short (paper). Price ~3682, D/4H/1H downtrend below 20/50/200, new 14-mo low 3667.56, 4H RSI 23 oversold. No FOMC; Donchian is long-only (today broke 20d LOW). Asia range locks 08:00Z Fri. No high-impact US news till 25 Nov.",
   "news_blackout": [],
   "kill_switch": false
 }

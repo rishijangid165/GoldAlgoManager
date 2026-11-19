@@ -2,7 +2,7 @@
 
 **Type:** Owner-requested demo trade (not a high-bar researched signal). Rishi asked to take a demo fill now ("Le lo wese hi bs") after being told the rejection setup was not confirmed.
 
-**Account:** MetaQuotes-Demo login <demo-login> (demo, hedge). Demo-only; no real account.
+**Account:** MetaQuotes-Demo login 115497724 (demo, hedge). Demo-only; no real account.
 
 ## Earlier ticket 11377847166 (12 Nov test SELL)
 

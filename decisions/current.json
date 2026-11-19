@@ -1,7 +1,7 @@
 {
   "version": 1,
-  "generated_at": "2026-11-18T21:23:35Z",
-  "valid_until": "2026-11-19T03:00:00Z",
+  "generated_at": "2026-11-19T00:19:23Z",
+  "valid_until": "2026-11-19T06:00:00Z",
   "symbol": "XAUUSD",
   "bias": "NONE",
   "entry_zone": {
@@ -15,7 +15,7 @@
   ],
   "confidence": 0,
   "max_risk_pct": 0.5,
-  "rationale": "Post-Minutes, stand aside. Hawkish FOMC Minutes (almost all see further hikes) extended the 4th down day: new low 3719.88 (19:30Z), close ~3724.9 (-121). D/4H/1H LH/LL far below EMA20 3969/3831/3768; 4H RSI 22 deeply oversold. Minutes != rate decision -> no FOMC setup. No Donchian (long-only, 20d high 4148.5). NY probation window passed with no London close-break. Shorting the low = chasing. Next: Asia range locks 08:00Z (with-4H downside break only if clean, probation 0.25%).",
+  "rationale": "Asia, stand aside. Asia open gapped to new low 3714.49 (swept equal lows 3719.9) then squeezed to 3744.83, now ~3740. D/4H LH/LL far below EMA20 3947/3823; 4H RSI 27 oversold, 1H 36. No FOMC setup, no Donchian (long-only, 20d high 4148.5). Asia range forming (3714.49-3744.83 so far), locks 08:00Z: with-4H downside break only if clean (probation 0.25%). Next: London/NY structure.",
   "news_blackout": [],
   "kill_switch": false
 }

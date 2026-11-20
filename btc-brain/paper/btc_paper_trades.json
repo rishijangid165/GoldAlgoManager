@@ -135,5 +135,41 @@
   "result": "win",
   "r_multiple": 0.67,
   "reason": "Bounce-and-sell at 63,300-63,500 resistance zone, TP1 62,500 hit, rest stopped at entry on bounce to 63,392"
+ },
+ {
+  "id": 5,
+  "venue": "xm_demo",
+  "tickets": [
+   2381072309
+  ],
+  "status": "closed",
+  "side": "sell",
+  "grade": "manual (Rishi ne bola)",
+  "open_time_ist": "2026-11-19 19:58 IST",
+  "entry": 62334.45,
+  "stop": 63360,
+  "tp1": 59260,
+  "lot": 0.01,
+  "risk_usd": 10.26,
+  "thesis": "4H trend neeche, price 62.3k support ke paas toot raha",
+  "invalidation": 63360,
+  "rules_followed": "no - Rishi ka manual order, A/A+ setup nahi tha",
+  "exit_time_ist": "2026-11-20 05:12-05:41 IST (approx; detected 05:42)",
+  "exit_price": 61981,
+  "exit_price_note": "approx, derived from XM balance change 105033.98->105037.32; not via bridge, XM history tab did not list the deal",
+  "exits": [
+   {
+    "price": 61981,
+    "lot": 0.01,
+    "reason": "closed outside bridge (likely manual), not SL/TP"
+   }
+  ],
+  "result": "win (small)",
+  "pnl_usd": 3.34,
+  "swap_usd": -0.19,
+  "r_multiple": 0.33,
+  "kya_sahi": "4H trend neeche ke saath short tha, price 62.3k se neeche gaya",
+  "kya_galat": "A/A+ setup nahi tha, manual entry; target se pehle band, exit data approx",
+  "emotion_risk": "manual order bina checklist ke - FOMO/impulse ka risk"
  }
 ]

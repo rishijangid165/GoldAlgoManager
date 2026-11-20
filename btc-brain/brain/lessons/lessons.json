@@ -1,5 +1,5 @@
 {
-  "updated_ist": "2026-11-19 23:53 IST",
+  "updated_ist": "2026-11-20 05:42 IST",
   "strength_rule": "Laplace (for+1)/(for+against+2). obs<3 => weak/untested; obs>=5 and strength<0.4 => forgotten; else active if strength>=0.4 else weak. Lessons never become trading rules automatically.",
   "lessons": [
     {
@@ -84,16 +84,18 @@
       "condition": "stop_distance>1000",
       "predicts": "skip",
       "auto_update": true,
-      "evidence_for": 316,
+      "evidence_for": 317,
       "evidence_against": 0,
       "sources": [
         "advanced Phase 6 risk engine, 1% risk, 0.01 lot step: S1 skipped 155, S2 skipped 46, S3 skipped 115 (plus 47 S1 pauses from the 3-loss rule)"
       ],
       "notes": "evidence_for is the count of setups that could not be sized at 1% on 1,000 USDT. Trades that were taken with a legal size are not counted as against.",
-      "applied_episodes": [],
+      "applied_episodes": [
+        "E0005"
+      ],
       "strength": 0.9969,
       "status": "active",
-      "observations": 316
+      "observations": 317
     },
     {
       "id": "L06",

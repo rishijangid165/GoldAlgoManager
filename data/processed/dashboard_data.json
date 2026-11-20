@@ -1,6 +1,6 @@
 {
-  "generated_at_ist": "2026-11-20 08:27:20 IST",
-  "generated_at_utc": "2026-11-20T02:57:20Z",
+  "generated_at_ist": "2026-11-20 11:26:30 IST",
+  "generated_at_utc": "2026-11-20T05:56:30Z",
   "timezone_label": "IST (Asia/Kolkata)",
   "account": {
     "server": "MetaQuotes-Demo",
@@ -22,11 +22,11 @@
     "first_ea_start_equity": 99977.46,
     "first_ea_start_equity_at_ist": "2026-11-13 05:50:05 IST",
     "last_terminal_sync_positions": 0,
-    "last_terminal_sync_ist": "2026-11-20 08:27:21 IST"
+    "last_terminal_sync_ist": "2026-11-20 11:26:31 IST"
   },
   "live_account": {
     "state": "live",
-    "pulled_at_ist": "2026-11-20 08:27:21 IST",
+    "pulled_at_ist": "2026-11-20 11:26:31 IST",
     "balance": 99673.93,
     "equity": 99673.93,
     "open_profit": 0.0,
@@ -478,17 +478,15 @@
       "backfill_closed": 9,
       "live_closed": 2
     },
-    "generated_utc": "2026-11-20T02:57Z",
-    "generated_ist": "2026-11-20 08:27 IST",
+    "generated_utc": "2026-11-20T05:56Z",
+    "generated_ist": "2026-11-20 11:26 IST",
     "data_source": "mt5_broker_live",
-    "last_completed_bar_ist": "2026-11-20 06:30 IST",
+    "last_completed_bar_ist": "2026-11-20 09:30 IST",
     "backfill_start_ist": "2026-10-16 09:30 IST",
     "live_start_ist": "2026-11-14 05:30 IST",
     "pending_signals": {},
     "new_rows_this_run": [],
-    "closed_this_run": [
-      "ny_lon_brk_d4h|2026-11-19T15:00Z|SELL"
-    ],
+    "closed_this_run": [],
     "note": "Paper only. Each setup is its own one-trade book, so books can overlap (live trading allows one trade total). Rows with mode=backfill were reconstructed from broker history on 2026-11-14, not logged in real time.",
     "mt5_account": {
       "server": "MetaQuotes-Demo",
@@ -498,7 +496,7 @@
       "equity": 99673.93,
       "margin": 0.0,
       "profit": 0.0,
-      "pulled_at_utc": "2026-11-20T02:57:18.694164+00:00"
+      "pulled_at_utc": "2026-11-20T05:55:59.553207+00:00"
     },
     "trades": [
       {
@@ -809,7 +807,7 @@
   "ea": {
     "name": "GoldAIBridge",
     "chart": "XAUUSD M15",
-    "last_decision_read_ist": "2026-11-20 08:25:42 IST",
+    "last_decision_read_ist": "2026-11-20 08:47:50 IST",
     "last_decision_bias": "NONE"
   },
   "trades": [
@@ -890,10 +888,10 @@
       "sort": "2026-11-13T07:41:28+02:00"
     },
     {
-      "t": "2026-11-20 08:27 IST",
+      "t": "2026-11-20 11:26 IST",
       "label": "Last known balance",
       "equity": 100046.1,
-      "sort": "2026-11-20T08:27:20.441375+05:30"
+      "sort": "2026-11-20T11:26:30.536112+05:30"
     }
   ],
   "stats": {
@@ -1010,7 +1008,7 @@
     }
   ],
   "notes": [
-    "Balance and equity are live from MT5 (pulled 2026-11-20 08:27:21 IST).",
+    "Balance and equity are live from MT5 (pulled 2026-11-20 11:26:31 IST).",
     "All live money figures come from MT5 result files, the EA journal, and MQL5 logs. No live broker quote is shown unless a file has a fresh one.",
     "Today's P&L vs the $100,046.10 start-of-day reference is $0.00 because both closed demo trades settled before that reference was recorded. Their combined P&L is +46.15 (including swap), which is already inside the current balance."
   ],

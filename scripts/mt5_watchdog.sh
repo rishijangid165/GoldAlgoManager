@@ -18,7 +18,13 @@ gold_running() {
 }
 while true; do
   if ! gold_running; then
-    echo "$(date -u +%FT%TZ) terminal missing -> restart" >> "$LOG"
+    # 2026-11-20: session Xvfb displays (:2/:3) come and go; pick a live X display or the restart fails with nodrv_CreateWindow.
+    D=""
+    for cand in 3 4 1 2; do
+      if [ -S /tmp/.X11-unix/X$cand ] && pgrep -f "^Xvfb :$cand " >/dev/null; then D=":$cand"; break; fi
+    done
+    [ -n "$D" ] && export DISPLAY="$D"
+    echo "$(date -u +%FT%TZ) terminal missing -> restart on DISPLAY=$DISPLAY" >> "$LOG"
     (cd /home/box/.wine-mt5/drive_c/MT5 && nohup wine terminal64.exe /portable /config:gold_ea_telegram.ini /skipupdate >/tmp/mt5_restart.log 2>&1 &)
     sleep 120
   fi

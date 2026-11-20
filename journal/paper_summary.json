@@ -3,13 +3,13 @@
     "ny_lon_brk_d4h": {
       "label": "NY London-range break (D+4H)",
       "all": {
-        "closed": 6,
-        "open": 1,
-        "wins": 3,
-        "win_rate_pct": 50.0,
-        "avg_r": 0.265,
-        "total_r": 1.587,
-        "profit_factor": 1.52
+        "closed": 7,
+        "open": 0,
+        "wins": 4,
+        "win_rate_pct": 57.1,
+        "avg_r": 0.605,
+        "total_r": 4.235,
+        "profit_factor": 2.4
       },
       "backfill": {
         "closed": 5,
@@ -21,13 +21,13 @@
         "profit_factor": 2.28
       },
       "live": {
-        "closed": 1,
-        "open": 1,
-        "wins": 0,
-        "win_rate_pct": 0.0,
-        "avg_r": -1.006,
-        "total_r": -1.006,
-        "profit_factor": 0.0
+        "closed": 2,
+        "open": 0,
+        "wins": 1,
+        "win_rate_pct": 50.0,
+        "avg_r": 0.821,
+        "total_r": 1.642,
+        "profit_factor": 2.63
       }
     },
     "fomc_cont": {
@@ -181,6 +181,12 @@
       "setup": "ny_lon_brk_d4h",
       "mode": "live",
       "cum_r": -2.435
+    },
+    {
+      "t": "2026-11-20 04:30 IST",
+      "setup": "ny_lon_brk_d4h",
+      "mode": "live",
+      "cum_r": 0.213
     }
   ],
   "equity_curve_usd": [
@@ -223,27 +229,33 @@
     {
       "t": "2026-11-17 20:30 IST",
       "equity": 98770.9
+    },
+    {
+      "t": "2026-11-20 04:30 IST",
+      "equity": 100078.62
     }
   ],
   "total": {
-    "closed": 10,
-    "open": 1,
-    "wins": 3,
-    "win_rate_pct": 30.0,
-    "avg_r": -0.243,
-    "total_r": -2.435,
+    "closed": 11,
+    "open": 0,
+    "wins": 4,
+    "win_rate_pct": 36.4,
+    "avg_r": 0.019,
+    "total_r": 0.213,
     "backfill_closed": 9,
-    "live_closed": 1
+    "live_closed": 2
   },
-  "generated_utc": "2026-11-19T23:48Z",
-  "generated_ist": "2026-11-20 05:18 IST",
+  "generated_utc": "2026-11-20T02:57Z",
+  "generated_ist": "2026-11-20 08:27 IST",
   "data_source": "mt5_broker_live",
-  "last_completed_bar_ist": "2026-11-20 01:30 IST",
+  "last_completed_bar_ist": "2026-11-20 06:30 IST",
   "backfill_start_ist": "2026-10-16 09:30 IST",
   "live_start_ist": "2026-11-14 05:30 IST",
   "pending_signals": {},
   "new_rows_this_run": [],
-  "closed_this_run": [],
+  "closed_this_run": [
+    "ny_lon_brk_d4h|2026-11-19T15:00Z|SELL"
+  ],
   "note": "Paper only. Each setup is its own one-trade book, so books can overlap (live trading allows one trade total). Rows with mode=backfill were reconstructed from broker history on 2026-11-14, not logged in real time.",
   "mt5_account": {
     "server": "MetaQuotes-Demo",
@@ -253,6 +265,6 @@
     "equity": 99673.93,
     "margin": 0.0,
     "profit": 0.0,
-    "pulled_at_utc": "2026-11-19T23:48:33.012792+00:00"
+    "pulled_at_utc": "2026-11-20T02:57:18.694164+00:00"
   }
 }

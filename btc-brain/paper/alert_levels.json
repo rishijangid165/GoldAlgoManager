@@ -1,18 +1,18 @@
 {
   "levels": {
     "support": [
-      63000,
-      62000,
       60000,
-      58000
+      59373,
+      58640,
+      57355,
+      55129
     ],
     "resistance": [
-      63700,
-      64100,
-      65500,
-      66800
+      60950,
+      62000,
+      63000
     ],
-    "note": "Long zone 63,900-64,100 obsolete as of 20:15 IST 18 Nov; now resistance."
+    "note": "21 Nov 19:50 IST: price closed above 59,373 and 60,000 pivots on 1H; those now support-side. Today high 60,950 = nearest resistance (watch for SELL rejection there, 4H still down)."
   },
-  "last_check": "2026-11-20 07:50 IST: no open XM demo position. Delta data fresh: last closed 1H 06:30 IST red O 62,118 H 62,611 L 61,256 C 61,552, vol 0.92x; 4H DOWN (61,959 < EMA50 66,279). Nearest unbroken pivot high 64,056 not touched, vol <1.2x -> no trigger. No message."
+  "last_check": "2026-11-21 23:16 IST: no new closed 1H since 21:30 IST bar (22:30 bar running). 4H DOWN, no resistance touch -> no trade, no message."
 }

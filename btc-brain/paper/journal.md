@@ -1,8 +1,8 @@
 # Paper trade journal
 
-Account assumed for sizing: **1,000 USDT notional** (paper only, no real money). These four trades were taken under earlier, looser rules, before the advanced tests failed and before the Stage 2 A+ / 3×-reward filters. Estimated XM costs were **not** deducted in this log. All four are closed. No trade is open.
+Account assumed for sizing: **1,000 USDT notional** (paper only, no real money). Trades #1–4 were taken under earlier, looser rules, before the advanced tests failed and before the Stage 2 A+ / 3×-reward filters. Estimated XM costs were **not** deducted in this log. All five trades are closed. No trade is open (checked 22 Nov 2026, 08:15 IST).
 
-Kul paper P/L: **+$26.46 USDT**.
+Kul paper P/L: **+$29.80 USDT** (5 trades, XM costs not deducted on #1–4).
 
 ## Trade #1 — BUY (long) — closed, +5.32 USDT
 
@@ -53,6 +53,18 @@ Kul paper P/L: **+$26.46 USDT**.
 - Grade (retroactive): B/C — a short reason was stored, but the full Stage 2 journal fields were still incomplete
 - This trade was later described as a training / paper trade. It does not mean the strategy has an edge.
 
+## Trade #5 — SELL (short), XM demo — closed, +3.34 USD (approx)
+
+- Opened: 19 Nov 2026, 19:58 IST · Entry: $62,334.45 · stop: $63,360 · Target 1: $59,260
+- Size: 0.01 lot (risk about $10.26)
+- Exit: about $61,981, closed outside the bridge (likely by hand) between ~05:12 and 05:41 IST on 20 Nov; not stop or target. Exit price is estimated from the demo balance change.
+- Result: +3.34 USD (swap -0.19), about 0.33x the risk
+- Thesis: 4H trend down, price breaking the ~$62.3k support
+- Grade: manual order (Rishi's call), not an A/A+ setup; rules followed: no
+- What went right: traded with the 4H downtrend; price did move below $62.3k
+- What went wrong: no checklist before entry; closed long before target; exit data is approximate
+- Note: a small win from a rule-break is still a rule-break.
+
 ## Running score
 
 | # | Side | Entry | Result | P/L (USDT) |
@@ -61,6 +73,7 @@ Kul paper P/L: **+$26.46 USDT**.
 | 2 | long | 64,309.3 | TP1 + breakeven | +6.50 |
 | 3 | short | 63,625.0 | TP1 + breakeven | +7.84 |
 | 4 | short | 63,300.0 | TP1 + breakeven | +6.80 |
-| **Total** |  |  | 4 closed, 0 open | **+26.46** |
+| 5 | short (XM demo, manual) | 62,334.45 | manual close ~61,981 | +3.34 |
+| **Total** |  |  | 5 closed, 0 open | **+29.80** |
 
-These four wins are a very small sample, taken in a few days, without XM costs, and with a strategy that failed the 3-month and 12-month backtests. Do not treat this as a reason to trade real money.
+These five wins are a very small sample, taken in a few days, without XM costs, and with a strategy that failed the 3-month and 12-month backtests. Do not treat this as a reason to trade real money.

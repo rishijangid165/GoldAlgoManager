@@ -18,6 +18,12 @@ These come mainly from the v1 and advanced backtests, not from the four short pa
 - Risk rules can limit damage. They cannot turn a losing strategy into a winning one.
 - A handful of recent paper trades in profit (+26.46 USDT, no costs) does **not** cancel a failed backtest.
 
+## Discipline lessons
+
+- **Manual orders outside the checklist (Trade #5, 19 Nov).** It ended slightly green, but it was not an A/A+ setup and the exit was done by hand outside the bridge, so the exit price is only an estimate. Count it as a rule-break, not as proof of anything. Every order should go through the checklist and be logged with exact entry and exit.
+
+- **Weekly review 22 Nov: 0/5 trades fit current rules.** All five ended green, but Target 1 was only ~1.1x–1.6x risk on #1–4 and #5 was manual. Green results with rule-breaks teach nothing about edge. From now: thesis + grade + Target 1 ≥ 3x written before entry, or no trade.
+
 ## What we will not do yet
 
 - No live trading and no XM demo EA until the pass criteria in `rules/training-plan.md` are actually met and Rishi says "haan".

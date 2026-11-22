@@ -1,7 +1,7 @@
 {
   "version": 1,
-  "generated_at": "2026-11-20T02:57:06Z",
-  "valid_until": "2026-11-20T08:30:00Z",
+  "generated_at": "2026-11-22T20:56:57Z",
+  "valid_until": "2026-11-23T01:00:00Z",
   "symbol": "XAUUSD",
   "bias": "NONE",
   "entry_zone": {
@@ -15,7 +15,7 @@
   ],
   "confidence": 0,
   "max_risk_pct": 0.25,
-  "rationale": "Stand aside, Fri Asia. Flush continued 3626->3526.39 on hawkish Fed/Dec hike odds; D/4H/1H downtrend, 4H RSI 14 extreme, no reversal. No FOMC; Donchian long-only (20d LOW broke). Asia range locks 08:00Z; no chase/fade. No high-impact US news till 25 Nov.",
+  "rationale": "Stand aside, weekend/pre-open Mon. Fri closed 3525.8 near week low 3502.8 after ~9% weekly flush (hawkish Fed, strong USD/yields); D/4H/1H downtrend, 4H RSI 18, no reversal. No FOMC; Donchian long-only (20d high 4148, 20d LOW broke). Asia range forms after open; no chase/fade. Next high-impact US: GDP/PCE 25 Nov 13:30Z.",
   "news_blackout": [],
   "kill_switch": false
 }

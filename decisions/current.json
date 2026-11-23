@@ -1,7 +1,7 @@
 {
   "version": 1,
-  "generated_at": "2026-11-23T09:51:25Z",
-  "valid_until": "2026-11-23T11:30:00Z",
+  "generated_at": "2026-11-23T10:48:37Z",
+  "valid_until": "2026-11-23T12:30:00Z",
   "symbol": "XAUUSD",
   "bias": "NONE",
   "entry_zone": {
@@ -15,7 +15,7 @@
   ],
   "confidence": 0,
   "max_risk_pct": 0.25,
-  "rationale": "Stand aside, Mon London midday. 3637 gap-fill rejected; London range 3600.6-3626.8, now 3615 chopping around 1H MA50 3620. D/4H LH/LL below MA20s (D 3912, 4H 3661). No FOMC; Donchian long-only not in play (20d high 4148). Asia range 3545-3637 too wide. NY setup 3 (probation) 13-17Z, shorts only if D+4H down. Next high-impact US: GDP/PCE 25 Nov 13:30Z.",
+  "rationale": "Stand aside, Mon late London. Range 3600.6-3637.0 intact; price 3623 grinding in 15M chop around 1H MA50 3618. D/4H LH/LL below MA20s (D 3912, 4H 3653), 4H RSI 39. No FOMC; Donchian long-only not in play (20d high 4148). Asia range 3545-3637 too wide. NY setup 3 (probation) 13-17Z, shorts only if D+4H down. Next high-impact US: GDP/PCE 25 Nov 13:30Z.",
   "news_blackout": [],
   "kill_switch": false
 }

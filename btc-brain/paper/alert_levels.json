@@ -16,5 +16,5 @@
     ],
     "note": "22 Nov 17:48 IST: 61,313 broken intrabar (not yet held on 1H close); new high 61,648. Watch 62,000/62,320 (20 Nov highs) for sell rejection while 4H trend down."
   },
-  "last_check": "2026-11-22 23:16 IST: no open XM demo position. No new 1H close since 22:47 run. Forming 22:30-23:30 IST candle RED ~60,806 (O 61,222 H 61,241 L 60,735) vol already 1.02M (~1.1x avg 0.93M). Possible SELL trigger at 23:30 close if red + vol >1.2x (~1.12M) - evaluate next run with FOMO check (stop ~61,241+0.3ATR(~190) = ~61,430+, half-stop rule)."
+  "last_check": "2026-11-23 07:45 IST: 06:30 IST 1H red (high 61,327 near 61,313 res, closed 60,841) = possible sell rejection, but volume 513k = 0.54x of 20-bar avg (need >1.2x) -> no trigger. Now ~60,789. 0 XM positions. SKIP, no message."
 }

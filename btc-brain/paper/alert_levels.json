@@ -1,20 +1,20 @@
 {
   "levels": {
     "support": [
+      62437,
+      62000,
       61313,
       60950,
       60389,
-      60000,
-      59373,
-      58640
+      60000
     ],
     "resistance": [
-      61648,
-      62000,
-      62320,
-      63000
+      63888,
+      64572,
+      65500,
+      66800
     ],
-    "note": "22 Nov 17:48 IST: 61,313 broken intrabar (not yet held on 1H close); new high 61,648. Watch 62,000/62,320 (20 Nov highs) for sell rejection while 4H trend down."
+    "note": "23 Nov 20:49 IST: spike 61.3k->64,572 then rejected to 62,588; range 62.6k-64.6k. Watch 4H close 21:30 IST."
   },
-  "last_check": "2026-11-23 07:45 IST: 06:30 IST 1H red (high 61,327 near 61,313 res, closed 60,841) = possible sell rejection, but volume 513k = 0.54x of 20-bar avg (need >1.2x) -> no trigger. Now ~60,789. 0 XM positions. SKIP, no message."
+  "last_check": "2026-11-23 23:11 IST: Current 1H (22:30 IST) at 61,460, low 61,446 - broke below 62,000 with better volume (1.62M so far) but hour not closed. Price already ~550 below 62k break point, close to 61,313 support -> short now would be chasing (FOMO rule) with support right below; 4H spike fully retraced, 4H mixed. SKIP. 0 XM positions. Watch 1H close 23:30 IST; a retest of 61,900-62,000 that rejects could be a short; a bounce at 61,313/61,043 against falling 1H is not a buy."
 }

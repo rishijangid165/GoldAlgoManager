@@ -160,3 +160,4 @@ Owner asked for a full-night research pass: gold behaviour from the start of ava
 - 2026-11-23 19:45 IST NY close check: 13Z 1H closed 3654 above London high 3637 — counter-trend (D+4H down) upside break, setup 3 is shorts-only, so NONE kept; lesson: London-range breaks against the D/4H trend are squeezes to watch, not trades.
 - 2026-11-23 20:37 IST NY check: 14Z 1H closed 3668 above London high again, wick to 3689.6 rejected at 4H LH 3687; counter-trend, NONE kept.
 - 2026-11-23 21:39 IST NY check: 15Z 1H closed 3669.1 above London high, counter-trend; setup 3 short needs <3600.6, NONE kept.
+- 2026-11-23 22:40 IST NY close check: 16Z 1H closed 3672 above London high 3637 (counter-trend vs D/4H down); no setup-3 short trigger, NY window over, NONE kept.

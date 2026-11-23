@@ -1,6 +1,6 @@
 time_utc=2026.11.13 05:41:27
 server_time=2026.11.13 07:39:00
-login=<demo-login>
+login=115497724
 server=MetaQuotes-Demo
 trade_mode=0 (0=demo,1=contest,2=real)
 company=MetaQuotes Ltd.

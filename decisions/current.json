@@ -1,7 +1,7 @@
 {
   "version": 1,
-  "generated_at": "2026-11-23T07:54:25Z",
-  "valid_until": "2026-11-23T09:30:00Z",
+  "generated_at": "2026-11-23T08:53:16Z",
+  "valid_until": "2026-11-23T10:30:00Z",
   "symbol": "XAUUSD",
   "bias": "NONE",
   "entry_zone": {
@@ -15,7 +15,7 @@
   ],
   "confidence": 0,
   "max_risk_pct": 0.25,
-  "rationale": "Stand aside, Mon London open. 2nd push swept Asia high/Thu gap to 3637.0 then slipped to 3624; D/4H still LH/LL below MA20s (D 3912, 4H 3662), 1H RSI 59. No FOMC; Donchian long-only not in play (20d high 4148). Asia range 3545-3637 (92, >3x 1H ATR) not clean; up-break counter-trend. NY setup 3 (probation) window 13-17Z. Next high-impact US: GDP/PCE 25 Nov 13:30Z.",
+  "rationale": "Stand aside, Mon London. Asia-high/Thu-gap push to 3637.0 rejected; London low 3600.6, now 3612. D/4H LH/LL below MA20s (D 3912, 4H 3661), 1H RSI 55. No FOMC; Donchian long-only not in play (20d high 4148). Asia range 3545-3637 too wide, up-break counter-trend. NY setup 3 (probation) 13-17Z, shorts only if D+4H down. Next high-impact US: GDP/PCE 25 Nov 13:30Z.",
   "news_blackout": [],
   "kill_switch": false
 }

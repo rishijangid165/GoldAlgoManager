@@ -162,3 +162,4 @@ Owner asked for a full-night research pass: gold behaviour from the start of ava
 - 2026-11-23 21:39 IST NY check: 15Z 1H closed 3669.1 above London high, counter-trend; setup 3 short needs <3600.6, NONE kept.
 - 2026-11-23 22:40 IST NY close check: 16Z 1H closed 3672 above London high 3637 (counter-trend vs D/4H down); no setup-3 short trigger, NY window over, NONE kept.
 - 2026-11-23 23:17 IST decision check: NY counter-trend rally to 3689.6 faded at 4H LH 3687 back to 3649; London-break-up never qualified (D/4H down), NONE republished to 23:30Z.
+- 2026-11-24 02:24 IST decision check: NY counter-trend bounce faded to 3633, back at London high/1H MA20; lower 1H highs since 3689.6 rejection, NONE kept.

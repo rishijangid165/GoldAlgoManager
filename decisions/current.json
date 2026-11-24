@@ -1,7 +1,7 @@
 {
   "version": 1,
-  "generated_at": "2026-11-24T02:52:52Z",
-  "valid_until": "2026-11-24T08:45:00Z",
+  "generated_at": "2026-11-24T07:52:07Z",
+  "valid_until": "2026-11-24T13:45:00Z",
   "symbol": "XAUUSD",
   "bias": "NONE",
   "entry_zone": {
@@ -15,7 +15,7 @@
   ],
   "confidence": 0,
   "max_risk_pct": 0.25,
-  "rationale": "Stand aside, Tue Asia. Asia so far 3590.2 (open spike)-3678.3; rally to 3678 faded, now ~3639 at 1H MA20, mid-range. D/4H still LH/LL below D MA20 3892 / 4H MA50 3770; Mon NY rejected at 4H LH 3687. No FOMC; Donchian long-only far (20d high 4148.5); setup-3 window not open; Asia break judged at London open. Next high-impact US: GDP/PCE 25 Nov 13:30Z.",
+  "rationale": "Stand aside, Tue late Asia/London open. Asia (locks 08:00Z) real 3613.8-3678.3 (3590.2 open spike); price ~3621 slipping under prior Asia low 3624.4, 1H below MA20 3642, 4H at MA20 3625. D/4H LH/LL below D MA20 3891 / 4H MA50 3762. No FOMC; Donchian long-only far (20d high 4148.5); Asia break judged on first 1H close after 08:00Z (stop to 3681+ ~ >3x 1H ATR 22 = likely skip); NY setup-3 window 13:00Z+. Next high-impact US: GDP/PCE 25 Nov 13:30Z.",
   "news_blackout": [],
   "kill_switch": false
 }

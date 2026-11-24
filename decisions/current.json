@@ -1,7 +1,7 @@
 {
   "version": 1,
-  "generated_at": "2026-11-24T17:52:23Z",
-  "valid_until": "2026-11-24T23:30:00Z",
+  "generated_at": "2026-11-24T20:48:06Z",
+  "valid_until": "2026-11-25T02:30:00Z",
   "symbol": "XAUUSD",
   "bias": "NONE",
   "entry_zone": {
@@ -15,7 +15,7 @@
   ],
   "confidence": 0,
   "max_risk_pct": 0.25,
-  "rationale": "Stand aside, Tue late NY. NY window closed: 15:00Z 1H flush broke London low 3607.5 to 3566.9 but was a chase (> half range, stop > 3x ATR) -> setup-3 (probation) skipped; 16:00Z second break invalid. Price ~3564 near day low 3558.9; D/4H/1H downtrend (D MA20 3888, 4H MA20 3611, 1H RSI 24 oversold). No FOMC; Donchian long far (20d high 4148.5). Asia range not formed. Next high-impact: GDP/PCE 25 Nov 13:30Z (blackout 13:00-15:00Z).",
+  "rationale": "Stand aside, Tue post-NY (20:47Z). Gold drifted to new day low 3546.7 (below Mon low 3544.9 is next), D/4H/1H downtrend, D/1H RSI ~23 oversold, 15M ATR 6.6 = thin. NY window closed with no trade (15Z chase skip). No FOMC; Donchian long far (20d high 4148.5). Asia range (from 23:00Z) not formed; Asia breakout only if clean. Next high-impact: GDP/PCE 25 Nov 13:30Z (blackout 13:00-15:00Z).",
   "news_blackout": [],
   "kill_switch": false
 }

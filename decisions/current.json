@@ -1,7 +1,7 @@
 {
   "version": 1,
-  "generated_at": "2026-11-24T12:49:51Z",
-  "valid_until": "2026-11-24T18:45:00Z",
+  "generated_at": "2026-11-24T17:52:23Z",
+  "valid_until": "2026-11-24T23:30:00Z",
   "symbol": "XAUUSD",
   "bias": "NONE",
   "entry_zone": {
@@ -15,7 +15,7 @@
   ],
   "confidence": 0,
   "max_risk_pct": 0.25,
-  "rationale": "Stand aside into NY (London range locked 13:00Z). Asia 3613.8-3678.3; London 3607.5-3646.7 (12:00 1H still open, high may extend). Price ~3644.6 at London high, 1H MA20 3640.7, 4H MA20 3620.7 / MA50 3755.7, D below MA20 3892: D/4H LH/LL downtrend. Setup 3 (probation 0.25%) only SHORT on a 1H close below London low ~3607.5 13:00-17:00Z, stop above London high+buffer (~3650, ~2x 1H ATR 21) -- fast NY check publishes it. Upside break = counter-trend, no trade. No FOMC; Donchian long far (20d high ~4148). Next high-impact: GDP/PCE 25 Nov 13:30Z.",
+  "rationale": "Stand aside, Tue late NY. NY window closed: 15:00Z 1H flush broke London low 3607.5 to 3566.9 but was a chase (> half range, stop > 3x ATR) -> setup-3 (probation) skipped; 16:00Z second break invalid. Price ~3564 near day low 3558.9; D/4H/1H downtrend (D MA20 3888, 4H MA20 3611, 1H RSI 24 oversold). No FOMC; Donchian long far (20d high 4148.5). Asia range not formed. Next high-impact: GDP/PCE 25 Nov 13:30Z (blackout 13:00-15:00Z).",
   "news_blackout": [],
   "kill_switch": false
 }

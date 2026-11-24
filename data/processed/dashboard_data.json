@@ -1,6 +1,6 @@
 {
-  "generated_at_ist": "2026-11-24 23:23:10 IST",
-  "generated_at_utc": "2026-11-24T17:53:10Z",
+  "generated_at_ist": "2026-11-25 02:18:22 IST",
+  "generated_at_utc": "2026-11-24T20:48:22Z",
   "timezone_label": "IST (Asia/Kolkata)",
   "account": {
     "server": "MetaQuotes-Demo",
@@ -22,11 +22,11 @@
     "first_ea_start_equity": 99977.46,
     "first_ea_start_equity_at_ist": "2026-11-13 05:50:05 IST",
     "last_terminal_sync_positions": 0,
-    "last_terminal_sync_ist": "2026-11-24 23:23:11 IST"
+    "last_terminal_sync_ist": "2026-11-25 02:18:23 IST"
   },
   "live_account": {
     "state": "live",
-    "pulled_at_ist": "2026-11-24 23:23:11 IST",
+    "pulled_at_ist": "2026-11-25 02:18:23 IST",
     "balance": 99673.93,
     "equity": 99673.93,
     "open_profit": 0.0,
@@ -488,10 +488,10 @@
       "backfill_closed": 9,
       "live_closed": 3
     },
-    "generated_utc": "2026-11-24T17:52Z",
-    "generated_ist": "2026-11-24 23:22 IST",
+    "generated_utc": "2026-11-24T20:48Z",
+    "generated_ist": "2026-11-25 02:18 IST",
     "data_source": "mt5_broker_live",
-    "last_completed_bar_ist": "2026-11-24 21:30 IST",
+    "last_completed_bar_ist": "2026-11-25 00:30 IST",
     "backfill_start_ist": "2026-10-16 09:30 IST",
     "live_start_ist": "2026-11-14 05:30 IST",
     "pending_signals": {},
@@ -506,7 +506,7 @@
       "equity": 99673.93,
       "margin": 0.0,
       "profit": 0.0,
-      "pulled_at_utc": "2026-11-24T17:52:44.827310+00:00"
+      "pulled_at_utc": "2026-11-24T20:48:21.302435+00:00"
     },
     "trades": [
       {
@@ -825,15 +825,15 @@
     "tp2": 0.0,
     "confidence": 0,
     "max_risk_pct": 0.25,
-    "generated_at_ist": "2026-11-24 23:22:23 IST",
-    "valid_until_ist": "2026-11-25 05:00 IST",
-    "valid_until_utc": "2026-11-24T23:30:00Z",
+    "generated_at_ist": "2026-11-25 02:18:06 IST",
+    "valid_until_ist": "2026-11-25 08:00 IST",
+    "valid_until_utc": "2026-11-25T02:30:00Z",
     "expired": false,
     "kill_switch": false,
     "in_news_blackout": false,
     "news_blackout": [],
     "next_blackout": null,
-    "rationale": "Stand aside, Tue late NY. NY window closed: 15:00Z 1H flush broke London low 3607.5 to 3566.9 but was a chase (> half range, stop > 3x ATR) -> setup-3 (probation) skipped; 16:00Z second break invalid. Price ~3564 near day low 3558.9; D/4H/1H downtrend (D MA20 3888, 4H MA20 3611, 1H RSI 24 oversold). No FOMC; Donchian long far (20d high 4148.5). Asia range not formed. Next high-impact: GDP/PCE 25 Nov 13:30Z (blackout 13:00-15:00Z).",
+    "rationale": "Stand aside, Tue post-NY (20:47Z). Gold drifted to new day low 3546.7 (below Mon low 3544.9 is next), D/4H/1H downtrend, D/1H RSI ~23 oversold, 15M ATR 6.6 = thin. NY window closed with no trade (15Z chase skip). No FOMC; Donchian long far (20d high 4148.5). Asia range (from 23:00Z) not formed; Asia breakout only if clean. Next high-impact: GDP/PCE 25 Nov 13:30Z (blackout 13:00-15:00Z).",
     "status": "flat",
     "source": "/workspace/gold-algo/decisions/current.json"
   },
@@ -842,7 +842,7 @@
   "ea": {
     "name": "GoldAIBridge",
     "chart": "XAUUSD M15",
-    "last_decision_read_ist": "2026-11-24 19:49:54 IST",
+    "last_decision_read_ist": "2026-11-24 23:26:28 IST",
     "last_decision_bias": "NONE"
   },
   "trades": [
@@ -923,10 +923,10 @@
       "sort": "2026-11-13T07:41:28+02:00"
     },
     {
-      "t": "2026-11-24 23:23 IST",
+      "t": "2026-11-25 02:18 IST",
       "label": "Last known balance",
       "equity": 100046.1,
-      "sort": "2026-11-24T23:23:10.502789+05:30"
+      "sort": "2026-11-25T02:18:22.548403+05:30"
     }
   ],
   "stats": {
@@ -1043,7 +1043,7 @@
     }
   ],
   "notes": [
-    "Balance and equity are live from MT5 (pulled 2026-11-24 23:23:11 IST).",
+    "Balance and equity are live from MT5 (pulled 2026-11-25 02:18:23 IST).",
     "All live money figures come from MT5 result files, the EA journal, and MQL5 logs. No live broker quote is shown unless a file has a fresh one.",
     "Today's P&L vs the $100,046.10 start-of-day reference is $0.00 because both closed demo trades settled before that reference was recorded. Their combined P&L is +46.15 (including swap), which is already inside the current balance."
   ],

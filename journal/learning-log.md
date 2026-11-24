@@ -177,3 +177,4 @@ Owner asked for a full-night research pass: gold behaviour from the start of ava
 - 2026-11-24 21:44 IST: 15:00Z 1H flushed to 3568.95, break of London low 3607.5 but $38.6 beyond (> half range $19.6) and stop ~$81 > 3x ATR → setup-3 skip (chase), NONE kept.
 - 2026-11-24 22:42 IST: 16:00Z 1H closed 3564.8, second break invalid, NY window done; no trade Tue.
 - 2026-11-24 23:21 IST: late NY, gold 3564 near day low 3558.9, D/1H RSI ~24 oversold; NY window closed, no setup → NONE republished to 23:30Z. Review: 15Z chase-skip cost nothing (price chopped 3559-3575 after). Lesson: after a one-bar flush in an oversold downtrend, follow-through stalls — skip rule protects R.
+- 2026-11-25 02:17 IST: post-NY drift to 3546.7 (new day low, Mon low 3544.9 next), oversold, thin; no setup → NONE republished to 02:30Z. Review: 23:21 NONE correct. Lesson: post-NY drift in oversold trend isn't a setup; wait for Asia range/London.

@@ -164,3 +164,4 @@ Owner asked for a full-night research pass: gold behaviour from the start of ava
 - 2026-11-23 23:17 IST decision check: NY counter-trend rally to 3689.6 faded at 4H LH 3687 back to 3649; London-break-up never qualified (D/4H down), NONE republished to 23:30Z.
 - 2026-11-24 02:24 IST decision check: NY counter-trend bounce faded to 3633, back at London high/1H MA20; lower 1H highs since 3689.6 rejection, NONE kept.
 - 2026-11-24 05:17 IST decision check: Tue opened with a gap/spike to 3594.6 refilled to 3641.9 in minutes; open-bar extremes are spread noise, not structure. Terminal restarted ~23:41Z, NONE republished to 05:45Z.
+- 2026-11-24 08:22 IST decision check: Asia rally to 3678 stalled under Mon LH 3687 and faded to 1H MA20 3639; resistance holding in downtrend, NONE republished to 08:45Z.

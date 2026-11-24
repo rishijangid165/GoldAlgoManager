@@ -1,20 +1,20 @@
 {
   "levels": {
     "support": [
-      62437,
-      62000,
-      61313,
-      60950,
+      60731,
       60389,
-      60000
+      60000,
+      58750
     ],
     "resistance": [
-      63888,
+      61747,
+      62225,
+      62912,
       64572,
       65500,
       66800
     ],
-    "note": "23 Nov 20:49 IST: spike 61.3k->64,572 then rejected to 62,588; range 62.6k-64.6k. Watch 4H close 21:30 IST."
+    "note": "24 Nov 01:16 IST: spike to 64,572 fully retraced; broke 61,231/61,043, low 60,731. 61,000-61,250 now resistance-ish; 61,747 1H high."
   },
-  "last_check": "2026-11-23 23:11 IST: Current 1H (22:30 IST) at 61,460, low 61,446 - broke below 62,000 with better volume (1.62M so far) but hour not closed. Price already ~550 below 62k break point, close to 61,313 support -> short now would be chasing (FOMO rule) with support right below; 4H spike fully retraced, 4H mixed. SKIP. 0 XM positions. Watch 1H close 23:30 IST; a retest of 61,900-62,000 that rejects could be a short; a bounce at 61,313/61,043 against falling 1H is not a buy."
+  "last_check": "2026-11-24 07:43 IST: BTC ~60,948 Delta. Dipped to 60,592 this hour (broke 60,731 support, now testing 60,389-60,731 zone); 06:30 IST hour wicked 61,654 then closed 61,067 on 0.4x volume. Current hour vol ~0.3x of 20h avg (<1.2x needed). No A/A+ setup. 0 XM positions."
 }

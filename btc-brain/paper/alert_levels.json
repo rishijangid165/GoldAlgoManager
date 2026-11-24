@@ -1,12 +1,14 @@
 {
   "levels": {
     "support": [
-      60731,
-      60389,
-      60000,
-      58750
+      59364,
+      58750,
+      58000
     ],
     "resistance": [
+      60389,
+      60615,
+      60731,
       61747,
       62225,
       62912,
@@ -14,7 +16,7 @@
       65500,
       66800
     ],
-    "note": "24 Nov 01:16 IST: spike to 64,572 fully retraced; broke 61,231/61,043, low 60,731. 61,000-61,250 now resistance-ish; 61,747 1H high."
+    "note": "24 Nov 22:42 IST: 59,364 support wicked to 59,309 but held on close; resistance zone 60,400-60,650 (today's rejections)."
   },
-  "last_check": "2026-11-24 07:43 IST: BTC ~60,948 Delta. Dipped to 60,592 this hour (broke 60,731 support, now testing 60,389-60,731 zone); 06:30 IST hour wicked 61,654 then closed 61,067 on 0.4x volume. Current hour vol ~0.3x of 20h avg (<1.2x needed). No A/A+ setup. 0 XM positions."
+  "last_check": "2026-11-24 23:14 IST: no new closed 1H since 21:30 IST bar (no trigger). 4H down. 0 XM positions. No trade. Next bar closes 23:30."
 }

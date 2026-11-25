@@ -1,6 +1,6 @@
 {
-  "generated_at_ist": "2026-11-25 17:19:41 IST",
-  "generated_at_utc": "2026-11-25T11:49:41Z",
+  "generated_at_ist": "2026-11-25 18:27:16 IST",
+  "generated_at_utc": "2026-11-25T12:57:16Z",
   "timezone_label": "IST (Asia/Kolkata)",
   "account": {
     "server": "MetaQuotes-Demo",
@@ -22,11 +22,11 @@
     "first_ea_start_equity": 99977.46,
     "first_ea_start_equity_at_ist": "2026-11-13 05:50:05 IST",
     "last_terminal_sync_positions": 0,
-    "last_terminal_sync_ist": "2026-11-25 17:19:42 IST"
+    "last_terminal_sync_ist": "2026-11-25 18:27:17 IST"
   },
   "live_account": {
     "state": "live",
-    "pulled_at_ist": "2026-11-25 17:19:42 IST",
+    "pulled_at_ist": "2026-11-25 18:27:17 IST",
     "balance": 99673.93,
     "equity": 99673.93,
     "open_profit": 0.0,
@@ -488,10 +488,10 @@
       "backfill_closed": 9,
       "live_closed": 3
     },
-    "generated_utc": "2026-11-25T11:49Z",
-    "generated_ist": "2026-11-25 17:19 IST",
+    "generated_utc": "2026-11-25T12:56Z",
+    "generated_ist": "2026-11-25 18:26 IST",
     "data_source": "mt5_broker_live",
-    "last_completed_bar_ist": "2026-11-25 15:30 IST",
+    "last_completed_bar_ist": "2026-11-25 16:30 IST",
     "backfill_start_ist": "2026-10-16 09:30 IST",
     "live_start_ist": "2026-11-14 05:30 IST",
     "pending_signals": {},
@@ -506,7 +506,7 @@
       "equity": 99673.93,
       "margin": 0.0,
       "profit": 0.0,
-      "pulled_at_utc": "2026-11-25T11:49:20.232771+00:00"
+      "pulled_at_utc": "2026-11-25T12:56:38.195283+00:00"
     },
     "trades": [
       {
@@ -825,15 +825,29 @@
     "tp2": 0.0,
     "confidence": 0,
     "max_risk_pct": 0.25,
-    "generated_at_ist": "2026-11-25 13:17:23 IST",
-    "valid_until_ist": "2026-11-25 18:30 IST",
-    "valid_until_utc": "2026-11-25T13:00:00Z",
+    "generated_at_ist": "2026-11-25 18:26:36 IST",
+    "valid_until_ist": "2026-11-25 22:30 IST",
+    "valid_until_utc": "2026-11-25T17:00:00Z",
     "expired": false,
     "kill_switch": false,
     "in_news_blackout": false,
-    "news_blackout": [],
-    "next_blackout": null,
-    "rationale": "Stand aside, Wed Asia close (07:47Z). Asia range 3512.6-3575.3 = 2.7, ~3.4x 1H ATR 18.4 -> too wide, setup-4 skipped per playbook cap. Gold at ~3530 after a new week low 3512.6, D/4H/1H downtrend, D RSI 29. No FOMC; no Donchian breakout (20d high 4148.5). NY London-break window opens 13:00Z but GDP/PCE 13:30Z blackout 13:00-15:00Z. Next liquidity: 3502.8 (20d low).",
+    "news_blackout": [
+      {
+        "start_ist": "2026-11-25 18:30:00 IST",
+        "end_ist": "2026-11-25 20:30:00 IST",
+        "start_utc": "2026-11-25T13:00:00Z",
+        "end_utc": "2026-11-25T15:00:00Z",
+        "reason": "GDP Q3 2nd est + PCE (Oct) 13:30Z"
+      }
+    ],
+    "next_blackout": {
+      "start_ist": "2026-11-25 18:30:00 IST",
+      "end_ist": "2026-11-25 20:30:00 IST",
+      "start_utc": "2026-11-25T13:00:00Z",
+      "end_utc": "2026-11-25T15:00:00Z",
+      "reason": "GDP Q3 2nd est + PCE (Oct) 13:30Z"
+    },
+    "rationale": "Stand aside, Wed London close (12:56Z). London range locked 3485.0-3540.3: late-London flush swept the 20d low 3502.8 to 3485.0 then 1H reclaimed to ~3517 (sweep+reclaim, D/4H still down, D RSI 29). No FOMC; no Donchian long (20d high 4148.5). GDP/PCE 13:30Z blackout 13:00-15:00Z. Post-blackout NY close-break (setup 3, probation 0.25%) only with D/4H trend: 1H close < 3485 for SELL; a break above 3540.3 is counter-trend = no trade. Thu = US Thanksgiving, thin.",
     "status": "flat",
     "source": "/workspace/gold-algo/decisions/current.json"
   },
@@ -923,10 +937,10 @@
       "sort": "2026-11-13T07:41:28+02:00"
     },
     {
-      "t": "2026-11-25 17:19 IST",
+      "t": "2026-11-25 18:27 IST",
       "label": "Last known balance",
       "equity": 100046.1,
-      "sort": "2026-11-25T17:19:41.180143+05:30"
+      "sort": "2026-11-25T18:27:16.041368+05:30"
     }
   ],
   "stats": {
@@ -1043,7 +1057,7 @@
     }
   ],
   "notes": [
-    "Balance and equity are live from MT5 (pulled 2026-11-25 17:19:42 IST).",
+    "Balance and equity are live from MT5 (pulled 2026-11-25 18:27:17 IST).",
     "All live money figures come from MT5 result files, the EA journal, and MQL5 logs. No live broker quote is shown unless a file has a fresh one.",
     "Today's P&L vs the $100,046.10 start-of-day reference is $0.00 because both closed demo trades settled before that reference was recorded. Their combined P&L is +46.15 (including swap), which is already inside the current balance."
   ],

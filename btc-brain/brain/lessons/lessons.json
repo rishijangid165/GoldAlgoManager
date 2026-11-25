@@ -1,5 +1,5 @@
 {
-  "updated_ist": "2026-11-20 05:42 IST",
+  "updated_ist": "2026-11-25 22:46 IST",
   "strength_rule": "Laplace (for+1)/(for+against+2). obs<3 => weak/untested; obs>=5 and strength<0.4 => forgotten; else active if strength>=0.4 else weak. Lessons never become trading rules automatically.",
   "lessons": [
     {

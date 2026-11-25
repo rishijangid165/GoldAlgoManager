@@ -171,5 +171,57 @@
   "kya_sahi": "4H trend neeche ke saath short tha, price 62.3k se neeche gaya",
   "kya_galat": "A/A+ setup nahi tha, manual entry; target se pehle band, exit data approx",
   "emotion_risk": "manual order bina checklist ke - FOMO/impulse ka risk"
+ },
+ {
+  "id": 6,
+  "venue": "xm_demo",
+  "tickets": [
+   2387200062
+  ],
+  "status": "closed",
+  "side": "sell",
+  "grade": "A+",
+  "setup_type": "v1: 1H rejection of 59,364 resistance + close below 58,750 support, vol 1.22x",
+  "open_time_ist": "2026-11-25 13:44 IST",
+  "entry": 58896.65,
+  "stop": 59510,
+  "tp1": 57066,
+  "tp2": null,
+  "lot": 0.01,
+  "risk_usd": 6.13,
+  "reward_usd_tp1": 18.31,
+  "thesis": "4H+1H trend down; 12:30 IST hour rejected 59,364 res and closed 58,710 below 58,750 support on 1.22x volume",
+  "invalidation": 59510,
+  "lot_calc": "basis 1003.34 x1% = 10.03 / 613.35 = 0.0164 -> 0.01",
+  "regime": "TREND_DOWN",
+  "fear_greed": 13,
+  "brain_lessons": [
+   "L01 costs (0.01 lot, cost small)",
+   "L09 extreme fear - not a buy signal; noted stretch -5.6 ATR from 4H EMA50 (watch-list B would skip, not adopted)"
+  ],
+  "rules_followed": "yes (price ~190 past ideal entry 58,710, < half stop distance; news clear, GDP/PCE 19:00 IST)",
+  "delta_ref": {
+   "trigger_close": 58710.5,
+   "trigger_high": 59392,
+   "atr14": 437.6,
+   "stop_delta": 59523
+  },
+  "exit_time_ist": "2026-11-25 22:19-22:46 IST (approx; detected 22:47)",
+  "exit_price": 59510.65,
+  "exit_price_note": "derived from XM balance change 105037.32->105031.18; XM history tab did not list the deal (bridge history empty)",
+  "exits": [
+   {
+    "price": 59510.65,
+    "lot": 0.01,
+    "reason": "SL hit (Delta 22:30 IST hour high 59,533 vs SL 59,510)"
+   }
+  ],
+  "result": "loss",
+  "pnl_usd": -6.14,
+  "swap_usd": 0.0,
+  "r_multiple": -1.0,
+  "kya_sahi": "Plan ke hisaab se stop pehle se laga tha, nuksaan sirf ~$6 (planned risk) raha; rules follow hue",
+  "kya_galat": "Price 57,257 tak gaya par target 57,066 se pehle palat gaya; extreme fear (F&G 13) aur 4H EMA50 se -5.6 ATR stretch ke baad short tha - oversold bounce ne stop le liya",
+  "emotion_risk": "Ab revenge trade ka risk - 1 ghanta koi naya trade nahi, agla size chhota"
  }
 ]

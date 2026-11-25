@@ -1,10 +1,14 @@
 {
   "levels": {
     "support": [
-      58750,
-      58000
+      57250,
+      57000,
+      56000
     ],
     "resistance": [
+      58000,
+      58600,
+      58750,
       59364,
       60389,
       60615,
@@ -16,7 +20,7 @@
       65500,
       66800
     ],
-    "note": "25 Nov 07:41 IST: 59,364 support broke (06:30-07:30 IST hour closed 59,244, low 59,050) -> now resistance. Next supports 58,750, 58,000."
+    "note": "25 Nov 20:50 IST: 19:30 IST hour wicked to 57,257 but closed 58,210 (58,000/57,500 breaks failed); 20:30 hour rejected 58,698 (under 58,750) and is ~57,760. Resistance 58,000 / 58,600-58,750; supports 57,250, 57,000, 56,000. Choppy, high volume."
   },
-  "last_check": "2026-11-25 07:41 IST: last closed 1H 06:30-07:30 IST red 59,636->59,244 (broke 59,364), vol 684k vs avg20 1.08M (0.63x <1.2x) -> no trigger. ATR14 ~535. Current hour ~59,018 (low 58,921). 4H down -> SELL only; watch retest of 59,364 from below with volume. 0 XM positions. No trade."
+  "last_check": "2026-11-25 23:15 IST: no open positions; inside no-revenge window (until 23:47 IST) -> no new setup checked."
 }

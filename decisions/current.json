@@ -1,7 +1,7 @@
 {
   "version": 1,
-  "generated_at": "2026-11-25T07:47:23Z",
-  "valid_until": "2026-11-25T13:00:00Z",
+  "generated_at": "2026-11-25T12:56:36Z",
+  "valid_until": "2026-11-25T17:00:00Z",
   "symbol": "XAUUSD",
   "bias": "NONE",
   "entry_zone": {
@@ -15,7 +15,13 @@
   ],
   "confidence": 0,
   "max_risk_pct": 0.25,
-  "rationale": "Stand aside, Wed Asia close (07:47Z). Asia range 3512.6-3575.3 = 2.7, ~3.4x 1H ATR 18.4 -> too wide, setup-4 skipped per playbook cap. Gold at ~3530 after a new week low 3512.6, D/4H/1H downtrend, D RSI 29. No FOMC; no Donchian breakout (20d high 4148.5). NY London-break window opens 13:00Z but GDP/PCE 13:30Z blackout 13:00-15:00Z. Next liquidity: 3502.8 (20d low).",
-  "news_blackout": [],
+  "rationale": "Stand aside, Wed London close (12:56Z). London range locked 3485.0-3540.3: late-London flush swept the 20d low 3502.8 to 3485.0 then 1H reclaimed to ~3517 (sweep+reclaim, D/4H still down, D RSI 29). No FOMC; no Donchian long (20d high 4148.5). GDP/PCE 13:30Z blackout 13:00-15:00Z. Post-blackout NY close-break (setup 3, probation 0.25%) only with D/4H trend: 1H close < 3485 for SELL; a break above 3540.3 is counter-trend = no trade. Thu = US Thanksgiving, thin.",
+  "news_blackout": [
+    {
+      "start": "2026-11-25T13:00:00Z",
+      "end": "2026-11-25T15:00:00Z",
+      "reason": "GDP Q3 2nd est + PCE (Oct) 13:30Z"
+    }
+  ],
   "kill_switch": false
 }

@@ -1,6 +1,6 @@
 {
-  "generated_at_ist": "2026-11-25 23:18:54 IST",
-  "generated_at_utc": "2026-11-25T17:48:54Z",
+  "generated_at_ist": "2026-11-26 02:26:19 IST",
+  "generated_at_utc": "2026-11-25T20:56:19Z",
   "timezone_label": "IST (Asia/Kolkata)",
   "account": {
     "server": "MetaQuotes-Demo",
@@ -22,11 +22,11 @@
     "first_ea_start_equity": 99977.46,
     "first_ea_start_equity_at_ist": "2026-11-13 05:50:05 IST",
     "last_terminal_sync_positions": 0,
-    "last_terminal_sync_ist": "2026-11-25 23:18:56 IST"
+    "last_terminal_sync_ist": "2026-11-26 02:26:21 IST"
   },
   "live_account": {
     "state": "live",
-    "pulled_at_ist": "2026-11-25 23:18:56 IST",
+    "pulled_at_ist": "2026-11-26 02:26:21 IST",
     "balance": 99673.93,
     "equity": 99673.93,
     "open_profit": 0.0,
@@ -236,13 +236,13 @@
       "ny_lon_brk_d4h": {
         "label": "NY London-range break (D+4H)",
         "all": {
-          "closed": 8,
-          "open": 1,
+          "closed": 9,
+          "open": 0,
           "wins": 4,
-          "win_rate_pct": 50.0,
-          "avg_r": 0.404,
-          "total_r": 3.231,
-          "profit_factor": 1.8
+          "win_rate_pct": 44.4,
+          "avg_r": 0.248,
+          "total_r": 2.228,
+          "profit_factor": 1.44
         },
         "backfill": {
           "closed": 5,
@@ -254,13 +254,13 @@
           "profit_factor": 2.28
         },
         "live": {
-          "closed": 3,
-          "open": 1,
+          "closed": 4,
+          "open": 0,
           "wins": 1,
-          "win_rate_pct": 33.3,
-          "avg_r": 0.213,
-          "total_r": 0.638,
-          "profit_factor": 1.32
+          "win_rate_pct": 25.0,
+          "avg_r": -0.091,
+          "total_r": -0.365,
+          "profit_factor": 0.88
         }
       },
       "fomc_cont": {
@@ -426,6 +426,12 @@
         "setup": "ny_lon_brk_d4h",
         "mode": "live",
         "cum_r": -0.791
+      },
+      {
+        "t": "2026-11-25 23:30 IST",
+        "setup": "ny_lon_brk_d4h",
+        "mode": "live",
+        "cum_r": -1.794
       }
     ],
     "equity_curve_usd": [
@@ -476,27 +482,33 @@
       {
         "t": "2026-11-23 06:30 IST",
         "equity": 99576.23
+      },
+      {
+        "t": "2026-11-25 23:30 IST",
+        "equity": 99076.85
       }
     ],
     "total": {
-      "closed": 12,
-      "open": 1,
+      "closed": 13,
+      "open": 0,
       "wins": 4,
-      "win_rate_pct": 33.3,
-      "avg_r": -0.066,
-      "total_r": -0.791,
+      "win_rate_pct": 30.8,
+      "avg_r": -0.138,
+      "total_r": -1.794,
       "backfill_closed": 9,
-      "live_closed": 3
+      "live_closed": 4
     },
-    "generated_utc": "2026-11-25T17:48Z",
-    "generated_ist": "2026-11-25 23:18 IST",
+    "generated_utc": "2026-11-25T20:55Z",
+    "generated_ist": "2026-11-26 02:25 IST",
     "data_source": "mt5_broker_live",
-    "last_completed_bar_ist": "2026-11-25 21:30 IST",
+    "last_completed_bar_ist": "2026-11-26 00:30 IST",
     "backfill_start_ist": "2026-10-16 09:30 IST",
     "live_start_ist": "2026-11-14 05:30 IST",
     "pending_signals": {},
     "new_rows_this_run": [],
-    "closed_this_run": [],
+    "closed_this_run": [
+      "ny_lon_brk_d4h|2026-11-25T14:00Z|SELL"
+    ],
     "note": "Paper only. Each setup is its own one-trade book, so books can overlap (live trading allows one trade total). Rows with mode=backfill were reconstructed from broker history on 2026-11-14, not logged in real time.",
     "mt5_account": {
       "server": "MetaQuotes-Demo",
@@ -506,7 +518,7 @@
       "equity": 99673.93,
       "margin": 0.0,
       "profit": 0.0,
-      "pulled_at_utc": "2026-11-25T17:48:22.064960+00:00"
+      "pulled_at_utc": "2026-11-25T20:55:35.748900+00:00"
     },
     "trades": [
       {
@@ -822,17 +834,17 @@
         "tp1_1p5r": "3375.03",
         "tp2_3r": "3273.59",
         "risk_per_oz": "67.63",
-        "status": "OPEN",
-        "exit_time_utc": "",
-        "exit_time_ist": "",
-        "exit_reason": "",
+        "status": "CLOSED",
+        "exit_time_utc": "2026-11-25 18:00Z",
+        "exit_time_ist": "2026-11-25 23:30 IST",
+        "exit_reason": "sl",
         "tp1_hit": "False",
-        "result": "OPEN",
-        "r": "",
-        "mark_r": "0.125",
+        "result": "LOSS",
+        "r": "-1.003",
+        "mark_r": "",
         "data_source": "mt5_broker_live",
         "first_logged_utc": "2026-11-25T15:16Z",
-        "updated_utc": "2026-11-25T17:12Z"
+        "updated_utc": "2026-11-25T20:55Z"
       }
     ]
   },
@@ -850,15 +862,15 @@
     "tp2": 0.0,
     "confidence": 0,
     "max_risk_pct": 0.25,
-    "generated_at_ist": "2026-11-25 23:18:19 IST",
-    "valid_until_ist": "2026-11-26 03:15 IST",
-    "valid_until_utc": "2026-11-25T21:45:00Z",
+    "generated_at_ist": "2026-11-26 02:25:33 IST",
+    "valid_until_ist": "2026-11-26 08:15 IST",
+    "valid_until_utc": "2026-11-26T02:45:00Z",
     "expired": false,
     "kill_switch": false,
     "in_news_blackout": false,
     "news_blackout": [],
     "next_blackout": null,
-    "rationale": "Stand aside, Wed late NY (17:48Z). Day V: GDP/PCE flush to 3426.6 then full reclaim to ~3506 (London range 3485.0-3540.3 back inside). D/4H downtrend, D RSI 29; no FOMC, no Donchian long (20d high 4148.5). NY window over (no setup-3 after 12:00 ET). Asia-range breakout only if clean; next check 21:00Z. Thu = US Thanksgiving, thin, no US releases.",
+    "rationale": "Stand aside, Wed post-NY (20:56Z). Late short-covering rally 3426.6 -> 3588 (H1 22:00 server), back above London range 3485.0-3540.3 but after 12:00 ET, so no setup-3 (probation). D/4H still downtrend (D RSI 32, below MA20 3863); no FOMC, no Donchian long (20d high 4148.5). Asia-range breakout only if clean. Thu = US Thanksgiving, thin, no US releases.",
     "status": "flat",
     "source": "/workspace/gold-algo/decisions/current.json"
   },
@@ -867,7 +879,7 @@
   "ea": {
     "name": "GoldAIBridge",
     "chart": "XAUUSD M15",
-    "last_decision_read_ist": "2026-11-25 21:47:40 IST",
+    "last_decision_read_ist": "2026-11-25 23:51:25 IST",
     "last_decision_bias": "NONE"
   },
   "trades": [
@@ -948,10 +960,10 @@
       "sort": "2026-11-13T07:41:28+02:00"
     },
     {
-      "t": "2026-11-25 23:18 IST",
+      "t": "2026-11-26 02:26 IST",
       "label": "Last known balance",
       "equity": 100046.1,
-      "sort": "2026-11-25T23:18:54.473037+05:30"
+      "sort": "2026-11-26T02:26:19.540497+05:30"
     }
   ],
   "stats": {
@@ -1068,7 +1080,7 @@
     }
   ],
   "notes": [
-    "Balance and equity are live from MT5 (pulled 2026-11-25 23:18:56 IST).",
+    "Balance and equity are live from MT5 (pulled 2026-11-26 02:26:21 IST).",
     "All live money figures come from MT5 result files, the EA journal, and MQL5 logs. No live broker quote is shown unless a file has a fresh one.",
     "Today's P&L vs the $100,046.10 start-of-day reference is $0.00 because both closed demo trades settled before that reference was recorded. Their combined P&L is +46.15 (including swap), which is already inside the current balance."
   ],

@@ -191,3 +191,4 @@ Owner asked for a full-night research pass: gold behaviour from the start of ava
 - 2026-11-25 20:46 IST: post-blackout 1H close (3472) was the 2nd close-break of the London range and price then ran past the half-range chase limit on a −2.9% day → NONE; release-candle breaks consume the 'first break' and can't be traded late.
 - 2026-11-25 21:42 IST: follow-through to 3426.6 after the blackout break; unchased, NONE held (no valid re-entry under section 5).
 - 2026-11-25 22:42 IST: GDP/PCE break below London low round-tripped to 3486 by NY close; chase shorts after the blackout would have lost — keep the blackout + first-break + chase rules strict.
+- 2026-11-25 23:17 IST: GDP/PCE day closed NY as a V (3426.6 low → 3506) with a hammer-like daily wick at RSI 29; late-day reclaims after an oversold flush are not entries in the playbook — NONE to 21:45Z, watch whether Asia holds above London low 3485.

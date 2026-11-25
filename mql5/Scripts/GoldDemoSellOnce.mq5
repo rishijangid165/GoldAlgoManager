@@ -12,7 +12,7 @@
 
 #include <Trade/Trade.mqh>
 
-const long   kExpectedLogin   = 115497724;
+const long   kExpectedLogin   = <demo-login>;
 const string kExpectedServer  = "MetaQuotes-Demo";
 const string kSymbol          = "XAUUSD";
 const double kSL              = 3906.00;

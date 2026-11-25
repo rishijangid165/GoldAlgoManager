@@ -1,7 +1,7 @@
 {
   "version": 1,
-  "generated_at": "2026-11-24T23:53:04Z",
-  "valid_until": "2026-11-25T05:30:00Z",
+  "generated_at": "2026-11-25T02:52:50Z",
+  "valid_until": "2026-11-25T08:30:00Z",
   "symbol": "XAUUSD",
   "bias": "NONE",
   "entry_zone": {
@@ -15,7 +15,7 @@
   ],
   "confidence": 0,
   "max_risk_pct": 0.25,
-  "rationale": "Stand aside, Wed early Asia (23:52Z). First Asia hour 3541.3-3568.8: swept Mon low 3544.9 by .6 and bounced, now ~3552 mid-range. D/4H/1H downtrend, D RSI 20 / 1H RSI 25 oversold. No Donchian breakout (20d high 4148.5 far), no FOMC, NY window long closed; Asia range still forming (breakout only if clean). Next high-impact: GDP/PCE 25 Nov 13:30Z (blackout 13:00-15:00Z).",
+  "rationale": "Stand aside, Wed Asia (02:51Z). Asia range so far 3533.7-3575.3 (new low below Mon low 3544.9, then 3575 bounce faded), price ~3552 mid-range. D/4H/1H downtrend, D RSI 30 / 1H RSI 32. No FOMC; no Donchian breakout (20d high 4148.5); NY window closed; Asia range completes 08:00Z, breakout only if clean (range 1.6 ~1.9x 1H ATR). Next high-impact: GDP/PCE 25 Nov 13:30Z (blackout 13:00-15:00Z).",
   "news_blackout": [],
   "kill_switch": false
 }

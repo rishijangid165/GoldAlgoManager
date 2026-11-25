@@ -1,7 +1,7 @@
 {
   "version": 1,
-  "generated_at": "2026-11-25T17:48:19Z",
-  "valid_until": "2026-11-25T21:45:00Z",
+  "generated_at": "2026-11-25T20:55:33Z",
+  "valid_until": "2026-11-26T02:45:00Z",
   "symbol": "XAUUSD",
   "bias": "NONE",
   "entry_zone": {
@@ -15,7 +15,7 @@
   ],
   "confidence": 0,
   "max_risk_pct": 0.25,
-  "rationale": "Stand aside, Wed late NY (17:48Z). Day V: GDP/PCE flush to 3426.6 then full reclaim to ~3506 (London range 3485.0-3540.3 back inside). D/4H downtrend, D RSI 29; no FOMC, no Donchian long (20d high 4148.5). NY window over (no setup-3 after 12:00 ET). Asia-range breakout only if clean; next check 21:00Z. Thu = US Thanksgiving, thin, no US releases.",
+  "rationale": "Stand aside, Wed post-NY (20:56Z). Late short-covering rally 3426.6 -> 3588 (H1 22:00 server), back above London range 3485.0-3540.3 but after 12:00 ET, so no setup-3 (probation). D/4H still downtrend (D RSI 32, below MA20 3863); no FOMC, no Donchian long (20d high 4148.5). Asia-range breakout only if clean. Thu = US Thanksgiving, thin, no US releases.",
   "news_blackout": [],
   "kill_switch": false
 }

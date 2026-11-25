@@ -1,7 +1,7 @@
 {
   "version": 1,
-  "generated_at": "2026-11-25T05:52:40Z",
-  "valid_until": "2026-11-25T11:00:00Z",
+  "generated_at": "2026-11-25T07:47:23Z",
+  "valid_until": "2026-11-25T13:00:00Z",
   "symbol": "XAUUSD",
   "bias": "NONE",
   "entry_zone": {
@@ -15,7 +15,7 @@
   ],
   "confidence": 0,
   "max_risk_pct": 0.25,
-  "rationale": "Stand aside, Wed late Asia (05:52Z). Gold broke below the Asia low 3533.7 to 3523.5 (new week low, ~3527 now) before the Asia range completes at 08:00Z, so no setup-4 trigger yet; a short here would chase into D RSI 29 / 1H RSI 25. D/4H/1H downtrend. No FOMC; no Donchian breakout (20d high 4148.5); NY window opens 13:00Z but GDP/PCE 13:30Z blackout 13:00-15:00Z. Next liquidity below: 3502.8 (20d low).",
+  "rationale": "Stand aside, Wed Asia close (07:47Z). Asia range 3512.6-3575.3 = 2.7, ~3.4x 1H ATR 18.4 -> too wide, setup-4 skipped per playbook cap. Gold at ~3530 after a new week low 3512.6, D/4H/1H downtrend, D RSI 29. No FOMC; no Donchian breakout (20d high 4148.5). NY London-break window opens 13:00Z but GDP/PCE 13:30Z blackout 13:00-15:00Z. Next liquidity: 3502.8 (20d low).",
   "news_blackout": [],
   "kill_switch": false
 }

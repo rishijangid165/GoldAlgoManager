@@ -1,11 +1,11 @@
 {
   "levels": {
     "support": [
-      59364,
       58750,
       58000
     ],
     "resistance": [
+      59364,
       60389,
       60615,
       60731,
@@ -16,7 +16,7 @@
       65500,
       66800
     ],
-    "note": "24 Nov 22:42 IST: 59,364 support wicked to 59,309 but held on close; resistance zone 60,400-60,650 (today's rejections)."
+    "note": "25 Nov 07:41 IST: 59,364 support broke (06:30-07:30 IST hour closed 59,244, low 59,050) -> now resistance. Next supports 58,750, 58,000."
   },
-  "last_check": "2026-11-24 23:14 IST: no new closed 1H since 21:30 IST bar (no trigger). 4H down. 0 XM positions. No trade. Next bar closes 23:30."
+  "last_check": "2026-11-25 07:41 IST: last closed 1H 06:30-07:30 IST red 59,636->59,244 (broke 59,364), vol 684k vs avg20 1.08M (0.63x <1.2x) -> no trigger. ATR14 ~535. Current hour ~59,018 (low 58,921). 4H down -> SELL only; watch retest of 59,364 from below with volume. 0 XM positions. No trade."
 }

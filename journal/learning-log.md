@@ -204,3 +204,4 @@ Owner asked for a full-night research pass: gold behaviour from the start of ava
 - 2026-11-26 18:17 IST: London locked 3552.1-3583.7 on Thanksgiving; the only pre-NY break (low sweep) was rejected — London ranges built on a failed sweep give a cleaner NY trigger level (3552.1); 17:21 NONE correct, NONE to 17:00Z for the NY window.
 - 2026-11-26 19:42 IST NY check: 13-14Z 1H closed 3571.7 inside London 3552.1-3583.7, no probation trigger, NONE kept.
 - 2026-11-26 20:39 IST NY check: 14-15Z 1H wicked to 3586.5 above London high but closed 3581.7 inside; no trigger (long blocked by daily down), NONE kept.
+- 2026-11-26 21:45 IST NY check: 15-16Z 1H closed 3573.5 inside London range; no trigger, NONE kept; terminal back as portable, EA reading decisions.

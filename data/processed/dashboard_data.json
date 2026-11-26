@@ -1,6 +1,6 @@
 {
-  "generated_at_ist": "2026-11-26 18:17:32 IST",
-  "generated_at_utc": "2026-11-26T12:47:32Z",
+  "generated_at_ist": "2026-11-26 19:53:28 IST",
+  "generated_at_utc": "2026-11-26T14:23:28Z",
   "timezone_label": "IST (Asia/Kolkata)",
   "account": {
     "server": "MetaQuotes-Demo",
@@ -22,11 +22,11 @@
     "first_ea_start_equity": 99977.46,
     "first_ea_start_equity_at_ist": "2026-11-13 05:50:05 IST",
     "last_terminal_sync_positions": 0,
-    "last_terminal_sync_ist": "2026-11-26 18:17:33 IST"
+    "last_terminal_sync_ist": "2026-11-26 19:53:30 IST"
   },
   "live_account": {
     "state": "live",
-    "pulled_at_ist": "2026-11-26 18:17:33 IST",
+    "pulled_at_ist": "2026-11-26 19:53:30 IST",
     "balance": 99673.93,
     "equity": 99673.93,
     "open_profit": 0.0,
@@ -326,12 +326,12 @@
       "asia_brk_trend": {
         "label": "Asia breakout (clean, D+4H)",
         "all": {
-          "closed": 3,
+          "closed": 4,
           "open": 0,
           "wins": 0,
           "win_rate_pct": 0.0,
-          "avg_r": -1.006,
-          "total_r": -3.017,
+          "avg_r": -1.005,
+          "total_r": -4.019,
           "profit_factor": 0.0
         },
         "backfill": {
@@ -344,13 +344,13 @@
           "profit_factor": 0.0
         },
         "live": {
-          "closed": 0,
+          "closed": 1,
           "open": 0,
           "wins": 0,
-          "win_rate_pct": null,
-          "avg_r": null,
-          "total_r": 0.0,
-          "profit_factor": null
+          "win_rate_pct": 0.0,
+          "avg_r": -1.002,
+          "total_r": -1.002,
+          "profit_factor": 0.0
         }
       }
     },
@@ -432,6 +432,12 @@
         "setup": "ny_lon_brk_d4h",
         "mode": "live",
         "cum_r": -1.794
+      },
+      {
+        "t": "2026-11-26 00:30 IST",
+        "setup": "asia_brk_trend",
+        "mode": "live",
+        "cum_r": -2.796
       }
     ],
     "equity_curve_usd": [
@@ -486,38 +492,36 @@
       {
         "t": "2026-11-25 23:30 IST",
         "equity": 99076.85
+      },
+      {
+        "t": "2026-11-26 00:30 IST",
+        "equity": 98580.48
       }
     ],
     "total": {
-      "closed": 13,
+      "closed": 14,
       "open": 0,
       "wins": 4,
-      "win_rate_pct": 30.8,
-      "avg_r": -0.138,
-      "total_r": -1.794,
+      "win_rate_pct": 28.6,
+      "avg_r": -0.2,
+      "total_r": -2.796,
       "backfill_closed": 9,
-      "live_closed": 4
+      "live_closed": 5
     },
-    "generated_utc": "2026-11-26T12:47Z",
-    "generated_ist": "2026-11-26 18:17 IST",
-    "data_source": "mt5_broker_live",
-    "last_completed_bar_ist": "2026-11-26 16:30 IST",
+    "generated_utc": "2026-11-26T14:23Z",
+    "generated_ist": "2026-11-26 19:53 IST",
+    "data_source": "gcf_1h_minus_swissquote_basis(+47.09)",
+    "last_completed_bar_ist": "2026-11-26 09:30 IST",
     "backfill_start_ist": "2026-10-16 09:30 IST",
     "live_start_ist": "2026-11-14 05:30 IST",
     "pending_signals": {},
-    "new_rows_this_run": [],
-    "closed_this_run": [],
+    "new_rows_this_run": [
+      "asia_brk_trend|2026-11-25T14:00Z|SELL"
+    ],
+    "closed_this_run": [
+      "asia_brk_trend|2026-11-25T14:00Z|SELL"
+    ],
     "note": "Paper only. Each setup is its own one-trade book, so books can overlap (live trading allows one trade total). Rows with mode=backfill were reconstructed from broker history on 2026-11-14, not logged in real time.",
-    "mt5_account": {
-      "server": "MetaQuotes-Demo",
-      "trade_mode": 0,
-      "currency": "USD",
-      "balance": 99673.93,
-      "equity": 99673.93,
-      "margin": 0.0,
-      "profit": 0.0,
-      "pulled_at_utc": "2026-11-26T12:47:31.564568+00:00"
-    },
     "trades": [
       {
         "trade_id": "ny_lon_brk_d4h|2026-10-19T14:00Z|SELL",
@@ -820,6 +824,31 @@
         "updated_utc": "2026-11-23T02:52Z"
       },
       {
+        "trade_id": "asia_brk_trend|2026-11-25T14:00Z|SELL",
+        "mode": "live",
+        "setup": "asia_brk_trend",
+        "setup_label": "Asia breakout (clean, D+4H)",
+        "direction": "SELL",
+        "entry_time_utc": "2026-11-25 14:00Z",
+        "entry_time_ist": "2026-11-25 19:30 IST",
+        "entry": "3456.54",
+        "sl": "3530.76",
+        "tp1_1p5r": "3345.21",
+        "tp2_3r": "3233.89",
+        "risk_per_oz": "74.22",
+        "status": "CLOSED",
+        "exit_time_utc": "2026-11-25 19:00Z",
+        "exit_time_ist": "2026-11-26 00:30 IST",
+        "exit_reason": "sl",
+        "tp1_hit": "False",
+        "result": "LOSS",
+        "r": "-1.002",
+        "mark_r": "",
+        "data_source": "gcf_1h_minus_swissquote_basis(+47.09)",
+        "first_logged_utc": "2026-11-26T14:23Z",
+        "updated_utc": "2026-11-26T14:23Z"
+      },
+      {
         "trade_id": "ny_lon_brk_d4h|2026-11-25T14:00Z|SELL",
         "mode": "live",
         "setup": "ny_lon_brk_d4h",
@@ -877,7 +906,7 @@
   "ea": {
     "name": "GoldAIBridge",
     "chart": "XAUUSD M15",
-    "last_decision_read_ist": "2026-11-26 16:30:38 IST",
+    "last_decision_read_ist": "2026-11-26 19:51:34 IST",
     "last_decision_bias": "NONE"
   },
   "trades": [
@@ -958,10 +987,10 @@
       "sort": "2026-11-13T07:41:28+02:00"
     },
     {
-      "t": "2026-11-26 18:17 IST",
+      "t": "2026-11-26 19:53 IST",
       "label": "Last known balance",
       "equity": 100046.1,
-      "sort": "2026-11-26T18:17:32.534752+05:30"
+      "sort": "2026-11-26T19:53:28.977194+05:30"
     }
   ],
   "stats": {
@@ -1078,7 +1107,7 @@
     }
   ],
   "notes": [
-    "Balance and equity are live from MT5 (pulled 2026-11-26 18:17:33 IST).",
+    "Balance and equity are live from MT5 (pulled 2026-11-26 19:53:30 IST).",
     "All live money figures come from MT5 result files, the EA journal, and MQL5 logs. No live broker quote is shown unless a file has a fresh one.",
     "Today's P&L vs the $100,046.10 start-of-day reference is $0.00 because both closed demo trades settled before that reference was recorded. Their combined P&L is +46.15 (including swap), which is already inside the current balance."
   ],

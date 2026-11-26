@@ -198,3 +198,4 @@ Owner asked for a full-night research pass: gold behaviour from the start of ava
 - 2026-11-26 11:19 IST: Thanksgiving Asia re-tested 3605 and failed (lower high under 3607.2) back to 3581 mid-range — thin holiday highs don't hold without a catalyst; 08:19 NONE correct, NONE to 09:00Z pending the 08:00Z Asia lock.
 - 2026-11-26 13:18 IST: London open on Thanksgiving drifted inside the Asia range (3561-3584) after the 3605 lower high — no break, no trade; 11:19 NONE correct, NONE to 10:00Z.
 - 2026-11-26 14:20 IST: Thanksgiving London is a narrow 3561-3584 box inside the Asia range — holiday London rarely breaks the Asia range; NONE to 11:00Z; terminal died again 08:43Z and watchdog recovered it with no missed setup.
+- 2026-11-26 15:21 IST: Thanksgiving London range kept compressing (3561-3584, 15M ATR 6) — holiday compression mid-Asia-range offers no edge; 14:20 NONE correct, NONE to 12:00Z.

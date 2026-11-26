@@ -1,6 +1,6 @@
 {
-  "generated_at_ist": "2026-11-26 13:19:32 IST",
-  "generated_at_utc": "2026-11-26T07:49:32Z",
+  "generated_at_ist": "2026-11-26 14:21:09 IST",
+  "generated_at_utc": "2026-11-26T08:51:09Z",
   "timezone_label": "IST (Asia/Kolkata)",
   "account": {
     "server": "MetaQuotes-Demo",
@@ -22,11 +22,11 @@
     "first_ea_start_equity": 99977.46,
     "first_ea_start_equity_at_ist": "2026-11-13 05:50:05 IST",
     "last_terminal_sync_positions": 0,
-    "last_terminal_sync_ist": "2026-11-26 13:19:33 IST"
+    "last_terminal_sync_ist": "2026-11-26 14:21:10 IST"
   },
   "live_account": {
     "state": "live",
-    "pulled_at_ist": "2026-11-26 13:19:33 IST",
+    "pulled_at_ist": "2026-11-26 14:21:10 IST",
     "balance": 99673.93,
     "equity": 99673.93,
     "open_profit": 0.0,
@@ -498,10 +498,10 @@
       "backfill_closed": 9,
       "live_closed": 4
     },
-    "generated_utc": "2026-11-26T07:49Z",
-    "generated_ist": "2026-11-26 13:19 IST",
+    "generated_utc": "2026-11-26T08:50Z",
+    "generated_ist": "2026-11-26 14:20 IST",
     "data_source": "mt5_broker_live",
-    "last_completed_bar_ist": "2026-11-26 11:30 IST",
+    "last_completed_bar_ist": "2026-11-26 12:30 IST",
     "backfill_start_ist": "2026-10-16 09:30 IST",
     "live_start_ist": "2026-11-14 05:30 IST",
     "pending_signals": {},
@@ -516,7 +516,7 @@
       "equity": 99673.93,
       "margin": 0.0,
       "profit": 0.0,
-      "pulled_at_utc": "2026-11-26T07:49:20.487061+00:00"
+      "pulled_at_utc": "2026-11-26T08:50:56.419757+00:00"
     },
     "trades": [
       {
@@ -860,15 +860,15 @@
     "tp2": 0.0,
     "confidence": 0,
     "max_risk_pct": 0.25,
-    "generated_at_ist": "2026-11-26 13:19:19 IST",
-    "valid_until_ist": "2026-11-26 15:30 IST",
-    "valid_until_utc": "2026-11-26T10:00:00Z",
+    "generated_at_ist": "2026-11-26 14:20:52 IST",
+    "valid_until_ist": "2026-11-26 16:30 IST",
+    "valid_until_utc": "2026-11-26T11:00:00Z",
     "expired": false,
     "kill_switch": false,
     "in_news_blackout": false,
     "news_blackout": [],
     "next_blackout": null,
-    "rationale": "Stand aside, Thu London open (07:50Z). Asia range 3544.6-3607.2 locked; price 3565 mid-range after the 3605 lower-high failure. D LH/LL downtrend (below MA20 3841, RSI 32); 4H slipped back under MA20 3587, below MA50 3685. No FOMC, no Donchian long (20d high 4148.5), no clean Asia break yet (London-open check watches it), NY window opens 13:00Z. Thanksgiving-thin.",
+    "rationale": "Stand aside, Thu London (08:51Z). Price 3573 mid Asia range 3544.6-3607.2; London so far 3561-3584 inside it. D LH/LL downtrend (below MA20 3841, RSI ~33); 4H under MA20 3587, below MA50 3685. No FOMC, no Donchian long (20d high 4148.5), no clean Asia break, NY window opens 13:00Z. Thanksgiving-thin.",
     "status": "flat",
     "source": "/workspace/gold-algo/decisions/current.json"
   },
@@ -877,7 +877,7 @@
   "ea": {
     "name": "GoldAIBridge",
     "chart": "XAUUSD M15",
-    "last_decision_read_ist": "2026-11-26 11:48:25 IST",
+    "last_decision_read_ist": "2026-11-26 14:13:28 IST",
     "last_decision_bias": "NONE"
   },
   "trades": [
@@ -958,10 +958,10 @@
       "sort": "2026-11-13T07:41:28+02:00"
     },
     {
-      "t": "2026-11-26 13:19 IST",
+      "t": "2026-11-26 14:21 IST",
       "label": "Last known balance",
       "equity": 100046.1,
-      "sort": "2026-11-26T13:19:32.946015+05:30"
+      "sort": "2026-11-26T14:21:09.279937+05:30"
     }
   ],
   "stats": {
@@ -1078,7 +1078,7 @@
     }
   ],
   "notes": [
-    "Balance and equity are live from MT5 (pulled 2026-11-26 13:19:33 IST).",
+    "Balance and equity are live from MT5 (pulled 2026-11-26 14:21:10 IST).",
     "All live money figures come from MT5 result files, the EA journal, and MQL5 logs. No live broker quote is shown unless a file has a fresh one.",
     "Today's P&L vs the $100,046.10 start-of-day reference is $0.00 because both closed demo trades settled before that reference was recorded. Their combined P&L is +46.15 (including swap), which is already inside the current balance."
   ],

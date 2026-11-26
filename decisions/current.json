@@ -1,7 +1,7 @@
 {
   "version": 1,
-  "generated_at": "2026-11-26T17:55:39Z",
-  "valid_until": "2026-11-26T23:45:00Z",
+  "generated_at": "2026-11-26T23:52:10Z",
+  "valid_until": "2026-11-27T05:46:10Z",
   "symbol": "XAUUSD",
   "bias": "NONE",
   "entry_zone": {
@@ -14,8 +14,8 @@
     0.0
   ],
   "confidence": 0,
-  "max_risk_pct": 0.25,
-  "rationale": "Stand aside, Thu late NY (17:55Z, Thanksgiving-thin). Price 3567 inside London 3552.1-3583.7; NY window closed with no close-break. D LH/LL downtrend (RSI 31), 4H below MA20 3581/MA50 3668. No FOMC, no Donchian (20d high far above). Next: Fri Asia range locks 08:00Z; probation Asia break only if clean and with 4H.",
+  "max_risk_pct": 0.5,
+  "rationale": "Stand aside, Fri Asia open (23:50Z, post-Thanksgiving thin). Price 3566.7 inside London 3552.1-3583.7 and Thu range 3544.6-3607.2. D LH/LL downtrend (RSI 32), 4H below MA20 3572/MA50 3656 with LH 3586.5. No FOMC, no Donchian (20d high far above). Next: Asia range locks 08:00Z; probation Asia break only if clean and with 4H.",
   "news_blackout": [],
   "kill_switch": false
 }

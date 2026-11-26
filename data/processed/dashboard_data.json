@@ -1,6 +1,6 @@
 {
-  "generated_at_ist": "2026-11-26 05:19:43 IST",
-  "generated_at_utc": "2026-11-25T23:49:43Z",
+  "generated_at_ist": "2026-11-26 08:21:36 IST",
+  "generated_at_utc": "2026-11-26T02:51:36Z",
   "timezone_label": "IST (Asia/Kolkata)",
   "account": {
     "server": "MetaQuotes-Demo",
@@ -22,11 +22,11 @@
     "first_ea_start_equity": 99977.46,
     "first_ea_start_equity_at_ist": "2026-11-13 05:50:05 IST",
     "last_terminal_sync_positions": 0,
-    "last_terminal_sync_ist": "2026-11-26 05:19:45 IST"
+    "last_terminal_sync_ist": "2026-11-26 08:21:37 IST"
   },
   "live_account": {
     "state": "live",
-    "pulled_at_ist": "2026-11-26 05:19:45 IST",
+    "pulled_at_ist": "2026-11-26 08:21:37 IST",
     "balance": 99673.93,
     "equity": 99673.93,
     "open_profit": 0.0,
@@ -498,10 +498,10 @@
       "backfill_closed": 9,
       "live_closed": 4
     },
-    "generated_utc": "2026-11-25T23:49Z",
-    "generated_ist": "2026-11-26 05:19 IST",
+    "generated_utc": "2026-11-26T02:51Z",
+    "generated_ist": "2026-11-26 08:21 IST",
     "data_source": "mt5_broker_live",
-    "last_completed_bar_ist": "2026-11-26 01:30 IST",
+    "last_completed_bar_ist": "2026-11-26 06:30 IST",
     "backfill_start_ist": "2026-10-16 09:30 IST",
     "live_start_ist": "2026-11-14 05:30 IST",
     "pending_signals": {},
@@ -516,7 +516,7 @@
       "equity": 99673.93,
       "margin": 0.0,
       "profit": 0.0,
-      "pulled_at_utc": "2026-11-25T23:49:13.430021+00:00"
+      "pulled_at_utc": "2026-11-26T02:51:08.557384+00:00"
     },
     "trades": [
       {
@@ -860,15 +860,15 @@
     "tp2": 0.0,
     "confidence": 0,
     "max_risk_pct": 0.25,
-    "generated_at_ist": "2026-11-26 05:19:11 IST",
-    "valid_until_ist": "2026-11-26 11:15 IST",
-    "valid_until_utc": "2026-11-26T05:45:00Z",
+    "generated_at_ist": "2026-11-26 08:21:05 IST",
+    "valid_until_ist": "2026-11-26 14:00 IST",
+    "valid_until_utc": "2026-11-26T08:30:00Z",
     "expired": false,
     "kill_switch": false,
     "in_news_blackout": false,
     "news_blackout": [],
     "next_blackout": null,
-    "rationale": "Stand aside, Thu Asia open (23:50Z Wed). Post-reversal chop 3544.6-3589.7 after Wed's outside-day hammer (3426.6 -> 3588). D/4H still downtrend (D RSI 32, below MA20 3841); no FOMC, no Donchian long (20d high 4148.5, 18:00 ET open passed). Asia range not yet formed; breakout only if clean. US Thanksgiving, thin, no US releases.",
+    "rationale": "Stand aside, Thu Asia (02:55Z). Thanksgiving-thin squeeze took out Asia/Wed highs 3588-3590 to 3607.2 (04:30 server). D still LH/LL downtrend (below MA20 3842, RSI 34); 4H reclaiming MA20 3588 but below MA50 3685. No FOMC, no Donchian long (20d high 4148.5), NY window closed, Asia range not locked until 08:00Z. Buying 3595 after +170 off the low = chase.",
     "status": "flat",
     "source": "/workspace/gold-algo/decisions/current.json"
   },
@@ -877,7 +877,7 @@
   "ea": {
     "name": "GoldAIBridge",
     "chart": "XAUUSD M15",
-    "last_decision_read_ist": "2026-11-26 02:29:38 IST",
+    "last_decision_read_ist": "2026-11-26 05:22:51 IST",
     "last_decision_bias": "NONE"
   },
   "trades": [
@@ -958,10 +958,10 @@
       "sort": "2026-11-13T07:41:28+02:00"
     },
     {
-      "t": "2026-11-26 05:19 IST",
+      "t": "2026-11-26 08:21 IST",
       "label": "Last known balance",
       "equity": 100046.1,
-      "sort": "2026-11-26T05:19:43.853592+05:30"
+      "sort": "2026-11-26T08:21:36.382861+05:30"
     }
   ],
   "stats": {
@@ -1078,7 +1078,7 @@
     }
   ],
   "notes": [
-    "Balance and equity are live from MT5 (pulled 2026-11-26 05:19:45 IST).",
+    "Balance and equity are live from MT5 (pulled 2026-11-26 08:21:37 IST).",
     "All live money figures come from MT5 result files, the EA journal, and MQL5 logs. No live broker quote is shown unless a file has a fresh one.",
     "Today's P&L vs the $100,046.10 start-of-day reference is $0.00 because both closed demo trades settled before that reference was recorded. Their combined P&L is +46.15 (including swap), which is already inside the current balance."
   ],

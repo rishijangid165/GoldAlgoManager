@@ -207,3 +207,4 @@ Owner asked for a full-night research pass: gold behaviour from the start of ava
 - 2026-11-26 21:45 IST NY check: 15-16Z 1H closed 3573.5 inside London range; no trigger, NONE kept; terminal back as portable, EA reading decisions.
 - 2026-11-26 22:41 IST NY close: Thanksgiving NY never closed outside London 3552.1-3583.7 (one wick to 3586.5); no probation trigger, NONE expired 17:00Z, no trade — thin-holiday NY respects the London range.
 - 2026-11-26 23:24 IST: late Thanksgiving NY drifted to 3567 inside London; NONE republished to 23:45Z; today's NONE calls held (no break, thin) — the 3607 high-then-fade is a fresh 4H lower high, so any Fri Asia long break needs the 4H to turn first.
+- 2026-11-27 02:23 IST: broker shut 14:30 ET for Thanksgiving with gold 3565 near the day low inside London range; NONE held all day correctly (no setup, 4H lower high 3586.5) — holiday early close means post-14:30 ET runs need no decision change.

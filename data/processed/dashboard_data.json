@@ -1,6 +1,6 @@
 {
-  "generated_at_ist": "2026-11-26 21:45:18 IST",
-  "generated_at_utc": "2026-11-26T16:15:18Z",
+  "generated_at_ist": "2026-11-26 22:41:23 IST",
+  "generated_at_utc": "2026-11-26T17:11:23Z",
   "timezone_label": "IST (Asia/Kolkata)",
   "account": {
     "server": "MetaQuotes-Demo",
@@ -22,11 +22,11 @@
     "first_ea_start_equity": 99977.46,
     "first_ea_start_equity_at_ist": "2026-11-13 05:50:05 IST",
     "last_terminal_sync_positions": 0,
-    "last_terminal_sync_ist": "2026-11-26 21:45:20 IST"
+    "last_terminal_sync_ist": "2026-11-26 22:41:25 IST"
   },
   "live_account": {
     "state": "live",
-    "pulled_at_ist": "2026-11-26 21:45:20 IST",
+    "pulled_at_ist": "2026-11-26 22:41:25 IST",
     "balance": 99673.93,
     "equity": 99673.93,
     "open_profit": 0.0,
@@ -508,10 +508,10 @@
       "backfill_closed": 9,
       "live_closed": 5
     },
-    "generated_utc": "2026-11-26T16:15Z",
-    "generated_ist": "2026-11-26 21:45 IST",
+    "generated_utc": "2026-11-26T17:11Z",
+    "generated_ist": "2026-11-26 22:41 IST",
     "data_source": "mt5_broker_live",
-    "last_completed_bar_ist": "2026-11-26 20:30 IST",
+    "last_completed_bar_ist": "2026-11-26 21:30 IST",
     "backfill_start_ist": "2026-10-16 09:30 IST",
     "live_start_ist": "2026-11-14 05:30 IST",
     "pending_signals": {},
@@ -526,7 +526,7 @@
       "equity": 99673.93,
       "margin": 0.0,
       "profit": 0.0,
-      "pulled_at_utc": "2026-11-26T16:15:17.798501+00:00"
+      "pulled_at_utc": "2026-11-26T17:11:22.253024+00:00"
     },
     "trades": [
       {
@@ -898,13 +898,13 @@
     "generated_at_ist": "2026-11-26 18:17:18 IST",
     "valid_until_ist": "2026-11-26 22:30 IST",
     "valid_until_utc": "2026-11-26T17:00:00Z",
-    "expired": false,
+    "expired": true,
     "kill_switch": false,
     "in_news_blackout": false,
     "news_blackout": [],
     "next_blackout": null,
     "rationale": "Stand aside, Thu pre-NY (12:47Z). London range locked 3552.1-3583.7; price 3570.8 mid-range after the 3552 sweep was rejected. D LH/LL downtrend; 4H below MA20 3583/MA50 3674. Probation NY SELL only on a 1H close below 3552.1 (13-17Z); no long setup. Thanksgiving-thin, no US data.",
-    "status": "flat",
+    "status": "expired",
     "source": "/workspace/gold-algo/decisions/current.json"
   },
   "open_position": null,
@@ -993,10 +993,10 @@
       "sort": "2026-11-13T07:41:28+02:00"
     },
     {
-      "t": "2026-11-26 21:45 IST",
+      "t": "2026-11-26 22:41 IST",
       "label": "Last known balance",
       "equity": 100046.1,
-      "sort": "2026-11-26T21:45:18.939905+05:30"
+      "sort": "2026-11-26T22:41:23.528261+05:30"
     }
   ],
   "stats": {
@@ -1113,7 +1113,7 @@
     }
   ],
   "notes": [
-    "Balance and equity are live from MT5 (pulled 2026-11-26 21:45:20 IST).",
+    "Balance and equity are live from MT5 (pulled 2026-11-26 22:41:25 IST).",
     "All live money figures come from MT5 result files, the EA journal, and MQL5 logs. No live broker quote is shown unless a file has a fresh one.",
     "Today's P&L vs the $100,046.10 start-of-day reference is $0.00 because both closed demo trades settled before that reference was recorded. Their combined P&L is +46.15 (including swap), which is already inside the current balance."
   ],

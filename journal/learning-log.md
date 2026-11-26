@@ -205,3 +205,4 @@ Owner asked for a full-night research pass: gold behaviour from the start of ava
 - 2026-11-26 19:42 IST NY check: 13-14Z 1H closed 3571.7 inside London 3552.1-3583.7, no probation trigger, NONE kept.
 - 2026-11-26 20:39 IST NY check: 14-15Z 1H wicked to 3586.5 above London high but closed 3581.7 inside; no trigger (long blocked by daily down), NONE kept.
 - 2026-11-26 21:45 IST NY check: 15-16Z 1H closed 3573.5 inside London range; no trigger, NONE kept; terminal back as portable, EA reading decisions.
+- 2026-11-26 22:41 IST NY close: Thanksgiving NY never closed outside London 3552.1-3583.7 (one wick to 3586.5); no probation trigger, NONE expired 17:00Z, no trade — thin-holiday NY respects the London range.

@@ -20,7 +20,7 @@
       65500,
       66800
     ],
-    "note": "25 Nov 20:50 IST: 19:30 IST hour wicked to 57,257 but closed 58,210 (58,000/57,500 breaks failed); 20:30 hour rejected 58,698 (under 58,750) and is ~57,760. Resistance 58,000 / 58,600-58,750; supports 57,250, 57,000, 56,000. Choppy, high volume."
+    "note": "25 Nov 23:50 IST: short-squeeze from 57,257 to 60,083. Resistance 60,000-60,400 / 60,615-60,750; support 59,364-59,500, 58,750, 58,000."
   },
-  "last_check": "2026-11-25 23:15 IST: no open positions; inside no-revenge window (until 23:47 IST) -> no new setup checked."
+  "last_check": "2026-11-26 07:47 IST: no positions (balance 1067.0). 06:30-07:30 IST 1H closed 60,848 GREEN, vol 0.33x. 4H DOWN (60,427 < EMA50 61,544) -> sell only; nearest intact 1H pivot resistance 61,654. No trigger. No trade."
 }

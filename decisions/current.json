@@ -1,7 +1,7 @@
 {
   "version": 1,
-  "generated_at": "2026-11-25T23:49:11Z",
-  "valid_until": "2026-11-26T05:45:00Z",
+  "generated_at": "2026-11-26T02:51:05Z",
+  "valid_until": "2026-11-26T08:30:00Z",
   "symbol": "XAUUSD",
   "bias": "NONE",
   "entry_zone": {
@@ -15,7 +15,7 @@
   ],
   "confidence": 0,
   "max_risk_pct": 0.25,
-  "rationale": "Stand aside, Thu Asia open (23:50Z Wed). Post-reversal chop 3544.6-3589.7 after Wed's outside-day hammer (3426.6 -> 3588). D/4H still downtrend (D RSI 32, below MA20 3841); no FOMC, no Donchian long (20d high 4148.5, 18:00 ET open passed). Asia range not yet formed; breakout only if clean. US Thanksgiving, thin, no US releases.",
+  "rationale": "Stand aside, Thu Asia (02:55Z). Thanksgiving-thin squeeze took out Asia/Wed highs 3588-3590 to 3607.2 (04:30 server). D still LH/LL downtrend (below MA20 3842, RSI 34); 4H reclaiming MA20 3588 but below MA50 3685. No FOMC, no Donchian long (20d high 4148.5), NY window closed, Asia range not locked until 08:00Z. Buying 3595 after +170 off the low = chase.",
   "news_blackout": [],
   "kill_switch": false
 }

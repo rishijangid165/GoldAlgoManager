@@ -1,7 +1,7 @@
 {
   "version": 1,
-  "generated_at": "2026-11-27T10:54:32Z",
-  "valid_until": "2026-11-27T14:00:00Z",
+  "generated_at": "2026-11-27T13:00:46Z",
+  "valid_until": "2026-11-27T17:00:00Z",
   "symbol": "XAUUSD",
   "bias": "NONE",
   "entry_zone": {
@@ -14,8 +14,8 @@
     0.0
   ],
   "confidence": 0,
-  "max_risk_pct": 0.5,
-  "rationale": "Stand aside, Fri London hour 3 (10:55Z, US half-day). Day high 3685.24 (09:00Z) stalled 5 under week H 3689.6, dip to 3668.8, now 3679; 1H RSI 76, 4H above MA50 3644.6 only, far below MA200 3942; D LH/LL below MA20 3831 -> no D+4H alignment, no long section. No FOMC, no Donchian (20d high 4148.5). Asia off (width). London range so far 3658.19-3685.24, locks 13:00Z; NY short only if 4H loses MA50 and 1H closes below London low. No chase.",
+  "max_risk_pct": 0.25,
+  "rationale": "Stand aside, Fri NY open (13:01Z, US half-day). London range LOCKED 08-13Z: 3658.19-3685.24 (27.05). 12Z 1H closed 3669.5, now 3665 just under 1H MA200 3665; D LH/LL below MA50 4018/MA200 4374 (down), 4H 3665 above MA50 3644.3 (not down) -> no D+4H alignment, long impossible. No FOMC, no Donchian (20d high 4148.5), Asia off (width). NY short only if 4H closes <3644 and first 1H close <3658.19 (not <3644.7) by 17:00Z. No chase.",
   "news_blackout": [],
   "kill_switch": false
 }

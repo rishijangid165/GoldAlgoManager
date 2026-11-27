@@ -220,3 +220,4 @@ Owner asked for a full-night research pass: gold behaviour from the start of ava
 - 2026-11-27 19:40 IST: NY 14Z 1H closed 3644.06, first break below London low 3658.19 but 14.1 beyond (>half-range 13.5) -> chase-skip, NONE kept; one-candle breaks can overshoot the chase limit.
 - 2026-11-27 20:41 IST: NY 15Z close check — post chase-skip, price 3628 far below London low; NONE held, no position.
 - 2026-11-27 21:36 IST: NY 15Z close check — gold 3622, setup spent; NONE held, flat.
+- 2026-11-27 22:37 IST: last NY close check — no trade today (setup chase-skipped at 14Z); NONE expired 17Z -> EA STALE, flat.

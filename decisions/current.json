@@ -1,7 +1,7 @@
 {
   "version": 1,
-  "generated_at": "2026-11-27T02:55:24Z",
-  "valid_until": "2026-11-27T08:49:24Z",
+  "generated_at": "2026-11-27T05:49:15Z",
+  "valid_until": "2026-11-27T11:50:00Z",
   "symbol": "XAUUSD",
   "bias": "NONE",
   "entry_zone": {
@@ -15,7 +15,7 @@
   ],
   "confidence": 0,
   "max_risk_pct": 0.5,
-  "rationale": "Stand aside, Fri Asia (02:57Z, post-Thanksgiving thin). Spike +60 in 2h: 3561->3636.8 high, now 3625.6, above Thu H 3607.2 and 4H LH 3586.5 (4H turned up short-term) but D still LH/LL below MA20 3828. No FOMC, no Donchian (20d high far above). Asia range 3557.8-3636.8 (9) already wider than 3x 1H ATR (48) -> Asia breakout skip today. No chase at 15M RSI 81.",
+  "rationale": "Stand aside, Fri pre-London (05:50Z, post-Thanksgiving thin). Rally extended to 3666.75 (05:30Z), now 3649; tagged 4H MA50 3652.7 with 15M bearish RSI div (81.9 vs 83.1), 1H MA200 3673 / Mon H 3689.6 overhead. D still LH/LL below MA20 3830 -> no Donchian (20d high 4148.5), no FOMC. Asia range 3557.8-3666.8 (109) > 3x 1H ATR (50) -> Asia breakout off today. London range not locked until 13:00Z; NY break needs D+4H aligned. No chase.",
   "news_blackout": [],
   "kill_switch": false
 }

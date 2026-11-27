@@ -1,6 +1,6 @@
 {
-  "generated_at_ist": "2026-11-27 18:31:07 IST",
-  "generated_at_utc": "2026-11-27T13:01:07Z",
+  "generated_at_ist": "2026-11-27 23:25:15 IST",
+  "generated_at_utc": "2026-11-27T17:55:15Z",
   "timezone_label": "IST (Asia/Kolkata)",
   "account": {
     "server": "MetaQuotes-Demo",
@@ -22,11 +22,11 @@
     "first_ea_start_equity": 99977.46,
     "first_ea_start_equity_at_ist": "2026-11-13 05:50:05 IST",
     "last_terminal_sync_positions": 0,
-    "last_terminal_sync_ist": "2026-11-27 18:31:08 IST"
+    "last_terminal_sync_ist": "2026-11-27 23:25:17 IST"
   },
   "live_account": {
     "state": "live",
-    "pulled_at_ist": "2026-11-27 18:31:08 IST",
+    "pulled_at_ist": "2026-11-27 23:25:17 IST",
     "balance": 99673.93,
     "equity": 99673.93,
     "open_profit": 0.0,
@@ -508,10 +508,10 @@
       "backfill_closed": 9,
       "live_closed": 5
     },
-    "generated_utc": "2026-11-27T13:01Z",
-    "generated_ist": "2026-11-27 18:31 IST",
+    "generated_utc": "2026-11-27T17:54Z",
+    "generated_ist": "2026-11-27 23:24 IST",
     "data_source": "mt5_broker_live",
-    "last_completed_bar_ist": "2026-11-27 17:30 IST",
+    "last_completed_bar_ist": "2026-11-27 21:30 IST",
     "backfill_start_ist": "2026-10-16 09:30 IST",
     "live_start_ist": "2026-11-14 05:30 IST",
     "pending_signals": {},
@@ -526,7 +526,7 @@
       "equity": 99673.93,
       "margin": 0.0,
       "profit": 0.0,
-      "pulled_at_utc": "2026-11-27T13:01:05.361238+00:00"
+      "pulled_at_utc": "2026-11-27T17:54:54.442125+00:00"
     },
     "trades": [
       {
@@ -898,13 +898,13 @@
     "generated_at_ist": "2026-11-27 18:30:46 IST",
     "valid_until_ist": "2026-11-27 22:30 IST",
     "valid_until_utc": "2026-11-27T17:00:00Z",
-    "expired": false,
+    "expired": true,
     "kill_switch": false,
     "in_news_blackout": false,
     "news_blackout": [],
     "next_blackout": null,
     "rationale": "Stand aside, Fri NY open (13:01Z, US half-day). London range LOCKED 08-13Z: 3658.19-3685.24 (27.05). 12Z 1H closed 3669.5, now 3665 just under 1H MA200 3665; D LH/LL below MA50 4018/MA200 4374 (down), 4H 3665 above MA50 3644.3 (not down) -> no D+4H alignment, long impossible. No FOMC, no Donchian (20d high 4148.5), Asia off (width). NY short only if 4H closes <3644 and first 1H close <3658.19 (not <3644.7) by 17:00Z. No chase.",
-    "status": "flat",
+    "status": "expired",
     "source": "/workspace/gold-algo/decisions/current.json"
   },
   "open_position": null,
@@ -912,7 +912,7 @@
   "ea": {
     "name": "GoldAIBridge",
     "chart": "XAUUSD M15",
-    "last_decision_read_ist": "2026-11-27 16:33:36 IST",
+    "last_decision_read_ist": "2026-11-27 18:35:05 IST",
     "last_decision_bias": "NONE"
   },
   "trades": [
@@ -993,10 +993,10 @@
       "sort": "2026-11-13T07:41:28+02:00"
     },
     {
-      "t": "2026-11-27 18:31 IST",
+      "t": "2026-11-27 23:25 IST",
       "label": "Last known balance",
       "equity": 100046.1,
-      "sort": "2026-11-27T18:31:07.138584+05:30"
+      "sort": "2026-11-27T23:25:15.362956+05:30"
     }
   ],
   "stats": {
@@ -1113,7 +1113,7 @@
     }
   ],
   "notes": [
-    "Balance and equity are live from MT5 (pulled 2026-11-27 18:31:08 IST).",
+    "Balance and equity are live from MT5 (pulled 2026-11-27 23:25:17 IST).",
     "All live money figures come from MT5 result files, the EA journal, and MQL5 logs. No live broker quote is shown unless a file has a fresh one.",
     "Today's P&L vs the $100,046.10 start-of-day reference is $0.00 because both closed demo trades settled before that reference was recorded. Their combined P&L is +46.15 (including swap), which is already inside the current balance."
   ],

@@ -221,3 +221,4 @@ Owner asked for a full-night research pass: gold behaviour from the start of ava
 - 2026-11-27 20:41 IST: NY 15Z close check — post chase-skip, price 3628 far below London low; NONE held, no position.
 - 2026-11-27 21:36 IST: NY 15Z close check — gold 3622, setup spent; NONE held, flat.
 - 2026-11-27 22:37 IST: last NY close check — no trade today (setup chase-skipped at 14Z); NONE expired 17Z -> EA STALE, flat.
+- 2026-11-27 23:25 IST: Fri 12:55 ET half-day, NONE kept (13:00:46Z file expired 17Z, EA STALE, not republished — weekend precedent). Gold 3637 bouncing +1.9% off 15-mo low; D down, 4H at MA50 (mixed); NY window closed, London-break chase-skipped at 14Z. Review: 22:37 NONE right (3631 -> 3637 chop, no setup). Ops: terminal+watchdog up, no restart, flat 99,673.93, Telegram 200 (transient getUpdates 100x errors). Paper: no new lines. Lesson: on holiday half-day Fridays the post-NY window adds nothing; skip re-deriving and just confirm flat + ops.
